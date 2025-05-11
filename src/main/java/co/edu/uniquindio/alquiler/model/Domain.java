@@ -1,6 +1,5 @@
 package co.edu.uniquindio.alquiler.model;
 
-import co.edu.uniquindio.alquiler.enums.EstadoRecibo;
 import co.edu.uniquindio.alquiler.exceptions.PromedioBajoException;
 import co.edu.uniquindio.alquiler.exceptions.ReciboExistenteException;
 
@@ -9,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Domain {
 

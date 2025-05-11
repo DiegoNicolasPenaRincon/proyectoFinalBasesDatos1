@@ -1,9 +1,6 @@
 package co.edu.uniquindio.alquiler.controller;
-import co.edu.uniquindio.alquiler.exceptions.EstudianteNoRegistradoException;
 import co.edu.uniquindio.alquiler.model.DatosSesion;
 import co.edu.uniquindio.alquiler.model.Domain;
-import co.edu.uniquindio.alquiler.model.Estudiante;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

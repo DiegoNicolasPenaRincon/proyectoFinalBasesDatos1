@@ -1,6 +1,5 @@
 package co.edu.uniquindio.alquiler.model;
 
-import co.edu.uniquindio.alquiler.enums.EstadoRecibo;
 import db.Conexion;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;

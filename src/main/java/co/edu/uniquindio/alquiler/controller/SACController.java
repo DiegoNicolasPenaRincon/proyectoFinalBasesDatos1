@@ -1,8 +1,6 @@
 package co.edu.uniquindio.alquiler.controller;
 
-import co.edu.uniquindio.alquiler.enums.EstadoRecibo;
 import co.edu.uniquindio.alquiler.exceptions.PromedioBajoException;
-import co.edu.uniquindio.alquiler.exceptions.ReciboExistenteException;
 import co.edu.uniquindio.alquiler.model.*;
 import co.edu.uniquindio.alquiler.utils.ArchivoUtils;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,16 +13,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Formatter;
-import java.util.Properties;
 
 public class SACController {
 
