@@ -2,15 +2,15 @@ package co.edu.uniquindio.alquiler.model;
 
 import lombok.*;
 
-import java.util.ArrayList;
-
 @Setter
 @Getter
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
 @NonNull
-public class Cliente extends Persona{
+public class Producto {
 
-    private ArrayList<Factura<Cliente>> listaFacturas;
+    private String nombre;
+    private String categoria;
+    private int codigo;
 }

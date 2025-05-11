@@ -1,5 +1,6 @@
 package co.edu.uniquindio.alquiler.model;
 
+
 import lombok.*;
 
 @Setter
@@ -8,5 +9,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @NonNull
-public class Administrador extends Persona{
+public class ProductoCantidad {
+    private Producto producto;
+    private int cantidad;
+
 }

@@ -4,6 +4,7 @@ import co.edu.uniquindio.alquiler.enums.TipoFactura;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Setter
 @Getter
@@ -19,4 +20,5 @@ public class Factura<T> {
     private TipoFactura tipoFactura;
     private LocalDateTime fechaPago;
     private double costoTotal;
+    private ArrayList<Producto> listaProductos;
 }
