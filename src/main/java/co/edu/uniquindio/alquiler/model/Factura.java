@@ -12,10 +12,10 @@ import java.util.ArrayList;
 @Builder
 @NoArgsConstructor
 @NonNull
-public class Factura<T> {
+public class Factura {
 
-    private T documentoEntidadCliente;
-    private T documentoEntidadCajero;
+    private String documentoEntidadCliente;
+    private String documentoEntidadCajero;
     private int codigo;
     private TipoFactura tipoFactura;
     private LocalDateTime fechaPago;

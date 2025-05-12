@@ -12,5 +12,5 @@ import java.util.ArrayList;
 @NonNull
 public class Cajero extends Persona {
 
-    private ArrayList<Factura<Cliente>> listaFacturas;
+    private ArrayList<Factura> listaFacturas;
 }

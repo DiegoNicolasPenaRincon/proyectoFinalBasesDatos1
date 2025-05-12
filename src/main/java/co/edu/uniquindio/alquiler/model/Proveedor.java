@@ -14,7 +14,9 @@ public class Proveedor {
     private String nombre;
     private String telefono;
     private int codigo;
+    private ArrayList<Inventario> inventariosMencionados;
     private String direccion;
     private ArrayList<Producto>productosOfertados;
     private ArrayList<Pedido> pedidos;
+    private ArrayList<Factura> facturasElementosAdquiridos;
 }

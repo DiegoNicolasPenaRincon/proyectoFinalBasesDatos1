@@ -16,5 +16,6 @@ public class Pedido {
     private int codigo;
     private Proveedor proveedor;
     private LocalDateTime fechaPedido;
-    private ArrayList<ProductoCantidad> listaProductoCantidad;
+    private ArrayList<Producto> listaProductoCantidad;
+    private Administrador administrador;
 }
