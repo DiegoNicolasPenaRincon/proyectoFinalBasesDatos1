@@ -13,4 +13,5 @@ import java.util.ArrayList;
 public class Cajero extends Persona {
 
     private ArrayList<Factura> listaFacturas;
+    private double salario;
 }

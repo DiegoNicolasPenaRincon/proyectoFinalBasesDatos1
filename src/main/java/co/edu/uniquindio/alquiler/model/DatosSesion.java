@@ -2,9 +2,9 @@ package co.edu.uniquindio.alquiler.model;
 
 import java.util.ArrayList;
 
-public class DatosSesion {
+public class DatosSesion<T> {
 
-    Estudiante estudianteSeleccionado;
+    T usuarioActivo;
     private static DatosSesion datos;
 
     private DatosSesion(){
@@ -18,11 +18,11 @@ public class DatosSesion {
         return datos;
     }
 
-    public Estudiante getEstudianteSeleccionado() {
-        return estudianteSeleccionado;
+    public T getEstudianteSeleccionado() {
+        return usuarioActivo;
     }
 
-    public void setEstudianteSeleccionado(Estudiante estudianteSeleccionado) {
-        this.estudianteSeleccionado = estudianteSeleccionado;
+    public void setEstudianteSeleccionado(T usuarioActivo) {
+        this.usuarioActivo = usuarioActivo;
     }
 }

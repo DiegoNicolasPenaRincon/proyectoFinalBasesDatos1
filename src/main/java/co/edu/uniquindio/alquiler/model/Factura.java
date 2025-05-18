@@ -14,8 +14,8 @@ import java.util.ArrayList;
 @NonNull
 public class Factura {
 
-    private String documentoEntidadCliente;
-    private String documentoEntidadCajero;
+    private String nombreCliente;
+    private String nombreCajero;
     private int codigo;
     private TipoFactura tipoFactura;
     private LocalDateTime fechaPago;

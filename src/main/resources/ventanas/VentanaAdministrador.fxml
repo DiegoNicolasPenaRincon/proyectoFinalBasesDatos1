@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="501.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
+   <children>
+      <Label fx:id="opcionesLabel" layoutX="283.0" layoutY="21.0" text="Opciones administrador" />
+      <TableView fx:id="cajerosTable" layoutX="138.0" layoutY="88.0" prefHeight="200.0" prefWidth="529.0" visible="false">
+        <columns>
+          <TableColumn fx:id="nombreCajeroColumn" prefWidth="94.0" text="Nombre" />
+          <TableColumn fx:id="IDCajeroColumn" prefWidth="79.0" text="ID" />
+            <TableColumn fx:id="correoCajeroColumn" prefWidth="148.0" text="Correo" />
+            <TableColumn fx:id="telefonoCajeroColumn" prefWidth="111.0" text="Telefono" />
+            <TableColumn fx:id="salarioColumn" prefWidth="96.0" text="Salario" />
+        </columns>
+      </TableView>
+      <Button fx:id="cajerosButton" layoutX="20.0" layoutY="100.0" mnemonicParsing="false" onAction="#mostrarCajerosOnAction" text="Cajeros" />
+      <Button fx:id="inventarioButton" layoutX="20.0" layoutY="141.0" mnemonicParsing="false" text="Inventario" />
+      <Button fx:id="pedidosButton" layoutX="22.0" layoutY="182.0" mnemonicParsing="false" text="Pedidos" />
+      <Button fx:id="clientesButton" layoutX="23.0" layoutY="225.0" mnemonicParsing="false" text="Clientes" />
+      <Button fx:id="facturasButton" layoutX="22.0" layoutY="263.0" mnemonicParsing="false" text="Facturas" />
+      <Button fx:id="proveedoresButton" layoutX="14.0" layoutY="306.0" mnemonicParsing="false" text="Porveedores" />
+      <Button fx:id="verificarFacturasButton" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" onAction="#verificarFacturasCajeroOnAction" text="Verificar facturas" visible="false" />
+      <TableView fx:id="listaRecibosCajerosTable" layoutX="200.0" layoutY="95.0" prefHeight="200.0" prefWidth="376.0">
+        <columns>
+          <TableColumn fx:id="clienteFacturaColumn" prefWidth="75.0" text="Cliente" />
+          <TableColumn fx:id="cajeroFacturaColumn" prefWidth="75.0" text="Cajero" />
+            <TableColumn fx:id="codigoFacturaColumn" prefWidth="75.0" text="Codigo" />
+            <TableColumn fx:id="fechaPagoFacturaColum" prefWidth="75.0" text="Fecha pago" />
+            <TableColumn fx:id="costoFacturaColum" prefWidth="75.0" text="Costo" />
+        </columns>
+      </TableView>
+      <Button fx:id="masDetallesButton" layoutX="347.0" layoutY="313.0" mnemonicParsing="false" onAction="#mostrarFacturaCompleta" text="Mas detalles" />
+   </children>
+</AnchorPane>

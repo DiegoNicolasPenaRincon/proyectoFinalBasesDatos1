@@ -13,4 +13,5 @@ import java.util.ArrayList;
 public class Administrador extends Persona{
     private ArrayList<Pedido> pedidos;
     private ArrayList<Inventario> inventariosModificados;
+    private double salario;
 }

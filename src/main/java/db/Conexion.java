@@ -1,9 +1,7 @@
 package db;
 
-import co.edu.uniquindio.alquiler.model.Domain;
 import javafx.scene.control.Alert;
 
-import java.io.IOException;
 import java.sql.*;
 
 public class Conexion {
