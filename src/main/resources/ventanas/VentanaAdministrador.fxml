@@ -44,13 +44,21 @@
       <Button fx:id="verificarProveedoresButton" layoutX="221.0" layoutY="313.0" mnemonicParsing="false" onAction="#verificarProveeOnAction" text="Verificar Proveedores" visible="false" />
       <Button fx:id="verificarModificacionesButton" layoutX="470.0" layoutY="313.0" mnemonicParsing="false" onAction="#verificarModifOnAction" text="Verificar modificaciones" visible="false" />
       <Button fx:id="agregarProductoButton" layoutX="400.0" layoutY="326.0" mnemonicParsing="false" onAction="#agregarProductoOnAction" text="Agregar producto" visible="false" />
-      <TableView fx:id="modificacionesTable" layoutX="129.0" layoutY="95.0" prefHeight="200.0" prefWidth="646.0">
+      <TableView fx:id="modificacionesTable" layoutX="129.0" layoutY="95.0" prefHeight="200.0" prefWidth="646.0" visible="false">
         <columns>
           <TableColumn fx:id="nombreadminModiColum" prefWidth="138.0" text="Nombre administrador" />
           <TableColumn fx:id="codigoAdminModiColum" prefWidth="130.0" text="Codigo administrador" />
             <TableColumn fx:id="fechaModiColumn" prefWidth="114.0" text="Fecha modificacion" />
             <TableColumn fx:id="inventarioModiColum" prefWidth="132.0" text="Inventario modificado" />
             <TableColumn fx:id="codigoModiColum" prefWidth="131.0" text="Codigo modificacion" />
+        </columns>
+      </TableView>
+      <TableView layoutX="303.0" layoutY="100.0" prefHeight="200.0" prefWidth="303.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Nombre" />
+          <TableColumn prefWidth="84.0" text="ID" />
+            <TableColumn prefWidth="66.0" text="Telefono" />
+            <TableColumn prefWidth="75.0" text="Direccion" />
         </columns>
       </TableView>
    </children>

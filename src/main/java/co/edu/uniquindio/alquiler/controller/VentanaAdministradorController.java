@@ -112,11 +112,10 @@ public class VentanaAdministradorController {
         salarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getSalario())));
 
         nombreadminModiColum.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getAdministrador().getNombre()));
-        codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
-        disponiblesColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesAdquiridas()) ) );
-        vendidasColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesVendidas()) ) );
-        numeroReferenciaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
-
+        codigoAdminModiColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getAdministrador().getDocumentoEntidad())));
+        fechaModiColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getFechaModificacion()) ) );
+        inventarioModiColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getInventario().getCodigoInstancia()) ) );
+        codigoModiColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
 
         this.cajerosTable.setItems(FXCollections.observableList(tiendaUQ.getCajeros()));
         this.inventarioTable.setItems(FXCollections.observableList(tiendaUQ.getInventario()));
@@ -174,13 +173,28 @@ public class VentanaAdministradorController {
         agregarProductoButton.setVisible(false);
         verificarProveedoresButton.setVisible(false);
         verificarModificacionesButton.setVisible(false);
+
+
     }
 
     public void verificarModifOnAction(ActionEvent actionEvent) {
-        inventarioTable.setVisible(false);
-        agregarProductoButton.setVisible(false);
-        verificarProveedoresButton.setVisible(false);
-        verificarModificacionesButton.setVisible(false);
+        Inventario inventarioSeleccionado=inventarioTable.getSelectionModel().getSelectedItem();
+        if(inventarioSeleccionado!=null)
+        {
+            inventarioTable.setVisible(false);
+            agregarProductoButton.setVisible(false);
+            verificarProveedoresButton.setVisible(false);
+            verificarModificacionesButton.setVisible(false);
+            this.modificacionesTable.setItems(FXCollections.observableList(inventarioSeleccionado.getModificaciones()));
+            modificacionesTable.setVisible(true);
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText("No ha seleccionado ninguna instancia de inventario");
+            alert.show();
+        }
     }
 
     public void agregarProductoOnAction(ActionEvent actionEvent) {
