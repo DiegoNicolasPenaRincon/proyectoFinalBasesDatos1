@@ -1,8 +1,6 @@
 package co.edu.uniquindio.alquiler.controller;
 
-import co.edu.uniquindio.alquiler.model.Cajero;
-import co.edu.uniquindio.alquiler.model.Factura;
-import co.edu.uniquindio.alquiler.model.TiendaUQ;
+import co.edu.uniquindio.alquiler.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -11,6 +9,36 @@ import javafx.scene.control.*;
 
 public class VentanaAdministradorController {
 
+    @FXML
+    private TableView<Modificacion> modificacionesTable;
+    @FXML
+    private TableColumn<Modificacion,String> nombreadminModiColum;
+    @FXML
+    private TableColumn<Modificacion,String> codigoAdminModiColum;
+    @FXML
+    private TableColumn<Modificacion,String> fechaModiColumn;
+    @FXML
+    private TableColumn<Modificacion,String> inventarioModiColum;
+    @FXML
+    private TableColumn<Modificacion,String> codigoModiColum;
+    @FXML
+    private Button verificarModificacionesButton;
+    @FXML
+    private TableColumn<Inventario,String> nombreInventarioColumn;
+    @FXML
+    private TableColumn<Inventario,String> codigoInventarioPColum;
+    @FXML
+    private Button agregarProductoButton;
+    @FXML
+    private TableView<Inventario> inventarioTable;
+    @FXML
+    private TableColumn<Inventario,String> disponiblesColum;
+    @FXML
+    private TableColumn<Inventario,String> vendidasColumn;
+    @FXML
+    private TableColumn<Inventario,String> numeroReferenciaColumn;
+    @FXML
+    private Button verificarProveedoresButton;
     @FXML
     private TableView<Factura> listaRecibosCajerosTable;
     @FXML
@@ -60,6 +88,16 @@ public class VentanaAdministradorController {
         cajerosTable.setVisible(false);
         listaRecibosCajerosTable.setVisible(false);
         masDetallesButton.setVisible(false);
+        inventarioTable.setVisible(false);
+        agregarProductoButton.setVisible(false);
+        verificarProveedoresButton.setVisible(false);
+        verificarModificacionesButton.setVisible(false);
+
+        nombreInventarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getProducto().getNombre()));
+        codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
+        disponiblesColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesAdquiridas()) ) );
+        vendidasColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesVendidas()) ) );
+        numeroReferenciaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
 
         nombreCajeroColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getNombre()));
         cajeroFacturaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNombreCajero())));
@@ -73,8 +111,15 @@ public class VentanaAdministradorController {
         telefonoCajeroColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getTelefono() ) );
         salarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getSalario())));
 
+        nombreadminModiColum.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getAdministrador().getNombre()));
+        codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
+        disponiblesColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesAdquiridas()) ) );
+        vendidasColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesVendidas()) ) );
+        numeroReferenciaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
+
 
         this.cajerosTable.setItems(FXCollections.observableList(tiendaUQ.getCajeros()));
+        this.inventarioTable.setItems(FXCollections.observableList(tiendaUQ.getInventario()));
 
     }
 
@@ -83,6 +128,10 @@ public class VentanaAdministradorController {
         verificarFacturasButton.setVisible(true);
         listaRecibosCajerosTable.setVisible(false);
         masDetallesButton.setVisible(false);
+        inventarioTable.setVisible(false);
+        agregarProductoButton.setVisible(false);
+        verificarProveedoresButton.setVisible(false);
+        verificarModificacionesButton.setVisible(false);
 
     }
 
@@ -95,7 +144,6 @@ public class VentanaAdministradorController {
             this.listaRecibosCajerosTable.setItems(FXCollections.observableList(cajeroSeleccionado.getListaFacturas()));
             listaRecibosCajerosTable.setVisible(true);
             masDetallesButton.setVisible(true);
-
         }
         else
         {
@@ -107,6 +155,35 @@ public class VentanaAdministradorController {
     }
 
     public void mostrarFacturaCompleta(ActionEvent actionEvent) {
-        
+
+    }
+
+    public void mostrarInventarioOnAction(ActionEvent actionEvent) {
+        inventarioTable.setVisible(true);
+        agregarProductoButton.setVisible(true);
+        verificarProveedoresButton.setVisible(true);
+        verificarModificacionesButton.setVisible(true);
+        cajerosTable.setVisible(false);
+        listaRecibosCajerosTable.setVisible(false);
+        masDetallesButton.setVisible(false);
+        verificarFacturasButton.setVisible(false);
+    }
+
+    public void verificarProveeOnAction(ActionEvent actionEvent) {
+        inventarioTable.setVisible(false);
+        agregarProductoButton.setVisible(false);
+        verificarProveedoresButton.setVisible(false);
+        verificarModificacionesButton.setVisible(false);
+    }
+
+    public void verificarModifOnAction(ActionEvent actionEvent) {
+        inventarioTable.setVisible(false);
+        agregarProductoButton.setVisible(false);
+        verificarProveedoresButton.setVisible(false);
+        verificarModificacionesButton.setVisible(false);
+    }
+
+    public void agregarProductoOnAction(ActionEvent actionEvent) {
+
     }
 }

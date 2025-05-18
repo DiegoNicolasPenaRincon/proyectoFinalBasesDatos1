@@ -1,7 +1,5 @@
 package co.edu.uniquindio.alquiler.model;
 
-import java.util.ArrayList;
-
 public class DatosSesion<T> {
 
     T usuarioActivo;
@@ -11,18 +9,19 @@ public class DatosSesion<T> {
     }
 
     public static DatosSesion getInstance(){
-        if(datos == null){
+        if(datos == null)
+        {
             datos = new DatosSesion();
         }
 
         return datos;
     }
 
-    public T getEstudianteSeleccionado() {
+    public T getUsuarioActivo() {
         return usuarioActivo;
     }
 
-    public void setEstudianteSeleccionado(T usuarioActivo) {
+    public void setUsuarioActivo(T usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
     }
 }

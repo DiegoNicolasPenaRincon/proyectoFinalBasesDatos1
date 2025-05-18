@@ -4,10 +4,11 @@ package co.edu.uniquindio.alquiler.model;
 import java.util.ArrayList;
 
 public class Inventario {
+
     private Producto producto;
     private int unidadesAdquiridas;
     private int unidadesVendidas;
-    private ArrayList<Administrador> modificadores;
+    private ArrayList<Modificacion> modificaciones;
     private int codigoInstancia;
     private ArrayList<Proveedor> proveedores;
 
@@ -35,12 +36,12 @@ public class Inventario {
         this.unidadesVendidas = unidadesVendidas;
     }
 
-    public ArrayList<Administrador> getModificadores() {
-        return modificadores;
+    public ArrayList<Modificacion> getModificaciones() {
+        return modificaciones;
     }
 
-    public void setModificadores(ArrayList<Administrador> modificadores) {
-        this.modificadores = modificadores;
+    public void setModificaciones(ArrayList<Modificacion> modificaciones) {
+        this.modificaciones = modificaciones;
     }
 
     public int getCodigoInstancia() {

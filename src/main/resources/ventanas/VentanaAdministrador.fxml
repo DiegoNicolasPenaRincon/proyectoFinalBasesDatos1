@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="501.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
+<AnchorPane prefHeight="501.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
    <children>
       <Label fx:id="opcionesLabel" layoutX="283.0" layoutY="21.0" text="Opciones administrador" />
       <TableView fx:id="cajerosTable" layoutX="138.0" layoutY="88.0" prefHeight="200.0" prefWidth="529.0" visible="false">
@@ -16,13 +16,13 @@
         </columns>
       </TableView>
       <Button fx:id="cajerosButton" layoutX="20.0" layoutY="100.0" mnemonicParsing="false" onAction="#mostrarCajerosOnAction" text="Cajeros" />
-      <Button fx:id="inventarioButton" layoutX="20.0" layoutY="141.0" mnemonicParsing="false" text="Inventario" />
+      <Button fx:id="inventarioButton" layoutX="20.0" layoutY="141.0" mnemonicParsing="false" onAction="#mostrarInventarioOnAction" text="Inventario" />
       <Button fx:id="pedidosButton" layoutX="22.0" layoutY="182.0" mnemonicParsing="false" text="Pedidos" />
       <Button fx:id="clientesButton" layoutX="23.0" layoutY="225.0" mnemonicParsing="false" text="Clientes" />
       <Button fx:id="facturasButton" layoutX="22.0" layoutY="263.0" mnemonicParsing="false" text="Facturas" />
       <Button fx:id="proveedoresButton" layoutX="14.0" layoutY="306.0" mnemonicParsing="false" text="Porveedores" />
       <Button fx:id="verificarFacturasButton" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" onAction="#verificarFacturasCajeroOnAction" text="Verificar facturas" visible="false" />
-      <TableView fx:id="listaRecibosCajerosTable" layoutX="200.0" layoutY="95.0" prefHeight="200.0" prefWidth="376.0">
+      <TableView fx:id="listaRecibosCajerosTable" layoutX="200.0" layoutY="95.0" prefHeight="200.0" prefWidth="376.0" visible="false">
         <columns>
           <TableColumn fx:id="clienteFacturaColumn" prefWidth="75.0" text="Cliente" />
           <TableColumn fx:id="cajeroFacturaColumn" prefWidth="75.0" text="Cajero" />
@@ -31,6 +31,27 @@
             <TableColumn fx:id="costoFacturaColum" prefWidth="75.0" text="Costo" />
         </columns>
       </TableView>
-      <Button fx:id="masDetallesButton" layoutX="347.0" layoutY="313.0" mnemonicParsing="false" onAction="#mostrarFacturaCompleta" text="Mas detalles" />
+      <Button fx:id="masDetallesButton" layoutX="347.0" layoutY="313.0" mnemonicParsing="false" onAction="#mostrarFacturaCompleta" text="Mas detalles" visible="false" />
+      <TableView fx:id="inventarioTable" layoutX="158.0" layoutY="95.0" prefHeight="200.0" prefWidth="529.0" visible="false">
+        <columns>
+          <TableColumn fx:id="nombreInventarioColumn" prefWidth="126.0" text="Nombre producto" />
+          <TableColumn fx:id="codigoInventarioPColum" prefWidth="136.0" text=" Codigo producto" />
+            <TableColumn fx:id="disponiblesColum" prefWidth="72.0" text="Disponibles" />
+            <TableColumn fx:id="vendidasColumn" prefWidth="78.0" text="Vendidas" />
+            <TableColumn fx:id="numeroReferenciaColumn" prefWidth="115.0" text="Numero Referencia" />
+        </columns>
+      </TableView>
+      <Button fx:id="verificarProveedoresButton" layoutX="221.0" layoutY="313.0" mnemonicParsing="false" onAction="#verificarProveeOnAction" text="Verificar Proveedores" visible="false" />
+      <Button fx:id="verificarModificacionesButton" layoutX="470.0" layoutY="313.0" mnemonicParsing="false" onAction="#verificarModifOnAction" text="Verificar modificaciones" visible="false" />
+      <Button fx:id="agregarProductoButton" layoutX="400.0" layoutY="326.0" mnemonicParsing="false" onAction="#agregarProductoOnAction" text="Agregar producto" visible="false" />
+      <TableView fx:id="modificacionesTable" layoutX="129.0" layoutY="95.0" prefHeight="200.0" prefWidth="646.0">
+        <columns>
+          <TableColumn fx:id="nombreadminModiColum" prefWidth="138.0" text="Nombre administrador" />
+          <TableColumn fx:id="codigoAdminModiColum" prefWidth="130.0" text="Codigo administrador" />
+            <TableColumn fx:id="fechaModiColumn" prefWidth="114.0" text="Fecha modificacion" />
+            <TableColumn fx:id="inventarioModiColum" prefWidth="132.0" text="Inventario modificado" />
+            <TableColumn fx:id="codigoModiColum" prefWidth="131.0" text="Codigo modificacion" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

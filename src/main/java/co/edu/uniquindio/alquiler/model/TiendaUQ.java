@@ -50,21 +50,7 @@ public class TiendaUQ {
         return tienda;
     }
 
-    public Persona verficiarUsuario(int documentoIdentidad,String contrasena) throws ContrasenaException {
-        for(Administrador administrador : administradores)
-        {
-            if(administrador.getDocumentoEntidad()==documentoIdentidad)
-            {
-                if(administrador.getContrasena().equals(contrasena))
-                {
-                    return administrador;
-                }
-                else
-                {
-                    throw new ContrasenaException("La contrasena es incorrecta");
-                }
-            }
-        }
+    public Cajero verficiarCajero(int documentoIdentidad,String contrasena) throws ContrasenaException {
 
         for(Cajero cajero: cajeros)
         {
@@ -81,6 +67,25 @@ public class TiendaUQ {
             }
         }
 
+        return null;
+    }
+
+    public Administrador verficiarAdministrador(int documentoIdentidad,String contrasena) throws ContrasenaException {
+
+        for(Administrador administrador : administradores)
+        {
+            if(administrador.getDocumentoEntidad()==documentoIdentidad)
+            {
+                if(administrador.getContrasena().equals(contrasena))
+                {
+                    return administrador;
+                }
+                else
+                {
+                    throw new ContrasenaException("La contrasena es incorrecta");
+                }
+            }
+        }
         return null;
     }
 
@@ -185,6 +190,8 @@ public class TiendaUQ {
         Cajero cajeroBacano=new Cajero("elAntiguo","NicolasBuenaGente","12345678","kilo@gmail.com",87654321,
                 facturas,50.0);
         ArrayList<Producto> productos=new ArrayList<>();
+        CategoriaProducto categoria1=new CategoriaProducto("Lacteos",523.456,0.16);
+        ArrayList<Proveedor> proveedores=new ArrayList<>();
         Factura factura=new Factura("NicolasEducado",123,cajeroBacano.getNombre(), TipoFactura.CLIENTE, LocalDateTime.now(),89,productos);
         cajeroBacano.getListaFacturas().add(factura);
         administradores.add(adminDeTi);

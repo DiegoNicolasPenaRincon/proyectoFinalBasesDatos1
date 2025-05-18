@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Producto {
 
     private String nombre;
-    private String categoria;
+    private CategoriaProducto categoria;
     private int codigo;
     private ArrayList<Proveedor> proveedores;
     private ArrayList<Factura> facturasAsociadas;
@@ -20,14 +20,6 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public int getCodigo() {
@@ -70,5 +62,21 @@ public class Producto {
         this.inventarioAsociado = inventarioAsociado;
     }
 
+    public CategoriaProducto getCategoria() {
+        return categoria;
+    }
 
+    public void setCategoria(CategoriaProducto categoria) {
+        this.categoria = categoria;
+    }
+
+    public Producto(String nombre, CategoriaProducto categoria, int codigo, ArrayList<Proveedor> proveedores, ArrayList<Factura> facturasAsociadas, int unidadesDisponibles, Inventario inventarioAsociado) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.codigo = codigo;
+        this.proveedores = proveedores;
+        this.facturasAsociadas = facturasAsociadas;
+        this.unidadesDisponibles = unidadesDisponibles;
+        this.inventarioAsociado = inventarioAsociado;
+    }
 }

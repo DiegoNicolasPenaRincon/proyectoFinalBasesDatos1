@@ -2,10 +2,7 @@ package co.edu.uniquindio.alquiler.controller;
 
 import co.edu.uniquindio.alquiler.exceptions.ContrasenaException;
 import co.edu.uniquindio.alquiler.exceptions.NoRegistradoException;
-import co.edu.uniquindio.alquiler.model.Administrador;
-import co.edu.uniquindio.alquiler.model.Cajero;
-import co.edu.uniquindio.alquiler.model.Persona;
-import co.edu.uniquindio.alquiler.model.TiendaUQ;
+import co.edu.uniquindio.alquiler.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +29,8 @@ public class InicioSesionController {
     private Label contrasenaLabel;
 
     TiendaUQ tiendaUQ=TiendaUQ.getInstance();
+    DatosSesion<Administrador> datosAdmin= DatosSesion.getInstance();
+    DatosSesion<Cajero> datosCajero=DatosSesion.getInstance();
 
     public void initialize() {
 
@@ -44,18 +43,21 @@ public class InicioSesionController {
         {
             try
             {
-                Persona isUsuarioRegistrado=tiendaUQ.verficiarUsuario(Integer.parseInt(documentoEntidad),contrasena);
-                if(isUsuarioRegistrado!=null)
+                int abrir=0;
+                Cajero esCajero=tiendaUQ.verficiarCajero(Integer.parseInt(documentoEntidad),contrasena);
+                Administrador esAdmin=tiendaUQ.verficiarAdministrador(Integer.parseInt(documentoEntidad),contrasena);
+                if(esCajero!=null)
                 {
-                    int abrir=0;
-                    if(isUsuarioRegistrado instanceof Administrador)
-                    {
-                        abrir=1;
-                    }
-                    else if(isUsuarioRegistrado instanceof Cajero)
-                    {
-                        abrir=2;
-                    }
+                    abrir=2;
+                    datosCajero.setUsuarioActivo(esCajero);
+                    datosAdmin.setUsuarioActivo(null);
+                    tiendaUQ.inicializarEmpleadoInterfaz(abrir);
+                }
+                else if(esAdmin!=null)
+                {
+                    abrir=1;
+                    datosAdmin.setUsuarioActivo(esAdmin);
+                    datosCajero.setUsuarioActivo(null);
                     tiendaUQ.inicializarEmpleadoInterfaz(abrir);
                 }
                 else

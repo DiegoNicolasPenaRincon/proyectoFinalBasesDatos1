@@ -77,4 +77,15 @@ public class Proveedor {
     public void setFacturasElementosAdquiridos(ArrayList<Factura> facturasElementosAdquiridos) {
         this.facturasElementosAdquiridos = facturasElementosAdquiridos;
     }
+
+    public Proveedor(String telefono, int codigo, String nombre, ArrayList<Inventario> inventariosMencionados, String direccion, ArrayList<Producto> productosOfertados, ArrayList<Pedido> pedidos, ArrayList<Factura> facturasElementosAdquiridos) {
+        this.telefono = telefono;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.inventariosMencionados = inventariosMencionados;
+        this.direccion = direccion;
+        this.productosOfertados = productosOfertados;
+        this.pedidos = pedidos;
+        this.facturasElementosAdquiridos = facturasElementosAdquiridos;
+    }
 }
