@@ -91,6 +91,7 @@ public class VentanaAdministradorController {
         if(cajeroSeleccionado!=null)
         {
             this.listaRecibosCajerosTable.setItems(FXCollections.observableList(cajeroSeleccionado.getListaFacturas()));
+            listaRecibosCajerosTable.setVisible(true);
         }
     }
 }
