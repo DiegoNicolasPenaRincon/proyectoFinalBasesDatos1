@@ -7,10 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class VentanaAdministradorController {
 
@@ -84,14 +81,32 @@ public class VentanaAdministradorController {
     public void mostrarCajerosOnAction(ActionEvent actionEvent) {
         cajerosTable.setVisible(true);
         verificarFacturasButton.setVisible(true);
+        listaRecibosCajerosTable.setVisible(false);
+        masDetallesButton.setVisible(false);
+
     }
 
     public void verificarFacturasCajeroOnAction(ActionEvent actionEvent) {
         Cajero cajeroSeleccionado=cajerosTable.getSelectionModel().getSelectedItem();
         if(cajeroSeleccionado!=null)
         {
+            cajerosTable.setVisible(false);
+            verificarFacturasButton.setVisible(false);
             this.listaRecibosCajerosTable.setItems(FXCollections.observableList(cajeroSeleccionado.getListaFacturas()));
             listaRecibosCajerosTable.setVisible(true);
+            masDetallesButton.setVisible(true);
+
         }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText("No ha seleccionado ningun cajero");
+            alert.show();
+        }
+    }
+
+    public void mostrarFacturaCompleta(ActionEvent actionEvent) {
+        
     }
 }

@@ -1,21 +1,55 @@
 package co.edu.uniquindio.alquiler.model;
 
 
-import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-@Setter
-@Getter
-@AllArgsConstructor
-@Builder
-@NoArgsConstructor
-@NonNull
+
 public class Pedido {
     private int codigo;
     private Proveedor proveedor;
     private LocalDateTime fechaPedido;
     private ArrayList<Producto> listaProductoCantidad;
     private Administrador administrador;
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public LocalDateTime getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(LocalDateTime fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public ArrayList<Producto> getListaProductoCantidad() {
+        return listaProductoCantidad;
+    }
+
+    public void setListaProductoCantidad(ArrayList<Producto> listaProductoCantidad) {
+        this.listaProductoCantidad = listaProductoCantidad;
+    }
+
+    public Administrador getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
+    }
 }

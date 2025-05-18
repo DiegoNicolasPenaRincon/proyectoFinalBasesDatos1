@@ -1,15 +1,8 @@
 package co.edu.uniquindio.alquiler.model;
 
-import lombok.*;
 
 import java.util.ArrayList;
 
-@Setter
-@Getter
-@AllArgsConstructor
-@Builder
-@NoArgsConstructor
-@NonNull
 public class Inventario {
     private Producto producto;
     private int unidadesAdquiridas;
@@ -17,4 +10,52 @@ public class Inventario {
     private ArrayList<Administrador> modificadores;
     private int codigoInstancia;
     private ArrayList<Proveedor> proveedores;
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public int getUnidadesAdquiridas() {
+        return unidadesAdquiridas;
+    }
+
+    public void setUnidadesAdquiridas(int unidadesAdquiridas) {
+        this.unidadesAdquiridas = unidadesAdquiridas;
+    }
+
+    public int getUnidadesVendidas() {
+        return unidadesVendidas;
+    }
+
+    public void setUnidadesVendidas(int unidadesVendidas) {
+        this.unidadesVendidas = unidadesVendidas;
+    }
+
+    public ArrayList<Administrador> getModificadores() {
+        return modificadores;
+    }
+
+    public void setModificadores(ArrayList<Administrador> modificadores) {
+        this.modificadores = modificadores;
+    }
+
+    public int getCodigoInstancia() {
+        return codigoInstancia;
+    }
+
+    public void setCodigoInstancia(int codigoInstancia) {
+        this.codigoInstancia = codigoInstancia;
+    }
+
+    public ArrayList<Proveedor> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(ArrayList<Proveedor> proveedores) {
+        this.proveedores = proveedores;
+    }
 }

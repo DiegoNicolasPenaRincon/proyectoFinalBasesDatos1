@@ -1,17 +1,43 @@
 package co.edu.uniquindio.alquiler.model;
 
-import lombok.*;
 
 import java.util.ArrayList;
 
-@Setter
-@Getter
-@AllArgsConstructor
-@Builder
-@NoArgsConstructor
-@NonNull
-public class Administrador extends Persona{
+
+public class Administrador extends Empleado{
     private ArrayList<Pedido> pedidos;
     private ArrayList<Inventario> inventariosModificados;
     private double salario;
+
+    public Administrador(ArrayList<Pedido> pedidos, ArrayList<Inventario> inventariosModificados, double salario,String contrasena,String nombre,String telefono,String correo,int documentoEntidad) {
+        super(contrasena,nombre,telefono,correo, documentoEntidad);
+        this.pedidos = pedidos;
+        this.inventariosModificados = inventariosModificados;
+        this.salario = salario;
+    }
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(ArrayList<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public ArrayList<Inventario> getInventariosModificados() {
+        return inventariosModificados;
+    }
+
+    public void setInventariosModificados(ArrayList<Inventario> inventariosModificados) {
+        this.inventariosModificados = inventariosModificados;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
 }

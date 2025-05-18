@@ -11,12 +11,12 @@ public class SolicitarPermisoApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(SolicitarPermisoApp.class.getResource("/ventanas/IngresarSAC.fxml"));
+        FXMLLoader loader = new FXMLLoader(SolicitarPermisoApp.class.getResource("/ventanas/InicioSesion.fxml"));
         Parent parent = loader.load();
 
         Scene scene = new Scene(parent);
         stage.setScene(scene);
-        stage.setTitle("Ingresar SAC");
+        stage.setTitle("Inicio sesion");
         stage.show();
 
 
