@@ -17,10 +17,10 @@
       </TableView>
       <Button fx:id="cajerosButton" layoutX="20.0" layoutY="100.0" mnemonicParsing="false" onAction="#mostrarCajerosOnAction" text="Cajeros" />
       <Button fx:id="inventarioButton" layoutX="20.0" layoutY="141.0" mnemonicParsing="false" onAction="#mostrarInventarioOnAction" text="Inventario" />
-      <Button fx:id="pedidosButton" layoutX="22.0" layoutY="182.0" mnemonicParsing="false" text="Pedidos" />
-      <Button fx:id="clientesButton" layoutX="23.0" layoutY="225.0" mnemonicParsing="false" text="Clientes" />
-      <Button fx:id="facturasButton" layoutX="22.0" layoutY="263.0" mnemonicParsing="false" text="Facturas" />
-      <Button fx:id="proveedoresButton" layoutX="14.0" layoutY="306.0" mnemonicParsing="false" text="Porveedores" />
+      <Button fx:id="pedidosButton" layoutX="22.0" layoutY="182.0" mnemonicParsing="false" onAction="#pedidosOnAction" text="Pedidos" />
+      <Button fx:id="clientesButton" layoutX="23.0" layoutY="225.0" mnemonicParsing="false" onAction="#clientesOnAction" text="Clientes" />
+      <Button fx:id="facturasButton" layoutX="22.0" layoutY="263.0" mnemonicParsing="false" onAction="#facturasOnAction" text="Facturas" />
+      <Button fx:id="proveedoresButton" layoutX="14.0" layoutY="306.0" mnemonicParsing="false" onAction="#proveedoresOnAction" text="Porveedores" />
       <Button fx:id="verificarFacturasButton" layoutX="350.0" layoutY="325.0" mnemonicParsing="false" onAction="#verificarFacturasCajeroOnAction" text="Verificar facturas" visible="false" />
       <TableView fx:id="listaRecibosCajerosTable" layoutX="200.0" layoutY="95.0" prefHeight="200.0" prefWidth="376.0" visible="false">
         <columns>
@@ -53,12 +53,19 @@
             <TableColumn fx:id="codigoModiColum" prefWidth="131.0" text="Codigo modificacion" />
         </columns>
       </TableView>
-      <TableView layoutX="303.0" layoutY="100.0" prefHeight="200.0" prefWidth="303.0">
+      <TableView fx:id="proveedoresTable" layoutX="303.0" layoutY="100.0" prefHeight="200.0" prefWidth="303.0" visible="false">
         <columns>
-          <TableColumn prefWidth="75.0" text="Nombre" />
-          <TableColumn prefWidth="84.0" text="ID" />
-            <TableColumn prefWidth="66.0" text="Telefono" />
-            <TableColumn prefWidth="75.0" text="Direccion" />
+          <TableColumn fx:id="nombreProveInveColum" prefWidth="75.0" text="Nombre" />
+          <TableColumn fx:id="idProveInvColumn" prefWidth="84.0" text="ID" />
+            <TableColumn fx:id="telefonoProveInvColumn" prefWidth="66.0" text="Telefono" />
+            <TableColumn fx:id="direccionProveInvColumn" prefWidth="75.0" text="Direccion" />
+        </columns>
+      </TableView>
+      <TableView layoutX="246.0" layoutY="95.0" prefHeight="200.0" prefWidth="505.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Codigo" />
+          <TableColumn prefWidth="114.0" text="Nonbre proveedor" />
+            <TableColumn prefWidth="120.0" text="Codigo proveedor" />
         </columns>
       </TableView>
    </children>

@@ -10,6 +10,16 @@ import javafx.scene.control.*;
 public class VentanaAdministradorController {
 
     @FXML
+    private TableView<Proveedor> proveedoresTable;
+    @FXML
+    private TableColumn<Proveedor,String> nombreProveInveColum;
+    @FXML
+    private TableColumn<Proveedor,String> idProveInvColumn;
+    @FXML
+    private TableColumn<Proveedor,String> telefonoProveInvColumn;
+    @FXML
+    private TableColumn<Proveedor,String> direccionProveInvColumn;
+    @FXML
     private TableView<Modificacion> modificacionesTable;
     @FXML
     private TableColumn<Modificacion,String> nombreadminModiColum;
@@ -92,6 +102,7 @@ public class VentanaAdministradorController {
         agregarProductoButton.setVisible(false);
         verificarProveedoresButton.setVisible(false);
         verificarModificacionesButton.setVisible(false);
+        proveedoresTable.setVisible(false);
 
         nombreInventarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getProducto().getNombre()));
         codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
@@ -117,6 +128,12 @@ public class VentanaAdministradorController {
         inventarioModiColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getInventario().getCodigoInstancia()) ) );
         codigoModiColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
 
+        nombreProveInveColum.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getNombre()));
+        idProveInvColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigo())));
+        telefonoProveInvColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getTelefono()) ) );
+        direccionProveInvColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getDireccion()) ) );
+
+
         this.cajerosTable.setItems(FXCollections.observableList(tiendaUQ.getCajeros()));
         this.inventarioTable.setItems(FXCollections.observableList(tiendaUQ.getInventario()));
 
@@ -131,6 +148,7 @@ public class VentanaAdministradorController {
         agregarProductoButton.setVisible(false);
         verificarProveedoresButton.setVisible(false);
         verificarModificacionesButton.setVisible(false);
+        proveedoresTable.setVisible(false);
 
     }
 
@@ -169,11 +187,23 @@ public class VentanaAdministradorController {
     }
 
     public void verificarProveeOnAction(ActionEvent actionEvent) {
-        inventarioTable.setVisible(false);
-        agregarProductoButton.setVisible(false);
-        verificarProveedoresButton.setVisible(false);
-        verificarModificacionesButton.setVisible(false);
-
+        Inventario inventarioSeleccionado=inventarioTable.getSelectionModel().getSelectedItem();
+        if(inventarioSeleccionado!=null)
+        {
+            inventarioTable.setVisible(false);
+            agregarProductoButton.setVisible(false);
+            verificarProveedoresButton.setVisible(false);
+            verificarModificacionesButton.setVisible(false);
+            this.proveedoresTable.setItems(FXCollections.observableList(inventarioSeleccionado.getProveedores()));
+            proveedoresTable.setVisible(false);
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText("No ha seleccionado ninguna instancia de inventario");
+            alert.show();
+        }
 
     }
 
@@ -199,5 +229,17 @@ public class VentanaAdministradorController {
 
     public void agregarProductoOnAction(ActionEvent actionEvent) {
 
+    }
+
+    public void pedidosOnAction(ActionEvent actionEvent) {
+    }
+
+    public void clientesOnAction(ActionEvent actionEvent) {
+    }
+
+    public void facturasOnAction(ActionEvent actionEvent) {
+    }
+
+    public void proveedoresOnAction(ActionEvent actionEvent) {
     }
 }
