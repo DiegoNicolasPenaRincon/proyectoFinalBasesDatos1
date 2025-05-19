@@ -8,9 +8,9 @@ public class Conexion {
 
     private Connection conexionT=null;
 
-    private final String usuario="NicolasPena";
-    private final String contrasenia="nicolas";
-    private final String bd="Software2";
+    private final String usuario="AdministradorBase";
+    private final String contrasenia="bases";
+    private final String bd="TiendaUQ";
     private final String Ip="localhost";
     private final String puerto="1433";
 
@@ -31,7 +31,7 @@ public class Conexion {
 
     String cadenaJDBC="jdbc:sqlserver://"+Ip+":"+puerto+"/"+bd;
 
-    public Connection conectarBDSoftware2(){
+    public Connection conectarBD(){
         try
         {
             String cadena="jdbc:sqlserver://localhost:"+puerto+";"+"DatabaseName="+bd+";"+"encrypt=true;trustServerCertificate=true;";

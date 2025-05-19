@@ -6,6 +6,7 @@ import co.edu.uniquindio.alquiler.controller.VentanaAdministradorController;
 import co.edu.uniquindio.alquiler.enums.TipoFactura;
 import co.edu.uniquindio.alquiler.exceptions.ContrasenaException;
 import co.edu.uniquindio.alquiler.exceptions.NoRegistradoException;
+import db.Conexion;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +29,7 @@ public class TiendaUQ {
     private ArrayList<Inventario> inventario;
 
     private static TiendaUQ tienda;
+    private static Conexion conexion;
 
     private TiendaUQ(){
         this.administradores=new ArrayList<>();
@@ -197,5 +199,6 @@ public class TiendaUQ {
         administradores.add(adminDeTi);
         cajeros.add(cajeroBacano);
         System.out.print(adminDeTi);
+        conexion.conectarBD();
     }
 }
