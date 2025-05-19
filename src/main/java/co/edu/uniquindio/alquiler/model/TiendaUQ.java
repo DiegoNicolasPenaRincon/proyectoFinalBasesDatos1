@@ -29,7 +29,7 @@ public class TiendaUQ {
     private ArrayList<Inventario> inventario;
 
     private static TiendaUQ tienda;
-    private static Conexion conexion;
+    public Conexion conexionBD=Conexion.getInstance();
 
     private TiendaUQ(){
         this.administradores=new ArrayList<>();
@@ -183,22 +183,6 @@ public class TiendaUQ {
     }
 
     public void quemarDatos() {
-        ArrayList<Pedido> pedidos=new ArrayList<>();
-        ArrayList<Inventario> inventarios=new ArrayList<>();
-        Administrador adminDeTi=new Administrador(pedidos,inventarios,890.00,"nicolas","NicolasAntiguo","1234567890",
-                "Nicolas@gmail.com",
-                12345678);
-        ArrayList<Factura> facturas=new ArrayList<>();
-        Cajero cajeroBacano=new Cajero("elAntiguo","NicolasBuenaGente","12345678","kilo@gmail.com",87654321,
-                facturas,50.0);
-        ArrayList<Producto> productos=new ArrayList<>();
-        CategoriaProducto categoria1=new CategoriaProducto("Lacteos",523.456,0.16);
-        ArrayList<Proveedor> proveedores=new ArrayList<>();
-        Factura factura=new Factura("NicolasEducado",123,cajeroBacano.getNombre(), TipoFactura.CLIENTE, LocalDateTime.now(),89,productos);
-        cajeroBacano.getListaFacturas().add(factura);
-        administradores.add(adminDeTi);
-        cajeros.add(cajeroBacano);
-        System.out.print(adminDeTi);
-        conexion.conectarBD();
+        conexionBD.conectarBD();
     }
 }
