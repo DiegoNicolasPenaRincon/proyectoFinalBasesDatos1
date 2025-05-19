@@ -9,8 +9,6 @@ public class Producto {
     private String nombre;
     private CategoriaProducto categoria;
     private int codigo;
-    private ArrayList<Proveedor> proveedores;
-    private ArrayList<Factura> facturasAsociadas;
     private int unidadesDisponibles;
     private Inventario inventarioAsociado;
 
@@ -30,21 +28,6 @@ public class Producto {
         this.codigo = codigo;
     }
 
-    public ArrayList<Proveedor> getProveedores() {
-        return proveedores;
-    }
-
-    public void setProveedores(ArrayList<Proveedor> proveedores) {
-        this.proveedores = proveedores;
-    }
-
-    public ArrayList<Factura> getFacturasAsociadas() {
-        return facturasAsociadas;
-    }
-
-    public void setFacturasAsociadas(ArrayList<Factura> facturasAsociadas) {
-        this.facturasAsociadas = facturasAsociadas;
-    }
 
     public int getUnidadesDisponibles() {
         return unidadesDisponibles;
@@ -70,12 +53,10 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public Producto(String nombre, CategoriaProducto categoria, int codigo, ArrayList<Proveedor> proveedores, ArrayList<Factura> facturasAsociadas, int unidadesDisponibles, Inventario inventarioAsociado) {
+    public Producto(String nombre, CategoriaProducto categoria, int codigo, int unidadesDisponibles, Inventario inventarioAsociado) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.codigo = codigo;
-        this.proveedores = proveedores;
-        this.facturasAsociadas = facturasAsociadas;
         this.unidadesDisponibles = unidadesDisponibles;
         this.inventarioAsociado = inventarioAsociado;
     }

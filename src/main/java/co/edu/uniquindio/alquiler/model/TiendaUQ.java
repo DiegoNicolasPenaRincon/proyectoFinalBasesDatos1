@@ -13,6 +13,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -40,6 +43,8 @@ public class TiendaUQ {
         this.inventario=new ArrayList<>();
         this.productos=new ArrayList<>();
         this.clientes=new ArrayList<>();
+
+        conexionBD.conectarBD();
 
         quemarDatos();
     }
@@ -183,6 +188,20 @@ public class TiendaUQ {
     }
 
     public void quemarDatos() {
-        conexionBD.conectarBD();
+        try
+        {
+            String consulta = "SELECT * FROM Materias";
+            Statement stmt = conexionBD.getConexionT().createStatement();
+            ResultSet rs = stmt.executeQuery(consulta);
+            while(rs.next())
+            {
+
+            }
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

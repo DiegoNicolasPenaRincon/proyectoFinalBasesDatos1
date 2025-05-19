@@ -8,7 +8,6 @@ public class Proveedor {
     private String nombre;
     private String telefono;
     private int codigo;
-    private ArrayList<Inventario> inventariosMencionados;
     private String direccion;
     private ArrayList<Producto>productosOfertados;
     private ArrayList<Pedido> pedidos;
@@ -36,14 +35,6 @@ public class Proveedor {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
-    }
-
-    public ArrayList<Inventario> getInventariosMencionados() {
-        return inventariosMencionados;
-    }
-
-    public void setInventariosMencionados(ArrayList<Inventario> inventariosMencionados) {
-        this.inventariosMencionados = inventariosMencionados;
     }
 
     public String getDireccion() {
@@ -78,11 +69,10 @@ public class Proveedor {
         this.facturasElementosAdquiridos = facturasElementosAdquiridos;
     }
 
-    public Proveedor(String telefono, int codigo, String nombre, ArrayList<Inventario> inventariosMencionados, String direccion, ArrayList<Producto> productosOfertados, ArrayList<Pedido> pedidos, ArrayList<Factura> facturasElementosAdquiridos) {
+    public Proveedor(String telefono, int codigo, String nombre, String direccion, ArrayList<Producto> productosOfertados, ArrayList<Pedido> pedidos, ArrayList<Factura> facturasElementosAdquiridos) {
         this.telefono = telefono;
         this.codigo = codigo;
         this.nombre = nombre;
-        this.inventariosMencionados = inventariosMencionados;
         this.direccion = direccion;
         this.productosOfertados = productosOfertados;
         this.pedidos = pedidos;
