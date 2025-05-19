@@ -18,8 +18,6 @@ public class SolicitarPermisoApp extends Application {
         stage.setScene(scene);
         stage.setTitle("Inicio sesion");
         stage.show();
-
-
     }
 
     public static void main(String[] args) {

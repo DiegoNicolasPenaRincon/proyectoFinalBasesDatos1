@@ -10,7 +10,6 @@ public class Producto {
     private CategoriaProducto categoria;
     private int codigo;
     private int unidadesDisponibles;
-    private Inventario inventarioAsociado;
 
     public String getNombre() {
         return nombre;
@@ -37,14 +36,6 @@ public class Producto {
         this.unidadesDisponibles = unidadesDisponibles;
     }
 
-    public Inventario getInventarioAsociado() {
-        return inventarioAsociado;
-    }
-
-    public void setInventarioAsociado(Inventario inventarioAsociado) {
-        this.inventarioAsociado = inventarioAsociado;
-    }
-
     public CategoriaProducto getCategoria() {
         return categoria;
     }
@@ -53,11 +44,10 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public Producto(String nombre, CategoriaProducto categoria, int codigo, int unidadesDisponibles, Inventario inventarioAsociado) {
+    public Producto(String nombre, CategoriaProducto categoria, int codigo, int unidadesDisponibles) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.codigo = codigo;
         this.unidadesDisponibles = unidadesDisponibles;
-        this.inventarioAsociado = inventarioAsociado;
     }
 }

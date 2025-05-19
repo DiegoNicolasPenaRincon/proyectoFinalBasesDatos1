@@ -190,7 +190,7 @@ public class TiendaUQ {
     public void quemarDatos() {
         try
         {
-            String consulta = "SELECT * FROM Materias";
+            String consulta = "SELECT * FROM ";
             Statement stmt = conexionBD.getConexionT().createStatement();
             ResultSet rs = stmt.executeQuery(consulta);
             while(rs.next())
