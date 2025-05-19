@@ -8,28 +8,28 @@ import java.util.ArrayList;
 
 public class Factura {
 
-    private String nombreCliente;
-    private String nombreCajero;
+    private int documentoEntidadCliente;
+    private int documentoEntidadCajero;
     private int codigo;
     private TipoFactura tipoFactura;
     private LocalDateTime fechaPago;
     private double costoTotal;
     private ArrayList<Producto> listaProductos;
 
-    public String getNombreCliente() {
-        return nombreCliente;
+    public int getDocumentoEntidadCliente() {
+        return documentoEntidadCliente;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
+    public void setDocumentoEntidadCliente(int documentoEntidadCliente) {
+        this.documentoEntidadCliente = documentoEntidadCliente;
     }
 
-    public String getNombreCajero() {
-        return nombreCajero;
+    public int getDocumentoEntidadCajero() {
+        return documentoEntidadCajero;
     }
 
-    public void setNombreCajero(String nombreCajero) {
-        this.nombreCajero = nombreCajero;
+    public void setDocumentoEntidadCajero(int documentoEntidadCajero) {
+        this.documentoEntidadCajero = documentoEntidadCajero;
     }
 
     public int getCodigo() {
@@ -72,13 +72,14 @@ public class Factura {
         this.listaProductos = listaProductos;
     }
 
-    public Factura(String nombreCliente, int codigo, String nombreCajero, TipoFactura tipoFactura, LocalDateTime fechaPago, double costoTotal, ArrayList<Producto> listaProductos) {
-        this.nombreCliente = nombreCliente;
+    public Factura(int documentoEntidadCliente, int codigo, int documentoEntidadCajero, TipoFactura tipoFactura, LocalDateTime fechaPago, double costoTotal, ArrayList<Producto> listaProductos) {
+        this.documentoEntidadCliente = documentoEntidadCliente;
         this.codigo = codigo;
-        this.nombreCajero = nombreCajero;
+        this.documentoEntidadCajero = documentoEntidadCajero;
         this.tipoFactura = tipoFactura;
         this.fechaPago = fechaPago;
         this.costoTotal = costoTotal;
         this.listaProductos = listaProductos;
     }
 }
+

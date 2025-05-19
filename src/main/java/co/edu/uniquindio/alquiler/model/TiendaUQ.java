@@ -28,7 +28,7 @@ public class TiendaUQ {
     private ArrayList<Administrador> administradores;
     private ArrayList<Cajero> cajeros;
     private ArrayList<Factura> facturas;
-    private ArrayList<Pedido> pedido;
+    private ArrayList<Pedido> pedidos;
     private ArrayList<Proveedor> proveedores;
     private ArrayList<Inventario> inventario;
     private ArrayList<CategoriaProducto> categorias;
@@ -41,7 +41,7 @@ public class TiendaUQ {
         this.administradores=new ArrayList<>();
         this.cajeros=new ArrayList<>();
         this.facturas=new ArrayList<>();
-        this.pedido=new ArrayList<>();
+        this.pedidos=new ArrayList<>();
         this.proveedores=new ArrayList<>();
         this.inventario=new ArrayList<>();
         this.productos=new ArrayList<>();
@@ -168,12 +168,12 @@ public class TiendaUQ {
         this.facturas = facturas;
     }
 
-    public ArrayList<Pedido> getPedido() {
-        return pedido;
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    public void setPedido(ArrayList<Pedido> pedido) {
-        this.pedido = pedido;
+    public void setPedidos(ArrayList<Pedido> pedido) {
+        this.pedidos = pedido;
     }
 
     public ArrayList<Proveedor> getProveedores() {
@@ -253,7 +253,7 @@ public class TiendaUQ {
             {
                 String nombreAdmin = rs.getString("nombre");
                 String telefonoAdmin = rs.getString("telefono");
-                String correoAdmin ="correo";
+                String correoAdmin =rs.getString("correo");
                 int documentoEntidad =rs.getInt("documentoEntidad");
                 double salarioAdmin=rs.getDouble("salario");
                 String contrasenaAdmin = rs.getString("contrasena");
@@ -263,13 +263,78 @@ public class TiendaUQ {
                 administradores.add(administrador);
             }
 
+            consulta = "SELECT * FROM Proveedor";
+
+            while(rs.next())
+            {
+                String nombre =rs.getString("proveedor");
+                String direccion =rs.getString("direccion");
+                String telefono =rs.getString("telefono");
+                int codigo=rs.getInt("codigo");
+
+                String consulta2="SELECT * FROM Proveedor_Producto";
+                Statement stmt2 = conexionBD.getConexionT().createStatement();
+                ResultSet rs2 = stmt2.executeQuery(consulta2);
+
+                ArrayList<Producto> productos1=new ArrayList<>();
+
+                while(rs2.next())
+                {
+                    if(rs2.getInt("codigoProveedor")==codigo)
+                    {
+                        int codigoProducto=rs2.getInt("codigoProducto");
+                        productos1.add(buscarProducto(codigoProducto));
+                    }
+                }
+
+                Proveedor proveedor=new Proveedor(telefono,codigo,nombre,direccion,productos1);
+                proveedores.add(proveedor);
+            }
+
+            consulta = "SELECT * FROM Pedido";
+
+            while(rs.next())
+            {
+                int codigoAdmin =rs.getInt("codigoAdministrador");
+                LocalDate fechaPedido = rs.getDate("fechaPedido").toLocalDate();
+                int codigo =rs.getInt("codigo");
+                int codigoProveedor=rs.getInt("codigoProveedor");
+
+                String consulta2="SELECT * FROM Pedido_Producto";
+                Statement stmt2 = conexionBD.getConexionT().createStatement();
+                ResultSet rs2 = stmt2.executeQuery(consulta2);
+
+                Proveedor proveedorPedido=buscarProveedor(codigoProveedor);
+
+                Administrador adminPedido=buscarAdmin(codigoAdmin);
+
+
+                ArrayList<Producto> productosPedido=new ArrayList<>();
+
+                while(rs2.next())
+                {
+                    if(rs2.getInt("codigoPedido")==codigo)
+                    {
+                        int codigoProducto=rs2.getInt("codigoProducto");
+                        productosPedido.add(buscarProducto(codigoProducto));
+                    }
+                }
+
+                Pedido pedido=new Pedido(codigo,proveedorPedido, fechaPedido.atStartOfDay(),adminPedido,productosPedido);
+                adminPedido.getPedidos().add(pedido);
+                proveedorPedido.getPedidos().add(pedido);
+                pedidos.add(pedido);
+            }
+
+
             consulta = "SELECT * FROM Cajero";
+
 
             while(rs.next())
             {
                 String nombreCajero = rs.getString("nombre");
                 String telefonoCajero = rs.getString("telefono");
-                String correoCajero ="correo";
+                String correoCajero =rs.getString("correo");
                 int documentoEntidad =rs.getInt("documentoEntidad");
                 double salarioCajero=rs.getDouble("salario");
                 String contrasenaCajero = rs.getString("contrasena");
@@ -284,12 +349,74 @@ public class TiendaUQ {
             {
                 String nombreCliente = rs.getString("nombre");
                 String telefonoCliente = rs.getString("telefono");
-                String correoCliente ="correo";
+                String correoCliente =rs.getString("correo");
                 int documentoEntidad =rs.getInt("documentoEntidad");
 
-                Cliente cliente=new Cliente(contrasenaCajero,nombreCajero,telefonoCajero,correoCajero,documentoEntidad,salarioCajero);
-                cajeros.add(cajero);
+                Cliente cliente=new Cliente(nombreCliente,telefonoCliente,correoCliente,documentoEntidad);
+                clientes.add(cliente);
             }
+
+            consulta = "SELECT * FROM Factura";
+
+            while(rs.next())
+            {
+                LocalDate fechaPago = rs.getDate("fechaPago").toLocalDate();
+                int codigoFactura = rs.getInt("codigo");
+                double total =rs.getDouble("total");
+                int documentoEntidadCajero=rs.getInt("documentoEntidadCajero");
+                int documentoEntidadCliente =rs.getInt("documentoEntidadCliente");
+                String tipo=rs.getString("tipo");
+
+                String consulta2="SELECT * FROM Factura_Producto";
+                Statement stmt2 = conexionBD.getConexionT().createStatement();
+                ResultSet rs2 = stmt2.executeQuery(consulta2);
+
+                ArrayList<Producto> productosFactura=new ArrayList<>();
+
+                while(rs2.next())
+                {
+                    if(rs2.getInt("codigoFactura")==codigoFactura)
+                    {
+                        int codigoProductoFactura=rs2.getInt("codigoProducto");
+                        productosFactura.add(buscarProducto(codigoProductoFactura));
+                    }
+                }
+
+                Factura factura=new Factura(documentoEntidadCliente,codigoFactura,documentoEntidadCajero,convertirTipoFactura(tipo), fechaPago.atStartOfDay(),total,productosFactura);
+                agregarFacturasCajero(documentoEntidadCajero,factura);
+                agregarFacturasCliente(documentoEntidadCliente,factura);
+                facturas.add(factura);
+            }
+
+            consulta="SELECT * FROM Inventario";
+
+            while(rs.next())
+            {
+                int codigoInventario = rs.getInt("codigo");
+                int codigoProducto = rs.getInt("codigoProducto");
+                int unidadesAdquiridas = rs.getInt("unidadesAdquiridas");
+                int unidadesVendidas =rs.getInt("unidadesVendidas");
+
+                Producto producto=buscarProducto(codigoProducto,);
+                Inventario inventario1=new Inventario(producto,unidadesAdquiridas,unidadesVendidas,codigoInventario,);
+                inventario.add(inventario1);
+            }
+
+            consulta="SELECT * FROM Modificaciones";
+
+            while(rs.next())
+            {
+                int codigoAdmin = rs.getInt("codigoAdmin");
+                int codigoInventario =rs.getInt("codigoInventario");
+                LocalDate fechaModificacion = rs.getDate("fechaModificacion").toLocalDate();
+                int codigoInstancia =rs.getInt("codigoInstancia");
+
+                Administrador admin1=buscarAdmin(codigoAdmin);
+                Modificacion modificacion=new Modificacion(admin1,fechaModificacion,codigoInstancia,documentoEntidad);
+                admin1.getModificaciones().add(modificacion);
+                modificaciones.add(modificacion);
+            }
+
 
         }
         catch (SQLException e)
@@ -308,4 +435,82 @@ public class TiendaUQ {
         }
         return null;
     }
+
+    public TipoFactura convertirTipoFactura(String tipo) {
+        if(tipo.equals("cliente"))
+        {
+            return TipoFactura.CLIENTE;
+        }
+        return TipoFactura.PROVEEDOR;
+    }
+
+    public Producto buscarProducto(int codigo) {
+        for(int i=0;i<productos.size();i++)
+        {
+            if(productos.get(i).getCodigo()==codigo)
+            {
+                return productos.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Administrador buscarAdmin(int codigoAdmin) {
+        for(int i=0;i<administradores.size();i++)
+        {
+            if(administradores.get(i).getDocumentoEntidad()==codigoAdmin)
+            {
+                return administradores.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void agregarFacturasCajero(int documento,Factura factura) {
+        if(factura.getTipoFactura().equals(TipoFactura.CLIENTE))
+        {
+            for(int i=0;i<cajeros.size();i++)
+            {
+                if(cajeros.get(i).getDocumentoEntidad()==documento)
+                {
+                    cajeros.get(i).getFacturas().add(factura);
+                }
+            }
+        }
+        else
+        {
+            for(int i=0;i<proveedores.size();i++)
+            {
+                if(proveedores.get(i).getCodigo()==documento)
+                {
+                    proveedores.get(i).getFacturasElementosAdquiridos().add(factura);
+                }
+            }
+        }
+    }
+
+    public void agregarFacturasCliente(int documento,Factura factura) {
+        if(factura.getTipoFactura().equals(TipoFactura.CLIENTE))
+        {
+            for(int i=0;i<clientes.size();i++)
+            {
+                if(clientes.get(i).getDocumentoEntidad()==documento)
+                {
+                    clientes.get(i).getFacturas().add(factura);
+                }
+            }
+        }
+    }
+
+    public Proveedor buscarProveedor(int codigoProveedor) {
+        for(int i=0;i<proveedores.size();i++)
+        {
+            if(proveedores.get(i).getCodigo()==codigoProveedor)
+            {
+                return proveedores.get(i);
+            }
+        }
+        return null;
+    }
+
 }

@@ -59,4 +59,13 @@ public class Inventario {
     public void setProveedores(ArrayList<Proveedor> proveedores) {
         this.proveedores = proveedores;
     }
+
+    public Inventario(Producto producto, int unidadesAdquiridas, int unidadesVendidas, int codigoInstancia, ArrayList<Modificacion> modificaciones, ArrayList<Proveedor> proveedores) {
+        this.producto = producto;
+        this.unidadesAdquiridas = unidadesAdquiridas;
+        this.unidadesVendidas = unidadesVendidas;
+        this.codigoInstancia = codigoInstancia;
+        this.modificaciones = modificaciones;
+        this.proveedores = proveedores;
+    }
 }

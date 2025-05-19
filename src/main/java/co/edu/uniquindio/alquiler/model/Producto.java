@@ -50,4 +50,5 @@ public class Producto {
         this.codigo = codigo;
         this.unidadesDisponibles = unidadesDisponibles;
     }
+
 }

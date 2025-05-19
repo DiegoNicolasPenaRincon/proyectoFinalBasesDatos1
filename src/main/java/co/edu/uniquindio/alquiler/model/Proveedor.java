@@ -69,13 +69,13 @@ public class Proveedor {
         this.facturasElementosAdquiridos = facturasElementosAdquiridos;
     }
 
-    public Proveedor(String telefono, int codigo, String nombre, String direccion, ArrayList<Producto> productosOfertados, ArrayList<Pedido> pedidos, ArrayList<Factura> facturasElementosAdquiridos) {
+    public Proveedor(String telefono, int codigo, String nombre, String direccion, ArrayList<Producto> productosOfertados) {
         this.telefono = telefono;
         this.codigo = codigo;
         this.nombre = nombre;
         this.direccion = direccion;
         this.productosOfertados = productosOfertados;
-        this.pedidos = pedidos;
-        this.facturasElementosAdquiridos = facturasElementosAdquiridos;
+        this.pedidos = new ArrayList<>();
+        this.facturasElementosAdquiridos = new ArrayList<>();
     }
 }

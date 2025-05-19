@@ -52,4 +52,12 @@ public class Pedido {
     public void setAdministrador(Administrador administrador) {
         this.administrador = administrador;
     }
+
+    public Pedido(int codigo, Proveedor proveedor, LocalDateTime fechaPedido, Administrador administrador,ArrayList<Producto> productos) {
+        this.codigo = codigo;
+        this.proveedor = proveedor;
+        this.fechaPedido = fechaPedido;
+        this.administrador = administrador;
+        this.listaProductoCantidad=productos;
+    }
 }
