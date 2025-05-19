@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -30,6 +31,8 @@ public class TiendaUQ {
     private ArrayList<Pedido> pedido;
     private ArrayList<Proveedor> proveedores;
     private ArrayList<Inventario> inventario;
+    private ArrayList<CategoriaProducto> categorias;
+    private ArrayList<Modificacion> modificaciones;
 
     private static TiendaUQ tienda;
     public Conexion conexionBD=Conexion.getInstance();
@@ -43,6 +46,8 @@ public class TiendaUQ {
         this.inventario=new ArrayList<>();
         this.productos=new ArrayList<>();
         this.clientes=new ArrayList<>();
+        this.modificaciones=new ArrayList<>();
+        this.categorias=new ArrayList<>();
 
         conexionBD.conectarBD();
 
@@ -187,15 +192,103 @@ public class TiendaUQ {
         this.inventario = inventario;
     }
 
+    public ArrayList<CategoriaProducto> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(ArrayList<CategoriaProducto> categorias) {
+        this.categorias = categorias;
+    }
+
+    public ArrayList<Modificacion> getModificaciones() {
+        return modificaciones;
+    }
+
+    public void setModificaciones(ArrayList<Modificacion> modificaciones) {
+        this.modificaciones = modificaciones;
+    }
+
+    public static TiendaUQ getTienda() {
+        return tienda;
+    }
+
+    public static void setTienda(TiendaUQ tienda) {
+        TiendaUQ.tienda = tienda;
+    }
+
     public void quemarDatos() {
         try
         {
-            String consulta = "SELECT * FROM ";
+            String consulta = "SELECT * FROM CategoriaProducto";
+
             Statement stmt = conexionBD.getConexionT().createStatement();
             ResultSet rs = stmt.executeQuery(consulta);
+
             while(rs.next())
             {
+                String nombreCategoria = rs.getString("nombre");
+                double utilidad = rs.getDouble("categoria");
+                double iva =rs.getDouble("codigo");
+                CategoriaProducto categoriaProducto=new CategoriaProducto(nombreCategoria,utilidad,iva);
+                categorias.add(categoriaProducto);
+            }
 
+
+            consulta = "SELECT * FROM Producto";
+
+            while(rs.next())
+            {
+                String nombreProducto = rs.getString("nombre");
+                String categoriaProducto = rs.getString("categoria");
+                int codigoProucto =rs.getInt("codigo");
+                int unidadesDisponibels =rs.getInt("unidadesDisponibles");
+                Producto producto=new Producto(nombreProducto,buscarCategoria(categoriaProducto),codigoProucto,unidadesDisponibels);
+                productos.add(producto);
+
+            }
+
+            consulta = "SELECT * FROM Administrador";
+
+            while(rs.next())
+            {
+                String nombreAdmin = rs.getString("nombre");
+                String telefonoAdmin = rs.getString("telefono");
+                String correoAdmin ="correo";
+                int documentoEntidad =rs.getInt("documentoEntidad");
+                double salarioAdmin=rs.getDouble("salario");
+                String contrasenaAdmin = rs.getString("contrasena");
+
+                Administrador administrador=new Administrador(salarioAdmin,contrasenaAdmin,
+                        nombreAdmin, telefonoAdmin,correoAdmin,documentoEntidad);
+                administradores.add(administrador);
+            }
+
+            consulta = "SELECT * FROM Cajero";
+
+            while(rs.next())
+            {
+                String nombreCajero = rs.getString("nombre");
+                String telefonoCajero = rs.getString("telefono");
+                String correoCajero ="correo";
+                int documentoEntidad =rs.getInt("documentoEntidad");
+                double salarioCajero=rs.getDouble("salario");
+                String contrasenaCajero = rs.getString("contrasena");
+
+                Cajero cajero=new Cajero(contrasenaCajero,nombreCajero,telefonoCajero,correoCajero,documentoEntidad,salarioCajero);
+                cajeros.add(cajero);
+            }
+
+            consulta = "SELECT * FROM Cliente";
+
+            while(rs.next())
+            {
+                String nombreCliente = rs.getString("nombre");
+                String telefonoCliente = rs.getString("telefono");
+                String correoCliente ="correo";
+                int documentoEntidad =rs.getInt("documentoEntidad");
+
+                Cliente cliente=new Cliente(contrasenaCajero,nombreCajero,telefonoCajero,correoCajero,documentoEntidad,salarioCajero);
+                cajeros.add(cajero);
             }
 
         }
@@ -203,5 +296,16 @@ public class TiendaUQ {
         {
             e.printStackTrace();
         }
+    }
+
+    public CategoriaProducto buscarCategoria(String nombreCategoriaSql) {
+        for(int i=0;i<categorias.size();i++)
+        {
+            if(categorias.get(i).getNombre().equals(nombreCategoriaSql))
+            {
+                return categorias.get(i);
+            }
+        }
+        return null;
     }
 }
