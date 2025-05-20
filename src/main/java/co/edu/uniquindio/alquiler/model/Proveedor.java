@@ -78,4 +78,9 @@ public class Proveedor {
         this.pedidos = new ArrayList<>();
         this.facturasElementosAdquiridos = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        return nombre; // Lo que se muestra por defecto en el ComboBox
+    }
 }

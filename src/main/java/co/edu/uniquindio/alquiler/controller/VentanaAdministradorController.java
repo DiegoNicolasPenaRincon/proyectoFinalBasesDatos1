@@ -1,5 +1,6 @@
 package co.edu.uniquindio.alquiler.controller;
 
+import co.edu.uniquindio.alquiler.exceptions.AtributoExistenteException;
 import co.edu.uniquindio.alquiler.exceptions.AtributoVacioException;
 import co.edu.uniquindio.alquiler.model.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,8 +9,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class VentanaAdministradorController {
 
+
+    @FXML
+    private ComboBox<Proveedor> proveedoresComboBox;
+    @FXML
+    private Label proveedoresLabel;
+    @FXML
+    private Button agregaProveedorInventarioButton;
+    @FXML
+    private Button categoriasButton;
+    @FXML
+    private ComboBox<CategoriaProducto> categoriasComboBox;
+    @FXML
+    private Label categoriasLabel;
     @FXML
     private Label nombreAgregarLabel;
     @FXML
@@ -110,8 +127,16 @@ public class VentanaAdministradorController {
     private Button verificarFacturasButton;
 
     TiendaUQ tiendaUQ=TiendaUQ.getInstance();
+    DatosSesion<Administrador> datosAdmin= DatosSesion.getInstance();
+    ArrayList<Proveedor> proveedoresApoyo;
 
     public void initialize() {
+        proveedoresComboBox=new ComboBox<>();
+        proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));
+        proveedoresComboBox.setVisible(false);
+        categoriasComboBox=new ComboBox<>();
+        categoriasComboBox.setItems(FXCollections.observableList(tiendaUQ.getCategorias()));
+        categoriasComboBox.setVisible(false);
         cajerosTable.setVisible(false);
         listaRecibosCajerosTable.setVisible(false);
         masDetallesButton.setVisible(false);
@@ -128,6 +153,9 @@ public class VentanaAdministradorController {
         agregarDisponiblesProductoTxtField.setVisible(false);
         agregarVendidasProductoTxtField.setVisible(false);
         agregarVendidasLabel.setVisible(false);
+        this.proveedoresApoyo=new ArrayList<>();
+        proveedoresLabel.setVisible(false);
+        agregaProveedorInventarioButton.setVisible(false);
 
         nombreInventarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getProducto().getNombre()));
         codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
@@ -175,6 +203,9 @@ public class VentanaAdministradorController {
         verificarModificacionesButton.setVisible(false);
         proveedoresTable.setVisible(false);
         modificacionesTable.setVisible(false);
+        categoriasComboBox.setVisible(false);
+        proveedoresComboBox.setVisible(false);
+
 
     }
 
@@ -210,6 +241,19 @@ public class VentanaAdministradorController {
         listaRecibosCajerosTable.setVisible(false);
         masDetallesButton.setVisible(false);
         verificarFacturasButton.setVisible(false);
+        nombreAgregarLabel.setVisible(true);
+        agregarNombreTxtField.setVisible(true);
+        codigoAgregarLable.setVisible(true);
+        agregarCodigoTxtfield.setVisible(true);
+        agregarDisponiblesLabel.setVisible(true);
+        agregarDisponiblesProductoTxtField.setVisible(true);
+        agregarVendidasProductoTxtField.setVisible(true);
+        agregarVendidasLabel.setVisible(true);
+        categoriasComboBox.setVisible(true);
+        proveedoresComboBox.setVisible(true);
+        proveedoresLabel.setVisible(true);
+        categoriasLabel.setVisible(true);
+        agregaProveedorInventarioButton.setVisible(true);
     }
 
     public void verificarProveeOnAction(ActionEvent actionEvent) {
@@ -254,38 +298,41 @@ public class VentanaAdministradorController {
     }
 
     public void agregarProductoOnAction(ActionEvent actionEvent) {
-        nombreAgregarLabel.setVisible(true);
-        agregarNombreTxtField.setVisible(true);
-        codigoAgregarLable.setVisible(true);
-        agregarCodigoTxtfield.setVisible(true);
-        agregarDisponiblesLabel.setVisible(true);
-        agregarDisponiblesProductoTxtField.setVisible(true);
-        agregarVendidasProductoTxtField.setVisible(true);
-        agregarVendidasLabel.setVisible(true);
-
         try
         {
             String nombre=agregarNombreTxtField.getText();
-            String codigo=agregarCodigoTxtfield.getText();
+            int codigo=Integer.parseInt(agregarCodigoTxtfield.getText());
             int disponibles=Integer.parseInt(agregarDisponiblesProductoTxtField.getText());
             int vendidas=Integer.parseInt(agregarVendidasProductoTxtField.getText());
+            String categoria=categoriasComboBox.getSelectionModel().getSelectedItem().getNombre();
             if(nombre.isEmpty())
             {
                 throw new AtributoVacioException("Debe ingresar un nombre");
             }
-            else if(codigo.isEmpty())
+            else if(categoria.isEmpty())
             {
-                throw new AtributoVacioException("Debe ingresar un codigo");
+                throw new AtributoVacioException("Debe seleccionar una categoria");
+            }
+            else if(proveedoresApoyo.isEmpty())
+            {
+                throw new AtributoVacioException("Debe seleccionar como minimo un proveedor");
+            }
+            else if(tiendaUQ.verificarCodigoNoRepetido(codigo,3))
+            {
+                throw new AtributoExistenteException("Ese producto ya existe");
             }
 
-            Producto producto=new Producto(nombre,);
-            tiendaUQ.getProductos().add();
+            Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,disponibles);
+            Inventario inventario=new Inventario(producto,disponibles,vendidas,tiendaUQ.seleccionarNumeroAleatorio(1),proveedoresApoyo);
+            Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),inventario);
+            inventario.getModificaciones().add(inicial);
+            tiendaUQ.getProductos().add(producto);
         }
         catch (NumberFormatException e)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Alerta");
-            alert.setContentText("Las unidades disponibles y unidades vendidas deben contener valores numericos");
+            alert.setContentText("Las unidades disponibles, unidades vendidas y el codigo del producto deben contener valores numericos");
             alert.show();
         }
         catch (AtributoVacioException e)
@@ -307,5 +354,27 @@ public class VentanaAdministradorController {
     }
 
     public void proveedoresOnAction(ActionEvent actionEvent) {
+    }
+
+    public void agregarProveedorProductoOnAction(ActionEvent actionEvent) {
+        Proveedor proveedor=proveedoresComboBox.getSelectionModel().getSelectedItem();
+        try
+        {
+            if(proveedor==null)
+            {
+                throw new AtributoVacioException("debe seleccionar por lo menos un proveedor");
+            }
+            else
+            {
+                proveedoresApoyo.add(proveedor);
+            }
+        }
+        catch (AtributoVacioException e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 }

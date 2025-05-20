@@ -4,6 +4,7 @@ package co.edu.uniquindio.alquiler.model;
 import co.edu.uniquindio.alquiler.controller.CajeroVentanaController;
 import co.edu.uniquindio.alquiler.controller.VentanaAdministradorController;
 import co.edu.uniquindio.alquiler.enums.TipoFactura;
+import co.edu.uniquindio.alquiler.exceptions.AtributoExistenteException;
 import co.edu.uniquindio.alquiler.exceptions.ContrasenaException;
 import co.edu.uniquindio.alquiler.exceptions.NoRegistradoException;
 import db.Conexion;
@@ -550,6 +551,49 @@ public class TiendaUQ {
             }
         }
         return null;
+    }
+
+    public boolean verificarCodigoNoRepetido(int numero,int objetoAVerificar) {
+        if(objetoAVerificar==1)
+        {
+            for(Inventario inventario: inventario)
+            {
+                if(inventario.getCodigoInstancia()==numero)
+                {
+                    return true;
+                }
+            }
+        }
+        else if(objetoAVerificar==2)
+        {
+            for(Modificacion modificacion: modificaciones)
+            {
+                if(modificacion.getCodigoInstancia()==numero)
+                {
+                    return true;
+                }
+            }
+        }
+        else if(objetoAVerificar==3)
+        {
+            for(Producto producto: productos)
+            {
+                if(producto.getCodigo()==numero)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int seleccionarNumeroAleatorio(int objetoAVerificar) {
+        int numeroAleatorio=(int)(Math.random() * 10000);
+        while(verificarCodigoNoRepetido(numeroAleatorio,objetoAVerificar))
+        {
+            numeroAleatorio=(int)(Math.random() * 10000);
+        }
+        return numeroAleatorio;
     }
 
 }

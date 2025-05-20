@@ -37,4 +37,9 @@ public class CategoriaProducto {
         this.utilidad = utilidad;
         this.iva = iva;
     }
+
+    @Override
+    public String toString() {
+        return nombre; // Lo que se muestra por defecto en el ComboBox
+    }
 }
