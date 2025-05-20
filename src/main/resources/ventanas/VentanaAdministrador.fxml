@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="501.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
+<AnchorPane prefHeight="501.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
    <children>
       <Label fx:id="opcionesLabel" layoutX="283.0" layoutY="21.0" text="Opciones administrador" />
       <TableView fx:id="cajerosTable" layoutX="138.0" layoutY="88.0" prefHeight="200.0" prefWidth="529.0" visible="false">
@@ -32,7 +32,7 @@
         </columns>
       </TableView>
       <Button fx:id="masDetallesButton" layoutX="347.0" layoutY="313.0" mnemonicParsing="false" onAction="#mostrarFacturaCompleta" text="Mas detalles" visible="false" />
-      <TableView fx:id="inventarioTable" layoutX="158.0" layoutY="95.0" prefHeight="200.0" prefWidth="529.0" visible="false">
+      <TableView fx:id="inventarioTable" layoutX="158.0" layoutY="95.0" prefHeight="200.0" prefWidth="529.0">
         <columns>
           <TableColumn fx:id="nombreInventarioColumn" prefWidth="126.0" text="Nombre producto" />
           <TableColumn fx:id="codigoInventarioPColum" prefWidth="136.0" text=" Codigo producto" />
@@ -43,7 +43,7 @@
       </TableView>
       <Button fx:id="verificarProveedoresButton" layoutX="221.0" layoutY="313.0" mnemonicParsing="false" onAction="#verificarProveeOnAction" text="Verificar Proveedores" visible="false" />
       <Button fx:id="verificarModificacionesButton" layoutX="470.0" layoutY="313.0" mnemonicParsing="false" onAction="#verificarModifOnAction" text="Verificar modificaciones" visible="false" />
-      <Button fx:id="agregarProductoButton" layoutX="400.0" layoutY="326.0" mnemonicParsing="false" onAction="#agregarProductoOnAction" text="Agregar producto" visible="false" />
+      <Button fx:id="agregarProductoButton" layoutX="755.0" layoutY="263.0" mnemonicParsing="false" onAction="#agregarProductoOnAction" prefHeight="25.0" prefWidth="111.0" text="Agregar producto" />
       <TableView fx:id="modificacionesTable" layoutX="129.0" layoutY="95.0" prefHeight="200.0" prefWidth="646.0" visible="false">
         <columns>
           <TableColumn fx:id="nombreadminModiColum" prefWidth="138.0" text="Nombre administrador" />
@@ -53,20 +53,23 @@
             <TableColumn fx:id="codigoModiColum" prefWidth="131.0" text="Codigo modificacion" />
         </columns>
       </TableView>
-      <TableView fx:id="proveedoresTable" layoutX="303.0" layoutY="100.0" prefHeight="200.0" prefWidth="303.0" visible="false">
+      <TableView fx:id="proveedoresTable" layoutX="198.0" layoutY="100.0" prefHeight="200.0" prefWidth="440.0" visible="false">
         <columns>
-          <TableColumn fx:id="nombreProveInveColum" prefWidth="75.0" text="Nombre" />
-          <TableColumn fx:id="idProveInvColumn" prefWidth="84.0" text="ID" />
-            <TableColumn fx:id="telefonoProveInvColumn" prefWidth="66.0" text="Telefono" />
-            <TableColumn fx:id="direccionProveInvColumn" prefWidth="75.0" text="Direccion" />
+          <TableColumn fx:id="nombreProveColum" prefWidth="146.0" text="Nombre" />
+          <TableColumn fx:id="idProveColumn" prefWidth="68.0" text="ID" />
+            <TableColumn fx:id="telefonoProveColumn" prefWidth="99.0" text="Telefono" />
+            <TableColumn fx:id="direccionProveColumn" prefWidth="126.0" text="Direccion" />
         </columns>
       </TableView>
-      <TableView layoutX="246.0" layoutY="95.0" prefHeight="200.0" prefWidth="505.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Codigo" />
-          <TableColumn prefWidth="114.0" text="Nonbre proveedor" />
-            <TableColumn prefWidth="120.0" text="Codigo proveedor" />
-        </columns>
-      </TableView>
+      <Label fx:id="nombreAgregarLabel" layoutX="711.0" layoutY="80.0" text="Nombre" />
+      <TextField fx:id="agregarNombreTxtField" layoutX="782.0" layoutY="76.0" prefHeight="25.0" prefWidth="111.0" />
+      <Label fx:id="codigoAgregarLable" layoutX="714.0" layoutY="117.0" text="Codigo" />
+      <TextField fx:id="agregarCodigoTxtfield" layoutX="783.0" layoutY="113.0" prefHeight="25.0" prefWidth="111.0" />
+      <Label fx:id="agregarDisponiblesLabel" layoutX="714.0" layoutY="158.0" text="Disponibles" />
+      <TextField fx:id="agregarDisponiblesProductoTxtField" layoutX="789.0" layoutY="154.0" prefHeight="25.0" prefWidth="98.0" />
+      <TextField fx:id="agregarVendidasProductoTxtField" layoutX="789.0" layoutY="195.0" prefHeight="25.0" prefWidth="98.0" />
+      <Label fx:id="agregarVendidasLabel" layoutX="709.0" layoutY="199.0" text="Vendidas" />
+      <Button fx:id="categoriasButton" layoutX="14.0" layoutY="350.0" mnemonicParsing="false" text="Categorias producto" />
+      <ComboBox layoutX="576.0" layoutY="375.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

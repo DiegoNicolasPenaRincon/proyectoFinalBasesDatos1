@@ -1,5 +1,6 @@
 package co.edu.uniquindio.alquiler.controller;
 
+import co.edu.uniquindio.alquiler.exceptions.AtributoVacioException;
 import co.edu.uniquindio.alquiler.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -10,15 +11,31 @@ import javafx.scene.control.*;
 public class VentanaAdministradorController {
 
     @FXML
+    private Label nombreAgregarLabel;
+    @FXML
+    private TextField agregarNombreTxtField;
+    @FXML
+    private Label codigoAgregarLable;
+    @FXML
+    private TextField agregarCodigoTxtfield;
+    @FXML
+    private Label agregarDisponiblesLabel;
+    @FXML
+    private TextField agregarDisponiblesProductoTxtField;
+    @FXML
+    private TextField agregarVendidasProductoTxtField;
+    @FXML
+    private Label agregarVendidasLabel;
+    @FXML
     private TableView<Proveedor> proveedoresTable;
     @FXML
-    private TableColumn<Proveedor,String> nombreProveInveColum;
+    private TableColumn<Proveedor,String> nombreProveColum;
     @FXML
-    private TableColumn<Proveedor,String> idProveInvColumn;
+    private TableColumn<Proveedor,String> idProveColumn;
     @FXML
-    private TableColumn<Proveedor,String> telefonoProveInvColumn;
+    private TableColumn<Proveedor,String> telefonoProveColumn;
     @FXML
-    private TableColumn<Proveedor,String> direccionProveInvColumn;
+    private TableColumn<Proveedor,String> direccionProveColumn;
     @FXML
     private TableView<Modificacion> modificacionesTable;
     @FXML
@@ -103,6 +120,14 @@ public class VentanaAdministradorController {
         verificarProveedoresButton.setVisible(false);
         verificarModificacionesButton.setVisible(false);
         proveedoresTable.setVisible(false);
+        nombreAgregarLabel.setVisible(false);
+        agregarNombreTxtField.setVisible(false);
+        codigoAgregarLable.setVisible(false);
+        agregarCodigoTxtfield.setVisible(false);
+        agregarDisponiblesLabel.setVisible(false);
+        agregarDisponiblesProductoTxtField.setVisible(false);
+        agregarVendidasProductoTxtField.setVisible(false);
+        agregarVendidasLabel.setVisible(false);
 
         nombreInventarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getProducto().getNombre()));
         codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
@@ -128,10 +153,10 @@ public class VentanaAdministradorController {
         inventarioModiColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getInventario().getCodigoInstancia()) ) );
         codigoModiColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
 
-        nombreProveInveColum.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getNombre()));
-        idProveInvColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigo())));
-        telefonoProveInvColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getTelefono()) ) );
-        direccionProveInvColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getDireccion()) ) );
+        nombreProveColum.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getNombre()));
+        idProveColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigo())));
+        telefonoProveColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getTelefono()) ) );
+        direccionProveColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getDireccion()) ) );
 
 
         this.cajerosTable.setItems(FXCollections.observableList(tiendaUQ.getCajeros()));
@@ -149,6 +174,7 @@ public class VentanaAdministradorController {
         verificarProveedoresButton.setVisible(false);
         verificarModificacionesButton.setVisible(false);
         proveedoresTable.setVisible(false);
+        modificacionesTable.setVisible(false);
 
     }
 
@@ -195,7 +221,7 @@ public class VentanaAdministradorController {
             verificarProveedoresButton.setVisible(false);
             verificarModificacionesButton.setVisible(false);
             this.proveedoresTable.setItems(FXCollections.observableList(inventarioSeleccionado.getProveedores()));
-            proveedoresTable.setVisible(false);
+            proveedoresTable.setVisible(true);
         }
         else
         {
@@ -228,7 +254,47 @@ public class VentanaAdministradorController {
     }
 
     public void agregarProductoOnAction(ActionEvent actionEvent) {
+        nombreAgregarLabel.setVisible(true);
+        agregarNombreTxtField.setVisible(true);
+        codigoAgregarLable.setVisible(true);
+        agregarCodigoTxtfield.setVisible(true);
+        agregarDisponiblesLabel.setVisible(true);
+        agregarDisponiblesProductoTxtField.setVisible(true);
+        agregarVendidasProductoTxtField.setVisible(true);
+        agregarVendidasLabel.setVisible(true);
 
+        try
+        {
+            String nombre=agregarNombreTxtField.getText();
+            String codigo=agregarCodigoTxtfield.getText();
+            int disponibles=Integer.parseInt(agregarDisponiblesProductoTxtField.getText());
+            int vendidas=Integer.parseInt(agregarVendidasProductoTxtField.getText());
+            if(nombre.isEmpty())
+            {
+                throw new AtributoVacioException("Debe ingresar un nombre");
+            }
+            else if(codigo.isEmpty())
+            {
+                throw new AtributoVacioException("Debe ingresar un codigo");
+            }
+
+            Producto producto=new Producto(nombre,);
+            tiendaUQ.getProductos().add();
+        }
+        catch (NumberFormatException e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText("Las unidades disponibles y unidades vendidas deben contener valores numericos");
+            alert.show();
+        }
+        catch (AtributoVacioException e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 
     public void pedidosOnAction(ActionEvent actionEvent) {
