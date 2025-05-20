@@ -111,12 +111,12 @@ public class VentanaAdministradorController {
         numeroReferenciaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
 
         nombreCajeroColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getNombre()));
-        cajeroFacturaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNombreCajero())));
+        cajeroFacturaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDocumentoEntidadCajero())));
         fechaPagoFacturaColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getFechaPago()) ) );
         costoFacturaColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getCostoTotal()) ) );
         codigoFacturaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigo())));
 
-        clienteFacturaColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getNombreCliente()));
+        clienteFacturaColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getDocumentoEntidadCliente())));
         IDCajeroColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDocumentoEntidad())));
         correoCajeroColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getCorreo() ) );
         telefonoCajeroColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getTelefono() ) );
@@ -158,7 +158,7 @@ public class VentanaAdministradorController {
         {
             cajerosTable.setVisible(false);
             verificarFacturasButton.setVisible(false);
-            this.listaRecibosCajerosTable.setItems(FXCollections.observableList(cajeroSeleccionado.getListaFacturas()));
+            this.listaRecibosCajerosTable.setItems(FXCollections.observableList(cajeroSeleccionado.getFacturas()));
             listaRecibosCajerosTable.setVisible(true);
             masDetallesButton.setVisible(true);
         }

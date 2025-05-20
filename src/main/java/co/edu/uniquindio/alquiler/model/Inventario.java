@@ -60,12 +60,12 @@ public class Inventario {
         this.proveedores = proveedores;
     }
 
-    public Inventario(Producto producto, int unidadesAdquiridas, int unidadesVendidas, int codigoInstancia, ArrayList<Modificacion> modificaciones, ArrayList<Proveedor> proveedores) {
+    public Inventario(Producto producto, int unidadesAdquiridas, int unidadesVendidas, int codigoInstancia,ArrayList<Proveedor> proveedores) {
         this.producto = producto;
         this.unidadesAdquiridas = unidadesAdquiridas;
         this.unidadesVendidas = unidadesVendidas;
         this.codigoInstancia = codigoInstancia;
-        this.modificaciones = modificaciones;
+        this.modificaciones = new ArrayList<>();
         this.proveedores = proveedores;
     }
 }

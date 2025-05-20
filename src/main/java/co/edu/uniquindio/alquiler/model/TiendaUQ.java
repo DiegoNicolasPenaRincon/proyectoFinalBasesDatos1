@@ -52,6 +52,7 @@ public class TiendaUQ {
         conexionBD.conectarBD();
 
         quemarDatos();
+
     }
 
     public static TiendaUQ getInstance(){
@@ -227,27 +228,29 @@ public class TiendaUQ {
             while(rs.next())
             {
                 String nombreCategoria = rs.getString("nombre");
-                double utilidad = rs.getDouble("categoria");
-                double iva =rs.getDouble("codigo");
+                double utilidad = rs.getDouble("utilidad");
+                double iva =rs.getDouble("iva");
                 CategoriaProducto categoriaProducto=new CategoriaProducto(nombreCategoria,utilidad,iva);
                 categorias.add(categoriaProducto);
             }
 
 
             consulta = "SELECT * FROM Producto";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
                 String nombreProducto = rs.getString("nombre");
                 String categoriaProducto = rs.getString("categoria");
                 int codigoProucto =rs.getInt("codigo");
-                int unidadesDisponibels =rs.getInt("unidadesDisponibles");
-                Producto producto=new Producto(nombreProducto,buscarCategoria(categoriaProducto),codigoProucto,unidadesDisponibels);
+                int unidadesDisponibles =rs.getInt("undidadesDisponibles");
+                Producto producto=new Producto(nombreProducto,buscarCategoria(categoriaProducto),codigoProucto,unidadesDisponibles);
                 productos.add(producto);
 
             }
 
             consulta = "SELECT * FROM Administrador";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
@@ -260,14 +263,16 @@ public class TiendaUQ {
 
                 Administrador administrador=new Administrador(salarioAdmin,contrasenaAdmin,
                         nombreAdmin, telefonoAdmin,correoAdmin,documentoEntidad);
+                System.out.println(administrador.getDocumentoEntidad());
                 administradores.add(administrador);
             }
 
             consulta = "SELECT * FROM Proveedor";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
-                String nombre =rs.getString("proveedor");
+                String nombre =rs.getString("nombre");
                 String direccion =rs.getString("direccion");
                 String telefono =rs.getString("telefono");
                 int codigo=rs.getInt("codigo");
@@ -292,6 +297,7 @@ public class TiendaUQ {
             }
 
             consulta = "SELECT * FROM Pedido";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
@@ -328,6 +334,7 @@ public class TiendaUQ {
 
 
             consulta = "SELECT * FROM Cajero";
+            rs = stmt.executeQuery(consulta);
 
 
             while(rs.next())
@@ -344,6 +351,7 @@ public class TiendaUQ {
             }
 
             consulta = "SELECT * FROM Cliente";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
@@ -357,6 +365,7 @@ public class TiendaUQ {
             }
 
             consulta = "SELECT * FROM Factura";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
@@ -389,6 +398,7 @@ public class TiendaUQ {
             }
 
             consulta="SELECT * FROM Inventario";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
@@ -397,12 +407,28 @@ public class TiendaUQ {
                 int unidadesAdquiridas = rs.getInt("unidadesAdquiridas");
                 int unidadesVendidas =rs.getInt("unidadesVendidas");
 
-                Producto producto=buscarProducto(codigoProducto,);
-                Inventario inventario1=new Inventario(producto,unidadesAdquiridas,unidadesVendidas,codigoInventario,);
+                String consulta2="SELECT * FROM Inventario_Proveedor";
+                Statement stmt2 = conexionBD.getConexionT().createStatement();
+                ResultSet rs2 = stmt2.executeQuery(consulta2);
+
+                ArrayList<Proveedor> listaProveedoresInventario=new ArrayList<>();
+
+                while(rs2.next())
+                {
+                    if(rs2.getInt("codigoInventario")==codigoInventario)
+                    {
+                        int codigoProveedorInventario=rs2.getInt("codigoProveedor");
+                        listaProveedoresInventario.add(buscarProveedor(codigoProveedorInventario));
+                    }
+                }
+
+                Producto producto=buscarProducto(codigoProducto);
+                Inventario inventario1=new Inventario(producto,unidadesAdquiridas,unidadesVendidas,codigoInventario,listaProveedoresInventario);
                 inventario.add(inventario1);
             }
 
-            consulta="SELECT * FROM Modificaciones";
+            consulta="SELECT * FROM Modificacion";
+            rs = stmt.executeQuery(consulta);
 
             while(rs.next())
             {
@@ -412,7 +438,9 @@ public class TiendaUQ {
                 int codigoInstancia =rs.getInt("codigoInstancia");
 
                 Administrador admin1=buscarAdmin(codigoAdmin);
-                Modificacion modificacion=new Modificacion(admin1,fechaModificacion,codigoInstancia,documentoEntidad);
+                Inventario inventario=buscarInventario(codigoInventario);
+                Modificacion modificacion=new Modificacion(admin1, fechaModificacion.atStartOfDay(),codigoInstancia,inventario);
+                inventario.getModificaciones().add(modificacion);
                 admin1.getModificaciones().add(modificacion);
                 modificaciones.add(modificacion);
             }
@@ -508,6 +536,17 @@ public class TiendaUQ {
             if(proveedores.get(i).getCodigo()==codigoProveedor)
             {
                 return proveedores.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Inventario buscarInventario(int codigoInventario) {
+        for(int i=0;i<inventario.size();i++)
+        {
+            if(inventario.get(i).getCodigoInstancia()==codigoInventario)
+            {
+                return inventario.get(i);
             }
         }
         return null;
