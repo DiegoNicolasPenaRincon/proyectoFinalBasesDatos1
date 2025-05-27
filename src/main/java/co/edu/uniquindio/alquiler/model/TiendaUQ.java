@@ -738,7 +738,7 @@ public class TiendaUQ {
         {
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("MES", mes);
-            jrxml = getClass().getResourceAsStream("src/main/resources/ModelosReportes/FiltrarPorMesPedido.jrxml");
+            jrxml = getClass().getResourceAsStream("/FiltrarPorMesPedido.jrxml");
             if (jrxml == null)
             {
                 throw new RuntimeException("No se encontró el archivo .jrxml en el classpath");
