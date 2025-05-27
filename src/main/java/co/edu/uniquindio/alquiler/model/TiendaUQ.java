@@ -344,7 +344,7 @@ public class TiendaUQ {
                 String nombre = rs.getString("nombre");
                 String categoria = rs.getString("categoria");
                 CategoriaProducto categoriaProducto=buscarCategoria(categoria);
-                int unidadesDisponibles =rs.getInt("unidadesDisponibles");
+                int unidadesDisponibles =rs.getInt("undidadesDisponibles");
                 return new Producto(nombre,categoriaProducto,codigo,unidadesDisponibles);
             }
         }
@@ -463,7 +463,7 @@ public class TiendaUQ {
         return numeroAleatorio;
     }
 
-    public CategoriaProducto buscarCategoria(String nombre) throws SQLException {
+    /*public CategoriaProducto buscarCategoria(String nombre) throws SQLException {
         String consulta = "SELECT * FROM CategoriaProducto WHERE nombre=?";
         PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
         stmt.setString(1, nombre);
@@ -478,6 +478,20 @@ public class TiendaUQ {
                 double iva=rs.getDouble("iva");
                 double utilidad=rs.getDouble("utilidad");
                 return new CategoriaProducto(nombre,utilidad,iva);
+            }
+        }
+        return null;
+    }
+
+
+     */
+
+    public CategoriaProducto buscarCategoria(String nombreCategoriaSql) {
+        for(int i=0;i<categorias.size();i++)
+        {
+            if(categorias.get(i).getNombre().equals(nombreCategoriaSql))
+            {
+                return categorias.get(i);
             }
         }
         return null;

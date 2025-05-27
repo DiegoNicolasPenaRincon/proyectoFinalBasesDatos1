@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="501.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
+<AnchorPane prefHeight="516.0" prefWidth="882.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
    <children>
       <TableView fx:id="inventarioTable" layoutX="21.0" layoutY="120.0" prefHeight="200.0" prefWidth="529.0">
         <columns>
@@ -20,19 +20,29 @@
             <TableColumn fx:id="numeroReferenciaColumn" prefWidth="115.0" text="Numero Referencia" />
         </columns>
       </TableView>
-      <Button fx:id="agregarProductoButton" layoutX="630.0" layoutY="422.0" mnemonicParsing="false" onAction="#agregarProductoOnAction" prefHeight="25.0" prefWidth="207.0" text="Agregar producto" />
-      <Label fx:id="nombreAgregarLabel" layoutX="576.0" layoutY="117.0" text="Nombre producto" />
-      <TextField fx:id="agregarNombreTxtField" layoutX="694.0" layoutY="113.0" prefHeight="25.0" prefWidth="165.0" />
-      <Label fx:id="codigoAgregarLable" layoutX="579.0" layoutY="158.0" text="Codigo producto" />
-      <TextField fx:id="agregarCodigoTxtfield" layoutX="698.0" layoutY="154.0" prefHeight="25.0" prefWidth="157.0" />
-      <Label fx:id="agregarDisponiblesLabel" layoutX="580.0" layoutY="200.0" prefHeight="17.0" prefWidth="117.0" text="Unidades disponibles" />
-      <Label fx:id="agregarVendidasLabel" layoutX="580.0" layoutY="242.0" text="Unidades vendidas" />
-      <ComboBox fx:id="categoriasComboBox" layoutX="702.0" layoutY="288.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label fx:id="categoriasLabel" layoutX="578.0" layoutY="287.0" text="Categoria" />
-      <ComboBox fx:id="proveedoresComboBox" layoutX="702.0" layoutY="338.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label fx:id="proveedoresLabel" layoutX="579.0" layoutY="342.0" text="Proveedores" />
-      <Button fx:id="agregaProveedorInventarioButton" layoutX="667.0" layoutY="384.0" mnemonicParsing="false" onAction="#agregarProveedorProductoOnAction" text="Agregar Proveedor" />
-      <Spinner fx:id="unidadesDisponiblesSpinner" layoutX="701.0" layoutY="196.0" />
-      <Spinner fx:id="unidadesVendidasSpinner" layoutX="701.0" layoutY="238.0" />
+      <Button fx:id="agregarProductoButton" layoutX="599.0" layoutY="435.0" mnemonicParsing="false" onAction="#agregarProductoOnAction" prefHeight="25.0" prefWidth="117.0" text="Agregar producto" />
+      <Label fx:id="nombreAgregarLabel" layoutX="577.0" layoutY="88.0" text="Nombre producto" />
+      <TextField fx:id="agregarNombreTxtField" layoutX="693.0" layoutY="84.0" prefHeight="25.0" prefWidth="165.0" />
+      <Label fx:id="codigoAgregarLable" layoutX="580.0" layoutY="120.0" text="Codigo producto" />
+      <TextField fx:id="agregarCodigoTxtfield" layoutX="697.0" layoutY="125.0" prefHeight="25.0" prefWidth="157.0" />
+      <Label fx:id="agregarDisponiblesLabel" layoutX="580.0" layoutY="163.0" prefHeight="17.0" prefWidth="117.0" text="Unidades disponibles" />
+      <Label fx:id="agregarVendidasLabel" layoutX="580.0" layoutY="212.0" text="Unidades vendidas" />
+      <ComboBox fx:id="categoriasComboBox" layoutX="701.0" layoutY="247.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label fx:id="categoriasLabel" layoutX="578.0" layoutY="251.0" text="Categoria" />
+      <ComboBox fx:id="proveedoresComboBox" layoutX="701.0" layoutY="290.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label fx:id="proveedoresLabel" layoutX="580.0" layoutY="294.0" text="Proveedores" />
+      <Button fx:id="agregaProveedorInventarioButton" layoutX="599.0" layoutY="397.0" mnemonicParsing="false" onAction="#agregarProveedorProductoOnAction" text="Agregar proveedor" />
+      <Spinner fx:id="unidadesDisponiblesSpinner" layoutX="701.0" layoutY="159.0" />
+      <Spinner fx:id="unidadesVendidasSpinner" layoutX="701.0" layoutY="200.0" />
+      <Label fx:id="opcionesAdminLbl" layoutX="159.0" layoutY="88.0" text="Opciones administrador" />
+      <Button fx:id="verificarProveedorButton" layoutX="22.0" layoutY="339.0" mnemonicParsing="false" onAction="#verificarProveedorOnAction" prefHeight="25.0" prefWidth="149.0" text="Verificar proveedores" />
+      <Button fx:id="verificarCategoriasButton" layoutX="24.0" layoutY="385.0" mnemonicParsing="false" onAction="#verificarCategoriasOnAction" prefHeight="25.0" prefWidth="147.0" text="Verificar categorias" />
+      <Button fx:id="verificarModificacionesButton" layoutX="21.0" layoutY="422.0" mnemonicParsing="false" onAction="#verificarModificacionesOnAction" text="Verifircar modificaciones" />
+      <Button fx:id="modificarProductoButton" layoutX="717.0" layoutY="435.0" mnemonicParsing="false" onAction="#modificarProductoOnAction" prefHeight="25.0" prefWidth="117.0" text="Modificar producto" />
+      <Label fx:id="proveedoresAgregadosLabel" layoutX="576.0" layoutY="351.0" text="Proveedores agregados" />
+      <ComboBox fx:id="proveedoresAgregadosComboBox" layoutX="716.0" layoutY="347.0" prefHeight="25.0" prefWidth="140.0" />
+      <Button fx:id="quitarProveedorProductoButton" layoutX="717.0" layoutY="397.0" mnemonicParsing="false" onAction="#quitarProveedor" prefHeight="25.0" prefWidth="117.0" text="Quitar proveedor" />
+      <Button fx:id="eliminarProductoButton" layoutX="599.0" layoutY="475.0" mnemonicParsing="false" onAction="#eliminarProductoOnAction" prefHeight="25.0" prefWidth="235.0" text="Eliminar producto" />
+      <Button fx:id="verificarPedidos" layoutX="21.0" layoutY="463.0" mnemonicParsing="false" onAction="#verificarPedidosOnAction" prefHeight="25.0" prefWidth="147.0" text="Verificar pedidos" />
    </children>
 </AnchorPane>

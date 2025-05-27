@@ -16,6 +16,26 @@ public class VentanaAdministradorController {
 
 
     @FXML
+    private Button verificarPedidos;
+    @FXML
+    private Button verificarProveedorButton;
+    @FXML
+    private Button verificarCategoriasButton;
+    @FXML
+    private Button modificarProductoButton;
+    @FXML
+    private Button verificarModificacionesButton;
+    @FXML
+    private Label proveedoresAgregadosLabel;
+    @FXML
+    private ComboBox<Proveedor> proveedoresAgregadosComboBox;
+    @FXML
+    private Button quitarProveedorProductoButton;
+    @FXML
+    private Button eliminarProductoButton;
+    @FXML
+    private Label opcionesAdminLbl;
+    @FXML
     private Spinner<Integer> unidadesDisponiblesSpinner;
     @FXML
     private Spinner<Integer> unidadesVendidasSpinner;
@@ -63,23 +83,9 @@ public class VentanaAdministradorController {
 
     public void initialize() {
         proveedoresComboBox=new ComboBox<>();
-        proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));
-        proveedoresComboBox.setVisible(false);
-        categoriasComboBox=new ComboBox<>();
+        proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));;
         categoriasComboBox.setItems(FXCollections.observableList(tiendaUQ.getCategorias()));
-        categoriasComboBox.setVisible(false);
-
-        inventarioTable.setVisible(false);
-        agregarProductoButton.setVisible(false);
-        nombreAgregarLabel.setVisible(false);
-        agregarNombreTxtField.setVisible(false);
-        codigoAgregarLable.setVisible(false);
-        agregarCodigoTxtfield.setVisible(false);
-        agregarDisponiblesLabel.setVisible(false);
-        agregarVendidasLabel.setVisible(false);
         this.proveedoresApoyo=new ArrayList<>();
-        proveedoresLabel.setVisible(false);
-        agregaProveedorInventarioButton.setVisible(false);
 
         nombreInventarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getProducto().getNombre()));
         codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
@@ -139,17 +145,7 @@ public class VentanaAdministradorController {
         }
     }
 
-    public void pedidosOnAction(ActionEvent actionEvent) {
-    }
 
-    public void clientesOnAction(ActionEvent actionEvent) {
-    }
-
-    public void facturasOnAction(ActionEvent actionEvent) {
-    }
-
-    public void proveedoresOnAction(ActionEvent actionEvent) {
-    }
 
     public void agregarProveedorProductoOnAction(ActionEvent actionEvent) {
         Proveedor proveedor=proveedoresComboBox.getSelectionModel().getSelectedItem();
@@ -171,5 +167,23 @@ public class VentanaAdministradorController {
             alert.setContentText(e.getMessage());
             alert.show();
         }
+    }
+
+    public void verificarProveedorOnAction(ActionEvent actionEvent) {
+    }
+
+    public void verificarCategoriasOnAction(ActionEvent actionEvent) {
+    }
+
+    public void verificarModificacionesOnAction(ActionEvent actionEvent) {
+    }
+
+    public void modificarProductoOnAction(ActionEvent actionEvent) {
+    }
+
+    public void quitarProveedor(ActionEvent actionEvent) {
+    }
+
+    public void eliminarProductoOnAction(ActionEvent actionEvent) {
     }
 }
