@@ -13,15 +13,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.InputStream;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class TiendaUQ {
@@ -357,7 +358,8 @@ public class TiendaUQ {
                 String categoria = rs.getString("categoria");
                 CategoriaProducto categoriaProducto=buscarCategoria(categoria);
                 int unidadesDisponibles =rs.getInt("undidadesDisponibles");
-                return new Producto(nombre,categoriaProducto,codigo,unidadesDisponibles);
+                double valor=rs.getDouble("valor");
+                return new Producto(nombre,categoriaProducto,codigo,unidadesDisponibles,valor);
             }
         }
         return null;
@@ -716,10 +718,21 @@ public class TiendaUQ {
 
      */
 
+    public void generarReporteValorTotalProducto(int tipoReporte) throws JRException {
+        if(tipoReporte==1)
+        {
+            InputStream jrxml = getClass().getResourceAsStream("/ReporteValorTotalProducto.jrxml");
 
-    public void generarReporte() {
-        
+            if (jrxml == null) {
+                throw new RuntimeException("No se encontró el archivo .jrxml en el classpath");
+            }
+
+            JasperReport reporte = JasperCompileManager.compileReport(jrxml);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexionBD.getConexionT());
+            JasperViewer.viewReport(jasperPrint, false);
+        }
     }
+
 
 
 }

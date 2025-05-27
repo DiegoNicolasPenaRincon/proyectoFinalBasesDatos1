@@ -98,7 +98,8 @@ public class VentanaAdministradorController {
     }
 
 
-    /*public void agregarProductoOnAction(ActionEvent actionEvent) {
+    public void agregarProductoOnAction(ActionEvent actionEvent) {
+        /*
         try
         {
             String nombre=agregarNombreTxtField.getText();
@@ -143,9 +144,10 @@ public class VentanaAdministradorController {
             alert.setContentText(e.getMessage());
             alert.show();
         }
+         */
     }
 
-     */
+
 
 
 

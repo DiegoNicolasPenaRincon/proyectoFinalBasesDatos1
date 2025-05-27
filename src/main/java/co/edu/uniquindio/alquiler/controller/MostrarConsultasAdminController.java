@@ -11,16 +11,15 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
+import java.sql.Connection;
+import java.util.Map;
+
 public class MostrarConsultasAdminController {
 
     @FXML
     private Button reporteCalcularValorButton;
     @FXML
     private Spinner<Integer> valorTotalSpinner;
-    @FXML
-    private Button generarReporteButton;
-    @FXML
-    private Spinner<Integer> cantidadProductoSpinner;
     @FXML
     private TableView<ContenedorGeneral> generalTable;
     @FXML
@@ -71,12 +70,17 @@ public class MostrarConsultasAdminController {
 
 
     public void initialize() {
+        SpinnerValueFactory<Integer> valueFactory =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30,1);
+        valorTotalSpinner.setValueFactory(valueFactory);
+
+
         pedidosTable.setVisible(false);
         verificarProductosButton.setVisible(false);
         modificacionesTable.setVisible(false);
         generalTable.setVisible(false);
-        cantidadProductoSpinner.setVisible(false);
-        generarReporteButton.setVisible(false);
+        valorTotalSpinner.setVisible(false);
+        reporteCalcularValorButton.setVisible(false);
 
         if(consultaDato.getValor()==1)
         {
@@ -107,12 +111,8 @@ public class MostrarConsultasAdminController {
         {
             consultaLbl.setText("Consulta generalidades");
             generalTable.setVisible(true);
-            cantidadProductoSpinner.setVisible(true);
-            generarReporteButton.setVisible(true);
-
-            SpinnerValueFactory<Integer> valueFactory =
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30,1);
-            cantidadProductoSpinner.setValueFactory(valueFactory);
+            valorTotalSpinner.setVisible(true);
+            reporteCalcularValorButton.setVisible(true);
 
 
             nombreGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNombreProducto())));
@@ -127,15 +127,18 @@ public class MostrarConsultasAdminController {
         }
     }
 
-    public void verificarProductosOnAction(ActionEvent actionEvent) throws JRException {
-        String rutaReporte = "src/main/resources/ReportesModelos/ReporteProductos.jasper";
+    public void verificarProductosOnAction(ActionEvent actionEvent) {
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(rutaReporte, null, tiendaUQ.conexionBD);
-
-        JasperExportManager.exportReportToPdfFile(jasperPrint, "ReporteProductos.pdf");
     }
 
     public void calcularValorReporteOnAction(ActionEvent actionEvent) {
-
+        try
+        {
+            tiendaUQ.generarReporteValorTotalProducto();
+        }
+        catch (JRException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
