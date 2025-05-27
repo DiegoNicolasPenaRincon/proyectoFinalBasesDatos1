@@ -1,52 +1,68 @@
 <!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
-<jasperReport name="ReporteProductoPedidoPorCodigo" language="java" columnCount="1" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1d4e570-2891-4ef7-a39a-89a219b903fa">
+<jasperReport name="ReporteDetallePedido" language="java" columnCount="1" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d2e8b59f-0a9f-432f-8ea5-58d402cb102f">
 	<parameter name="codigoPedido" class="java.lang.Integer"/>
-	<query language="sql"><![CDATA[SELECT *, pp.codigoPedido, pp.cantidadAdquirida 
-            FROM Producto p 
+	<query language="sql"><![CDATA[SELECT p.categoria AS nombreCategorias, p.nombre AS NombreProducto, p.codigo AS codigoProducto,
+                   p.undidadesDisponibles AS unidadesDisponiblesProduto, p.valor AS valorProducto,
+                   pp.codigoPedido AS codigoPedido, pp.cantidadAdquirida
+            FROM Producto p
             JOIN Pedido_Producto pp ON p.codigo = pp.codigoProducto
             WHERE pp.codigoPedido = $P{codigoPedido};]]></query>
-	<field name="codigo" class="java.lang.Integer"/>
-	<field name="nombre" class="java.lang.String"/>
-	<field name="precio" class="java.lang.Double"/>
+	<field name="nombreCategorias" class="java.lang.String"/>
+	<field name="NombreProducto" class="java.lang.String"/>
+	<field name="codigoProducto" class="java.lang.Integer"/>
+	<field name="unidadesDisponiblesProduto" class="java.lang.Integer"/>
+	<field name="valorProducto" class="java.lang.Double"/>
 	<field name="codigoPedido" class="java.lang.Integer"/>
 	<field name="cantidadAdquirida" class="java.lang.Integer"/>
 	<title height="50" splitType="Stretch">
-		<element kind="staticText" uuid="d8cfd9d2-f6fe-4347-99d0-0bf493ba2e5b" stretchType="NoStretch" x="0" y="10" width="555" height="30" fontSize="16.0" bold="true" hTextAlign="Center">
-			<text><![CDATA[Productos por Pedido]]></text>
+		<element kind="staticText" uuid="e952d757-9173-4d63-be36-2f33d0bbb29e" stretchType="NoStretch" x="0" y="10" width="555" height="30" fontSize="16.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[Detalle del Pedido por Código]]></text>
 		</element>
 	</title>
-	<columnHeader height="20" splitType="Stretch">
-		<element kind="staticText" uuid="ee82258e-6a29-4803-a54f-3e1156728439" stretchType="NoStretch" x="0" y="0" width="80" height="20">
+	<columnHeader height="25" splitType="Stretch">
+		<element kind="staticText" uuid="6bde5ad4-a7e3-4649-8ef3-e8b9e0e0317f" stretchType="NoStretch" x="0" y="0" width="90" height="20">
+			<text><![CDATA[Categoría]]></text>
+		</element>
+		<element kind="staticText" uuid="69b7426b-9546-4da4-a738-5fde63d6f0fe" stretchType="NoStretch" x="90" y="0" width="90" height="20">
+			<text><![CDATA[Producto]]></text>
+		</element>
+		<element kind="staticText" uuid="b87c95bc-a6e9-4d00-9895-876940c3806a" stretchType="NoStretch" x="180" y="0" width="60" height="20">
 			<text><![CDATA[Código]]></text>
 		</element>
-		<element kind="staticText" uuid="bb1596e4-fcc3-440d-b74a-6d5e23dc444b" stretchType="NoStretch" x="80" y="0" width="150" height="20">
-			<text><![CDATA[Nombre]]></text>
+		<element kind="staticText" uuid="ebd021f2-d8c8-42f1-8c9c-af2782a01bb3" stretchType="NoStretch" x="240" y="0" width="80" height="20">
+			<text><![CDATA[Unidades]]></text>
 		</element>
-		<element kind="staticText" uuid="ae75127d-a459-4f5d-8aab-215e3ba3e194" stretchType="NoStretch" x="230" y="0" width="80" height="20">
-			<text><![CDATA[Precio]]></text>
+		<element kind="staticText" uuid="6e3a53f5-486a-4557-b55a-71a04d4c46d7" stretchType="NoStretch" x="320" y="0" width="80" height="20">
+			<text><![CDATA[Valor]]></text>
 		</element>
-		<element kind="staticText" uuid="63f5d465-5b49-49b6-a5fd-4801172a4f88" stretchType="NoStretch" x="310" y="0" width="120" height="20">
-			<text><![CDATA[Código Pedido]]></text>
+		<element kind="staticText" uuid="37af99b5-a8ba-4d40-a164-5b1a4cd6159a" stretchType="NoStretch" x="400" y="0" width="75" height="20">
+			<text><![CDATA[Pedido]]></text>
 		</element>
-		<element kind="staticText" uuid="c685bb1b-d81f-4b60-896d-7363ca96b5f7" stretchType="NoStretch" x="430" y="0" width="125" height="20">
-			<text><![CDATA[Cantidad Adquirida]]></text>
+		<element kind="staticText" uuid="f7efc52f-4359-4af9-9056-f96597926e24" stretchType="NoStretch" x="475" y="0" width="80" height="20">
+			<text><![CDATA[Cantidad]]></text>
 		</element>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<element kind="textField" uuid="38c65514-75d0-4050-b3f4-59bddf6d60da" stretchType="NoStretch" x="0" y="0" width="80" height="20">
-				<expression><![CDATA[$F{codigo}]]></expression>
+			<element kind="textField" uuid="6a1acb51-eefe-4dd3-bfdb-33330bd3af63" stretchType="NoStretch" x="0" y="0" width="90" height="20">
+				<expression><![CDATA[$F{nombreCategorias}]]></expression>
 			</element>
-			<element kind="textField" uuid="4425ece0-4386-4126-9175-360061227ccc" stretchType="NoStretch" x="80" y="0" width="150" height="20">
-				<expression><![CDATA[$F{nombre}]]></expression>
+			<element kind="textField" uuid="89736c5e-4cc4-44c5-8d16-f399bc2b5c2e" stretchType="NoStretch" x="90" y="0" width="90" height="20">
+				<expression><![CDATA[$F{NombreProducto}]]></expression>
 			</element>
-			<element kind="textField" uuid="83293127-66d5-4c0d-ac13-7a95270bc903" stretchType="NoStretch" x="230" y="0" width="80" height="20">
-				<expression><![CDATA[$F{precio}]]></expression>
+			<element kind="textField" uuid="74029784-217e-4255-bf35-9b44c917a1fb" stretchType="NoStretch" x="180" y="0" width="60" height="20">
+				<expression><![CDATA[$F{codigoProducto}]]></expression>
 			</element>
-			<element kind="textField" uuid="650f086b-27a3-42a9-9f2c-c410138185a2" stretchType="NoStretch" x="310" y="0" width="120" height="20">
+			<element kind="textField" uuid="0508197e-b565-4ee6-9d70-f36f39431dd0" stretchType="NoStretch" x="240" y="0" width="80" height="20">
+				<expression><![CDATA[$F{unidadesDisponiblesProduto}]]></expression>
+			</element>
+			<element kind="textField" uuid="98240f46-4a8f-4858-bade-5904acd8b085" stretchType="NoStretch" x="320" y="0" width="80" height="20">
+				<expression><![CDATA[$F{valorProducto}]]></expression>
+			</element>
+			<element kind="textField" uuid="ad2f8519-a673-47a7-80e5-20cbeb5069f7" stretchType="NoStretch" x="400" y="0" width="75" height="20">
 				<expression><![CDATA[$F{codigoPedido}]]></expression>
 			</element>
-			<element kind="textField" uuid="eaf5cb13-4c48-4e8d-b628-5a38fd42c967" stretchType="NoStretch" x="430" y="0" width="125" height="20">
+			<element kind="textField" uuid="779fe5cb-613e-483d-99ae-8d96b631eea5" stretchType="NoStretch" x="475" y="0" width="80" height="20">
 				<expression><![CDATA[$F{cantidadAdquirida}]]></expression>
 			</element>
 		</band>
