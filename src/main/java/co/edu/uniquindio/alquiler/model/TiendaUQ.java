@@ -622,6 +622,41 @@ public class TiendaUQ {
         return listaPedidos;
     }
 
+    public ArrayList<ContenedorModificaciones> importarModificaciones(int codigoInventario) {
+        ArrayList<ContenedorModificaciones> listaModificaciones=new ArrayList<>();
+        try
+        {
+            String consulta = """
+            SELECT 
+                ad.nombre AS nombreAdmin,
+                ad.documentoEntidad AS documentoIdentidadAdmin,
+                modi.fechaModificacion,
+                modi.codigoInstancia
+            FROM Administrador ad
+            JOIN Modificacion modi ON modi.codigoAdmin = ad.documentoEntidad
+            WHERE modi.codigoInventario=?""";
+
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1, codigoInventario);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                String nombreAdmin = rs.getString("nombreAdmin");
+                int documentoIdentidadAdmin = rs.getInt("documentoIdentidadAdmin");
+                LocalDateTime fechaModificacion = rs.getTimestamp("fechaModificacion").toLocalDateTime();
+                int codigoInstancia = rs.getInt("codigoInstancia");
+                ContenedorModificaciones contenedor=new ContenedorModificaciones(nombreAdmin,documentoIdentidadAdmin,fechaModificacion,codigoInstancia);
+                listaModificaciones.add(contenedor);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return listaModificaciones;
+    }
 
 
 }

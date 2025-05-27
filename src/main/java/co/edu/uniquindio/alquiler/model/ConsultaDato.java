@@ -4,7 +4,7 @@ public class ConsultaDato {
 
     private int valor;
     private static ConsultaDato consulta;
-    private int codigoProducto;
+    private int codigoUniversal;
 
     private ConsultaDato(){
     }
@@ -27,11 +27,11 @@ public class ConsultaDato {
         this.valor = valor;
     }
 
-    public int getcodigoProducto() {
-        return codigoProducto;
+    public int getcodigoUniversal() {
+        return codigoUniversal;
     }
 
-    public void setcodigoProducto(int codigoProducto) {
-        this.codigoProducto = codigoProducto;
+    public void setcodigoUniversal(int codigoUniversal) {
+        this.codigoUniversal = codigoUniversal;
     }
 }

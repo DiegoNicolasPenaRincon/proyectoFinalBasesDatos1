@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.MostrarConsultasAdminController">
    <children>
-      <TableView fx:id="pedidosTable" layoutX="36.0" layoutY="62.0" prefHeight="200.0" prefWidth="742.0">
+      <TableView fx:id="pedidosTable" layoutX="36.0" layoutY="62.0" prefHeight="200.0" prefWidth="742.0" visible="false">
         <columns>
           <TableColumn fx:id="codigoPedidoColumn" prefWidth="104.0" text="Codigo pedido" />
           <TableColumn fx:id="codigoAdministradorColumn" prefWidth="133.0" text="Codigo administrador" />
@@ -20,6 +20,14 @@
         </columns>
       </TableView>
       <Label fx:id="consultaLbl" layoutX="393.0" layoutY="26.0" text="Label" />
-      <Button fx:id="verificarProductosButton" layoutX="44.0" layoutY="290.0" mnemonicParsing="false" onAction="#verificarProductosOnAction" text="Verificar productos del pedido" />
+      <Button fx:id="verificarProductosButton" layoutX="44.0" layoutY="290.0" mnemonicParsing="false" onAction="#verificarProductosOnAction" text="Verificar productos del pedido" visible="false" />
+      <TableView fx:id="modificacionesTable" layoutX="152.0" layoutY="84.0" prefHeight="200.0" prefWidth="538.0">
+        <columns>
+          <TableColumn fx:id="nombreAdminColumn" prefWidth="135.0" text="Nombre administrador" />
+          <TableColumn fx:id="idAdminColumn" minWidth="3.0" prefWidth="109.0" text="ID administrador" />
+            <TableColumn fx:id="fechaModificacionColumn" prefWidth="124.0" text="Fecha modificacion" />
+            <TableColumn fx:id="codigoModificacionColumn" prefWidth="169.0" text="Codigo modificacion" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
