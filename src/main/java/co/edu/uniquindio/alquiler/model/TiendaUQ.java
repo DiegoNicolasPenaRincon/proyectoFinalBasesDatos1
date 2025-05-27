@@ -701,7 +701,7 @@ public class TiendaUQ {
         return listaGeneralidades;
     }
 
-    public void verificarProveedor() {
+    /*public void verificarProveedor() {
         for(int i=0;i<proveedores.size();i++)
         {
             /*
@@ -712,6 +712,12 @@ public class TiendaUQ {
 
              */
         }
+    }
+
+     */
+
+    public void generarReporte() {
+        
     }
 
 

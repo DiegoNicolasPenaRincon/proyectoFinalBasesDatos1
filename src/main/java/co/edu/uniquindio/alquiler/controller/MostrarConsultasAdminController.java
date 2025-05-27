@@ -5,13 +5,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class MostrarConsultasAdminController {
 
+    @FXML
+    private Button generarReporteButton;
+    @FXML
+    private Spinner<Integer> cantidadProductoSpinner;
     @FXML
     private TableView<ContenedorGeneral> generalTable;
     @FXML
@@ -66,6 +67,9 @@ public class MostrarConsultasAdminController {
         verificarProductosButton.setVisible(false);
         modificacionesTable.setVisible(false);
         generalTable.setVisible(false);
+        cantidadProductoSpinner.setVisible(false);
+        generarReporteButton.setVisible(false);
+
         if(consultaDato.getValor()==1)
         {
             consultaLbl.setText("Consulta pedidos");
@@ -95,6 +99,13 @@ public class MostrarConsultasAdminController {
         {
             consultaLbl.setText("Consulta generalidades");
             generalTable.setVisible(true);
+            cantidadProductoSpinner.setVisible(true);
+            generarReporteButton.setVisible(true);
+
+            SpinnerValueFactory<Integer> valueFactory =
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30,1);
+            cantidadProductoSpinner.setValueFactory(valueFactory);
+
 
             nombreGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNombreProducto())));
             codigoGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoProducto())));
@@ -109,5 +120,6 @@ public class MostrarConsultasAdminController {
     }
 
     public void verificarProductosOnAction(ActionEvent actionEvent) {
+
     }
 }
