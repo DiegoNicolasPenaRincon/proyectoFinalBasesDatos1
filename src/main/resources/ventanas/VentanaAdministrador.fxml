@@ -35,14 +35,13 @@
       <Spinner fx:id="unidadesDisponiblesSpinner" layoutX="701.0" layoutY="159.0" />
       <Spinner fx:id="unidadesVendidasSpinner" layoutX="701.0" layoutY="200.0" />
       <Label fx:id="opcionesAdminLbl" layoutX="200.0" layoutY="80.0" text="Opciones administrador" />
-      <Button fx:id="verificarProveedorButton" layoutX="22.0" layoutY="339.0" mnemonicParsing="false" onAction="#verificarProveedorOnAction" prefHeight="25.0" prefWidth="149.0" text="Verificar proveedores" />
-      <Button fx:id="verificarCategoriasButton" layoutX="24.0" layoutY="385.0" mnemonicParsing="false" onAction="#verificarCategoriasOnAction" prefHeight="25.0" prefWidth="147.0" text="Verificar categorias" />
-      <Button fx:id="verificarModificacionesButton" layoutX="21.0" layoutY="422.0" mnemonicParsing="false" onAction="#verificarModificacionesOnAction" text="Verifircar modificaciones" />
+      <Button fx:id="InformacionGeneralButton" layoutX="22.0" layoutY="339.0" mnemonicParsing="false" onAction="#InformacionGeneralOnAction" prefHeight="25.0" prefWidth="149.0" text="Informacion general" />
+      <Button fx:id="verificarModificacionesButton" layoutX="23.0" layoutY="385.0" mnemonicParsing="false" onAction="#verificarModificacionesOnAction" text="Verifircar modificaciones" />
       <Button fx:id="modificarProductoButton" layoutX="717.0" layoutY="435.0" mnemonicParsing="false" onAction="#modificarProductoOnAction" prefHeight="25.0" prefWidth="117.0" text="Modificar producto" />
       <Label fx:id="proveedoresAgregadosLabel" layoutX="576.0" layoutY="351.0" text="Proveedores agregados" />
       <ComboBox fx:id="proveedoresAgregadosComboBox" layoutX="716.0" layoutY="347.0" prefHeight="25.0" prefWidth="140.0" />
       <Button fx:id="quitarProveedorProductoButton" layoutX="717.0" layoutY="397.0" mnemonicParsing="false" onAction="#quitarProveedor" prefHeight="25.0" prefWidth="117.0" text="Quitar proveedor" />
       <Button fx:id="eliminarProductoButton" layoutX="599.0" layoutY="475.0" mnemonicParsing="false" onAction="#eliminarProductoOnAction" prefHeight="25.0" prefWidth="235.0" text="Eliminar producto" />
-      <Button fx:id="verificarPedidos" layoutX="21.0" layoutY="463.0" mnemonicParsing="false" onAction="#verificarPedidosOnAction" prefHeight="25.0" prefWidth="147.0" text="Verificar pedidos" />
+      <Button fx:id="verificarPedidos" layoutX="23.0" layoutY="423.0" mnemonicParsing="false" onAction="#verificarPedidosOnAction" prefHeight="25.0" prefWidth="147.0" text="Verificar pedidos" />
    </children>
 </AnchorPane>

@@ -21,12 +21,23 @@
       </TableView>
       <Label fx:id="consultaLbl" layoutX="393.0" layoutY="26.0" text="Label" />
       <Button fx:id="verificarProductosButton" layoutX="44.0" layoutY="290.0" mnemonicParsing="false" onAction="#verificarProductosOnAction" text="Verificar productos del pedido" visible="false" />
-      <TableView fx:id="modificacionesTable" layoutX="152.0" layoutY="84.0" prefHeight="200.0" prefWidth="538.0">
+      <TableView fx:id="modificacionesTable" layoutX="152.0" layoutY="84.0" prefHeight="200.0" prefWidth="538.0" visible="false">
         <columns>
           <TableColumn fx:id="nombreAdminColumn" prefWidth="135.0" text="Nombre administrador" />
           <TableColumn fx:id="idAdminColumn" minWidth="3.0" prefWidth="109.0" text="ID administrador" />
             <TableColumn fx:id="fechaModificacionColumn" prefWidth="124.0" text="Fecha modificacion" />
             <TableColumn fx:id="codigoModificacionColumn" prefWidth="169.0" text="Codigo modificacion" />
+        </columns>
+      </TableView>
+      <TableView fx:id="generalTable" layoutX="73.0" layoutY="84.0" prefHeight="200.0" prefWidth="681.0">
+        <columns>
+          <TableColumn fx:id="nombreGeneralColumn" prefWidth="112.0" text="Nombre producto" />
+          <TableColumn fx:id="codigoGeneralColumn" prefWidth="110.0" text="Codigo producto" />
+            <TableColumn fx:id="proveedorGeneralColumn" prefWidth="126.0" text="Nombre  proveedor" />
+            <TableColumn fx:id="cProveedorGeneralColumn" prefWidth="111.0" text="Codigo proveedor" />
+            <TableColumn fx:id="categoriaGeneralColumn" prefWidth="89.0" text="Categoria" />
+            <TableColumn fx:id="ivaGeneralColumn" prefWidth="61.0" text="Iva" />
+            <TableColumn fx:id="utilidadGeneralColumn" prefWidth="75.0" text="Utilidad" />
         </columns>
       </TableView>
    </children>

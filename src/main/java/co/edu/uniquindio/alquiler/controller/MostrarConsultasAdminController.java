@@ -1,9 +1,6 @@
 package co.edu.uniquindio.alquiler.controller;
 
-import co.edu.uniquindio.alquiler.model.ConsultaDato;
-import co.edu.uniquindio.alquiler.model.ContenedorConsultaPedido;
-import co.edu.uniquindio.alquiler.model.ContenedorModificaciones;
-import co.edu.uniquindio.alquiler.model.TiendaUQ;
+import co.edu.uniquindio.alquiler.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,6 +11,23 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class MostrarConsultasAdminController {
+
+    @FXML
+    private TableView<ContenedorGeneral> generalTable;
+    @FXML
+    private TableColumn<ContenedorGeneral,String> nombreGeneralColumn;
+    @FXML
+    private TableColumn<ContenedorGeneral,String> codigoGeneralColumn;
+    @FXML
+    private TableColumn<ContenedorGeneral,String> proveedorGeneralColumn;
+    @FXML
+    private TableColumn<ContenedorGeneral,String> cProveedorGeneralColumn;
+    @FXML
+    private TableColumn<ContenedorGeneral,String> categoriaGeneralColumn;
+    @FXML
+    private TableColumn<ContenedorGeneral,String> ivaGeneralColumn;
+    @FXML
+    private TableColumn<ContenedorGeneral,String> utilidadGeneralColumn;
     @FXML
     private TableView<ContenedorModificaciones> modificacionesTable;
     @FXML
@@ -51,6 +65,7 @@ public class MostrarConsultasAdminController {
         pedidosTable.setVisible(false);
         verificarProductosButton.setVisible(false);
         modificacionesTable.setVisible(false);
+        generalTable.setVisible(false);
         if(consultaDato.getValor()==1)
         {
             consultaLbl.setText("Consulta pedidos");
@@ -75,6 +90,21 @@ public class MostrarConsultasAdminController {
             codigoModificacionColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getCodigoInstancia()) ) );
 
             this.modificacionesTable.setItems(FXCollections.observableList(tiendaUQ.importarModificaciones(consultaDato.getcodigoUniversal())));
+        }
+        else if(consultaDato.getValor()==3)
+        {
+            consultaLbl.setText("Consulta generalidades");
+            generalTable.setVisible(true);
+
+            nombreGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNombreProducto())));
+            codigoGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoProducto())));
+            proveedorGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getNombreProveedor()) ) );
+            cProveedorGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getCodigoProveedor()) ) );
+            categoriaGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getNombreCategoria()) ) );
+            ivaGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getIva()) ) );
+            utilidadGeneralColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUtilidad()) ) );
+
+            this.generalTable.setItems(FXCollections.observableList(tiendaUQ.importarDatosGenerales()));
         }
     }
 

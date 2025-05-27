@@ -658,5 +658,48 @@ public class TiendaUQ {
         return listaModificaciones;
     }
 
+    public ArrayList<ContenedorGeneral> importarDatosGenerales() {
+        ArrayList<ContenedorGeneral> listaGeneralidades=new ArrayList<>();
+        try
+        {
+            String consulta = """
+            SELECT 
+                p.nombre AS nombreProducto, 
+                p.codigo AS codigoProducto, 
+                prov.nombre AS nombreProveedor,
+                prov.codigo AS codigoProveedor,
+                cate.nombre AS categoria,
+                cate.iva,
+                cate.utilidad 
+            FROM Producto p
+            JOIN CategoriaProducto cate ON cate.nombre = p.categoria
+            JOIN Proveedor_Producto prop ON prop.codigoProducto = p.codigo
+            JOIN Proveedor prov ON prov.codigo = prop.codigoProveedor
+        """;
+
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                String nombreProducto = rs.getString("nombreProducto");
+                int codigoProducto = rs.getInt("codigoProducto");
+                String nombreProveedor = rs.getString("nombreProveedor");
+                int codigoProveedor = rs.getInt("codigoProveedor");
+                String categoria = rs.getString("categoria");
+                double iva = rs.getDouble("iva");
+                double utilidad = rs.getDouble("utilidad");
+                ContenedorGeneral contenedor=new ContenedorGeneral(nombreProducto,codigoProducto,nombreProveedor,codigoProveedor,categoria,iva,utilidad);
+                listaGeneralidades.add(contenedor);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return listaGeneralidades;
+    }
+
 
 }

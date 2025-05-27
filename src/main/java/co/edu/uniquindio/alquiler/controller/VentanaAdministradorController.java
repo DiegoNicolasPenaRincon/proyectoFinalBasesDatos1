@@ -17,11 +17,9 @@ public class VentanaAdministradorController {
 
 
     @FXML
+    private Button InformacionGeneralButton;
+    @FXML
     private Button verificarPedidos;
-    @FXML
-    private Button verificarProveedorButton;
-    @FXML
-    private Button verificarCategoriasButton;
     @FXML
     private Button modificarProductoButton;
     @FXML
@@ -171,13 +169,6 @@ public class VentanaAdministradorController {
         }
     }
 
-    public void verificarProveedorOnAction(ActionEvent actionEvent) {
-
-    }
-
-    public void verificarCategoriasOnAction(ActionEvent actionEvent) {
-    }
-
     public void verificarModificacionesOnAction(ActionEvent actionEvent) {
         Inventario inventario=inventarioTable.getSelectionModel().getSelectedItem();
         try
@@ -237,6 +228,18 @@ public class VentanaAdministradorController {
             alert.setHeaderText("Alerta");
             alert.setContentText(e.getMessage());
             alert.show();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void InformacionGeneralOnAction(ActionEvent actionEvent) {
+        try
+        {
+            consultaDato.setValor(3);
+            tiendaUQ.inicializarConsultas();
         }
         catch (IOException e)
         {
