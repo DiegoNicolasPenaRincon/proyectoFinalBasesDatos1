@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -44,7 +43,6 @@
         </TableView>
 
         <Button fx:id="reporteCalcularValorButton" layoutX="73.0" layoutY="303.0" onAction="#calcularValorReporteOnAction" styleClass="button" text="Calcular valor total producto" />
-        <Spinner fx:id="valorTotalSpinner" layoutX="369.0" layoutY="309.0" styleClass="spinner" />
       <AnchorPane layoutY="-5.0" prefHeight="85.0" prefWidth="841.0" style="-fx-background-color: #5EB0E8;">
          <children>
       
