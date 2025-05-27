@@ -2,6 +2,7 @@ package co.edu.uniquindio.alquiler.model;
 
 
 import co.edu.uniquindio.alquiler.controller.CajeroVentanaController;
+import co.edu.uniquindio.alquiler.controller.MostrarConsultasAdminController;
 import co.edu.uniquindio.alquiler.controller.VentanaAdministradorController;
 import co.edu.uniquindio.alquiler.enums.TipoFactura;
 import co.edu.uniquindio.alquiler.exceptions.AtributoExistenteException;
@@ -145,6 +146,18 @@ public class TiendaUQ {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    public void inicializarConsultas() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanas/MostrarConsultasAdmin.fxml"));
+        Parent root = loader.load();
+
+        MostrarConsultasAdminController consultasAdminController =loader.getController();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public ArrayList<Cliente> getClientes() {
@@ -569,6 +582,44 @@ public class TiendaUQ {
             e.printStackTrace();
         }
         return listaProductos;
+    }
+
+    public ArrayList<ContenedorConsultaPedido> importarConsultaPedido(int codigoProducto) {
+        ArrayList<ContenedorConsultaPedido> listaPedidos=new ArrayList<>();
+        try
+        {
+            String consulta="""
+            
+                   SELECT p.codigo AS codigoPedido, ad.documentoEntidad AS codigoAdministrador,ad.nombre AS nombreAdmin,prove.codigo AS codigoProveedor,prove.nombre AS nombreProveedor,p.fechaPedido,
+                                                                         	   PP.codigoProducto
+                                                                         	   FROM Pedido p
+                                                                         	   JOIN Administrador ad ON ad.documentoEntidad=p.codigoAdministrador
+                                                                         	   JOIN Proveedor prove ON prove.codigo=p.codigoProveedor
+                                                                         	   JOIN Pedido_Producto PP ON PP.codigoPedido=p.codigo
+                                                                         	   WHERE PP.codigoProducto=?;
+            """;
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1, codigoProducto);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                int codigoPedido = rs.getInt("codigoPedido");
+                int codigoAdmin = rs.getInt("codigoAdministrador");
+                String nombreAdmin = rs.getString("nombreAdmin");
+                int codigoProveedor = rs.getInt("codigoProveedor");
+                String nombreProveedor = rs.getString("nombreProveedor");
+                LocalDateTime fechaPedido = rs.getTimestamp("fechaPedido").toLocalDateTime();
+                ContenedorConsultaPedido contenedor=new ContenedorConsultaPedido(codigoPedido,codigoAdmin,nombreAdmin,nombreProveedor,codigoProveedor,fechaPedido);
+                listaPedidos.add(contenedor);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return listaPedidos;
     }
 
 

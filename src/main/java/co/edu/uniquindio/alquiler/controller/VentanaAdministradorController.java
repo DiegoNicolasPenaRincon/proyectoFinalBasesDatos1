@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -80,6 +81,7 @@ public class VentanaAdministradorController {
     TiendaUQ tiendaUQ=TiendaUQ.getInstance();
     DatosSesionAdministrador datosAdmin= DatosSesionAdministrador.getInstance();
     ArrayList<Proveedor> proveedoresApoyo;
+    ConsultaDato consultaDato=ConsultaDato.getInstance();
 
     public void initialize() {
         proveedoresComboBox=new ComboBox<>();
@@ -170,6 +172,7 @@ public class VentanaAdministradorController {
     }
 
     public void verificarProveedorOnAction(ActionEvent actionEvent) {
+
     }
 
     public void verificarCategoriasOnAction(ActionEvent actionEvent) {
@@ -188,6 +191,31 @@ public class VentanaAdministradorController {
     }
 
     public void verificarPedidosOnAction(ActionEvent actionEvent) {
-
+        Inventario inventario=inventarioTable.getSelectionModel().getSelectedItem();
+        try
+        {
+            if(inventario!=null)
+            {
+                consultaDato.setValor(1);
+                consultaDato.setcodigoProducto(inventario.getProducto().getCodigo());
+                tiendaUQ.inicializarConsultas();
+            }
+            else
+            {
+                throw new AtributoVacioException("Debe seleccionar una instancia del inventario");
+            }
+        }
+        catch (AtributoVacioException e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
+
 }

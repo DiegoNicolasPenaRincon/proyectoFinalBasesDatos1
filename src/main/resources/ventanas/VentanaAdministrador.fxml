@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="516.0" prefWidth="882.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
+<AnchorPane prefHeight="518.0" prefWidth="882.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
    <children>
       <TableView fx:id="inventarioTable" layoutX="21.0" layoutY="120.0" prefHeight="200.0" prefWidth="529.0">
         <columns>
@@ -34,7 +34,7 @@
       <Button fx:id="agregaProveedorInventarioButton" layoutX="599.0" layoutY="397.0" mnemonicParsing="false" onAction="#agregarProveedorProductoOnAction" text="Agregar proveedor" />
       <Spinner fx:id="unidadesDisponiblesSpinner" layoutX="701.0" layoutY="159.0" />
       <Spinner fx:id="unidadesVendidasSpinner" layoutX="701.0" layoutY="200.0" />
-      <Label fx:id="opcionesAdminLbl" layoutX="159.0" layoutY="88.0" text="Opciones administrador" />
+      <Label fx:id="opcionesAdminLbl" layoutX="200.0" layoutY="80.0" text="Opciones administrador" />
       <Button fx:id="verificarProveedorButton" layoutX="22.0" layoutY="339.0" mnemonicParsing="false" onAction="#verificarProveedorOnAction" prefHeight="25.0" prefWidth="149.0" text="Verificar proveedores" />
       <Button fx:id="verificarCategoriasButton" layoutX="24.0" layoutY="385.0" mnemonicParsing="false" onAction="#verificarCategoriasOnAction" prefHeight="25.0" prefWidth="147.0" text="Verificar categorias" />
       <Button fx:id="verificarModificacionesButton" layoutX="21.0" layoutY="422.0" mnemonicParsing="false" onAction="#verificarModificacionesOnAction" text="Verifircar modificaciones" />

@@ -36,17 +36,10 @@ public class Conexion {
         {
             String cadena="jdbc:sqlserver://localhost:"+puerto+";"+"DatabaseName="+bd+";"+"encrypt=true;trustServerCertificate=true;";
             conexionT= DriverManager.getConnection(cadena,usuario,contrasenia);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Informacion");
-            alert.setContentText("Se realizo la conexion de manera exitosa");
-            alert.show();
         }
         catch (Exception e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText(e.getMessage());
-            alert.show();
+
         }
         return conexionT;
     }
