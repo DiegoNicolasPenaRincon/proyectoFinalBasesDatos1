@@ -11,8 +11,6 @@
 
 <AnchorPane prefHeight="501.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.VentanaAdministradorController">
    <children>
-      <Label fx:id="opcionesLabel" layoutX="325.0" layoutY="68.0" text="Opciones administrador" />
-      <Button fx:id="masDetallesButton" layoutX="347.0" layoutY="313.0" mnemonicParsing="false" onAction="#mostrarFacturaCompleta" text="Mas detalles" visible="false" />
       <TableView fx:id="inventarioTable" layoutX="21.0" layoutY="120.0" prefHeight="200.0" prefWidth="529.0">
         <columns>
           <TableColumn fx:id="nombreInventarioColumn" prefWidth="126.0" text="Nombre producto" />
@@ -26,7 +24,7 @@
       <Label fx:id="nombreAgregarLabel" layoutX="576.0" layoutY="117.0" text="Nombre producto" />
       <TextField fx:id="agregarNombreTxtField" layoutX="694.0" layoutY="113.0" prefHeight="25.0" prefWidth="165.0" />
       <Label fx:id="codigoAgregarLable" layoutX="579.0" layoutY="158.0" text="Codigo producto" />
-      <TextField fx:id="agregarCodigoTxtfield" layoutX="698.0" layoutY="154.0" prefHeight="25.0" prefWidth="155.0" />
+      <TextField fx:id="agregarCodigoTxtfield" layoutX="698.0" layoutY="154.0" prefHeight="25.0" prefWidth="157.0" />
       <Label fx:id="agregarDisponiblesLabel" layoutX="580.0" layoutY="200.0" prefHeight="17.0" prefWidth="117.0" text="Unidades disponibles" />
       <Label fx:id="agregarVendidasLabel" layoutX="580.0" layoutY="242.0" text="Unidades vendidas" />
       <ComboBox fx:id="categoriasComboBox" layoutX="702.0" layoutY="288.0" prefHeight="25.0" prefWidth="149.0" />

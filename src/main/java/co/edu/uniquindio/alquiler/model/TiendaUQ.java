@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,40 +65,56 @@ public class TiendaUQ {
         return tienda;
     }
 
-    public Cajero verficiarCajero(int documentoIdentidad,String contrasena) throws ContrasenaException {
+    public Cajero verficiarCajero(int documentoIdentidad,String contrasenia) throws ContrasenaException, SQLException {
+        String consulta = "SELECT * FROM Cajero WHERE documentoEntidad=?";
+        PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+        stmt.setInt(1, documentoIdentidad);
 
-        for(Cajero cajero: cajeros)
+        ResultSet rs = stmt.executeQuery();
+
+        while(rs.next())
         {
-            if(cajero.getDocumentoEntidad()==documentoIdentidad)
+            String contrasena = rs.getString("contrasena");
+            if(contrasena.equals(contrasenia))
             {
-                if(cajero.getContrasena().equals(contrasena))
-                {
-                    return cajero;
-                }
-                else
-                {
-                    throw new ContrasenaException("La contrasena es incorrecta");
-                }
+                int documentoEntidad = rs.getInt("documentoEntidad");
+                String nombre = rs.getString("nombre");
+                String telefono = rs.getString("telefono");
+                String correo = rs.getString("correo");
+                double salario =rs.getDouble("salario");
+                return new Cajero(contrasena,nombre,telefono,correo,documentoEntidad,salario);
+            }
+            else
+            {
+                throw new ContrasenaException("Contraseña incorrecta");
             }
         }
-
         return null;
     }
 
-    public Administrador verficiarAdministrador(int documentoIdentidad,String contrasena) throws ContrasenaException {
+    public Administrador verficiarAdministrador(int documentoIdentidad,String contrasenia) throws ContrasenaException, SQLException {
 
-        for(Administrador administrador : administradores)
+        String consulta = "SELECT * FROM Administrador WHERE documentoEntidad=?";
+        PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+        stmt.setInt(1, documentoIdentidad);
+
+        ResultSet rs = stmt.executeQuery();
+
+        while(rs.next())
         {
-            if(administrador.getDocumentoEntidad()==documentoIdentidad)
+            String contrasena = rs.getString("contrasena");
+            if(contrasena.equals(contrasenia))
             {
-                if(administrador.getContrasena().equals(contrasena))
-                {
-                    return administrador;
-                }
-                else
-                {
-                    throw new ContrasenaException("La contrasena es incorrecta");
-                }
+                int documentoEntidad = rs.getInt("documentoEntidad");
+                String nombre = rs.getString("nombre");
+                String telefono = rs.getString("telefono");
+                String correo = rs.getString("correo");
+                double salario =rs.getDouble("salario");
+                return new Administrador(salario,contrasena,nombre,telefono,correo,documentoEntidad);
+            }
+            else
+            {
+                throw new ContrasenaException("Contraseña incorrecta");
             }
         }
         return null;

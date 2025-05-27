@@ -97,8 +97,8 @@ public class VentanaAdministradorController {
         {
             String nombre=agregarNombreTxtField.getText();
             int codigo=Integer.parseInt(agregarCodigoTxtfield.getText());
-            int disponibles=Integer.parseInt(agregarDisponiblesProductoTxtField.getText());
-            int vendidas=Integer.parseInt(agregarVendidasProductoTxtField.getText());
+            int disponibles=unidadesDisponiblesSpinner.getValue();
+            int vendidas=unidadesVendidasSpinner.getValue();
             String categoria=categoriasComboBox.getSelectionModel().getSelectedItem().getNombre();
             if(nombre.isEmpty())
             {

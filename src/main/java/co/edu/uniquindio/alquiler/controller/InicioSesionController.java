@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class InicioSesionController {
 
@@ -72,7 +73,7 @@ public class InicioSesionController {
                 alert.setContentText(e.getMessage());
                 alert.show();
             }
-            catch (IOException e)
+            catch (IOException | SQLException e)
             {
                 throw new RuntimeException(e);
             }
