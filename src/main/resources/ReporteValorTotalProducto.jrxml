@@ -1,0 +1,73 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="ReporteProductos" language="java" columnCount="1" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="123e4567-e89b-12d3-a456-426614174000">
+	<query language="sql"><![CDATA[SELECT 
+            p.codigo AS codigoProducto,
+            p.nombre AS nombreProducto,
+            p.categoria AS Categoria,
+            p.valor AS ValorProducto,
+            (c.utilidad * p.valor) AS valorUtilidad,
+            (c.iva * p.valor) AS ValorIva,
+            (p.valor + (c.utilidad * p.valor) + (c.iva * p.valor)) AS valorProducto
+        FROM Producto p
+        JOIN CategoriaProducto c ON p.categoria = c.nombre]]></query>
+	<field name="codigoProducto" class="java.lang.String"/>
+	<field name="nombreProducto" class="java.lang.String"/>
+	<field name="Categoria" class="java.lang.String"/>
+	<field name="ValorProducto" class="java.lang.Double"/>
+	<field name="valorUtilidad" class="java.lang.Double"/>
+	<field name="ValorIva" class="java.lang.Double"/>
+	<field name="valorProducto" class="java.lang.Double"/>
+	<title height="50" splitType="Stretch">
+		<element kind="staticText" uuid="11f1c1ae-2b03-4e94-8c5c-6d705a05609a" stretchType="NoStretch" x="0" y="0" width="555" height="30" hTextAlign="Center">
+			<text><![CDATA[Reporte de Productos]]></text>
+		</element>
+	</title>
+	<columnHeader height="20" splitType="Stretch">
+		<element kind="textField" uuid="0a507b82-1011-47fa-8558-0dbeb0c30f7b" stretchType="NoStretch" x="0" y="0" width="70" height="20">
+			<expression><![CDATA["Código"]]></expression>
+		</element>
+		<element kind="textField" uuid="1b350ff1-7e36-4791-9a30-cf502d1919b3" stretchType="NoStretch" x="70" y="0" width="100" height="20">
+			<expression><![CDATA["Nombre"]]></expression>
+		</element>
+		<element kind="textField" uuid="b7fbdeb3-3192-445c-aa51-0daef4e7feaa" stretchType="NoStretch" x="170" y="0" width="80" height="20">
+			<expression><![CDATA["Categoría"]]></expression>
+		</element>
+		<element kind="textField" uuid="4ee43d85-5621-482c-8fc4-ea20bf6c8e8a" stretchType="NoStretch" x="250" y="0" width="80" height="20">
+			<expression><![CDATA["Valor"]]></expression>
+		</element>
+		<element kind="textField" uuid="b896a32c-9484-4a78-84d6-28a21c1603bd" stretchType="NoStretch" x="330" y="0" width="80" height="20">
+			<expression><![CDATA["Utilidad"]]></expression>
+		</element>
+		<element kind="textField" uuid="f24af0f9-5837-47a1-9b13-54f492284d5d" stretchType="NoStretch" x="410" y="0" width="70" height="20">
+			<expression><![CDATA["IVA"]]></expression>
+		</element>
+		<element kind="textField" uuid="11e5bb76-075d-45d7-a407-2c8dcdf42057" stretchType="NoStretch" x="480" y="0" width="75" height="20">
+			<expression><![CDATA["Total"]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<element kind="textField" uuid="e0c8a69d-58f7-43ca-87e6-f892bdee53a7" stretchType="NoStretch" x="0" y="0" width="70" height="20">
+				<expression><![CDATA[$F{codigoProducto}]]></expression>
+			</element>
+			<element kind="textField" uuid="13760960-89c1-4c67-baaf-1f586512c8d8" stretchType="NoStretch" x="70" y="0" width="100" height="20">
+				<expression><![CDATA[$F{nombreProducto}]]></expression>
+			</element>
+			<element kind="textField" uuid="01ae2968-71c4-4a19-9bf7-98fffe6429dc" stretchType="NoStretch" x="170" y="0" width="80" height="20">
+				<expression><![CDATA[$F{Categoria}]]></expression>
+			</element>
+			<element kind="textField" uuid="5fe8ae60-cbe2-4791-8a1d-f8bae1602429" stretchType="NoStretch" x="250" y="0" width="80" height="20">
+				<expression><![CDATA[$F{ValorProducto}]]></expression>
+			</element>
+			<element kind="textField" uuid="ec9da9dd-8db1-41cb-884b-d8996a85b553" stretchType="NoStretch" x="330" y="0" width="80" height="20">
+				<expression><![CDATA[$F{valorUtilidad}]]></expression>
+			</element>
+			<element kind="textField" uuid="81c8886e-0776-4e31-bd2c-b4a698471a2f" stretchType="NoStretch" x="410" y="0" width="70" height="20">
+				<expression><![CDATA[$F{ValorIva}]]></expression>
+			</element>
+			<element kind="textField" uuid="5471e33a-3ceb-4a56-b65a-90bce1e6ff0e" stretchType="NoStretch" x="480" y="0" width="75" height="20">
+				<expression><![CDATA[$F{valorProducto}]]></expression>
+			</element>
+		</band>
+	</detail>
+</jasperReport>
