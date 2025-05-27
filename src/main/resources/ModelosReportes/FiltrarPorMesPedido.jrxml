@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+"http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="ReportePedidosPorMes" pageWidth="595" pageHeight="842"
+              columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="eae0f538-9fdc-4e69-9de4-bb6e3429db32">
+
+    <parameter name="MES" class="java.lang.Integer"/>
+
+    <queryString>
+        <![CDATA[
+            SELECT * FROM Pedido WHERE MONTH(fechaPedido) = $P{MES}
+        ]]>
+    </queryString>
+
+    <field name="codigo" class="java.lang.Integer"/>
+    <field name="fechaPedido" class="java.sql.Timestamp"/>
+    <field name="codigoAdministrador" class="java.lang.Integer"/>
+    <field name="codigoProveedor" class="java.lang.Integer"/>
+
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30" uuid="title-text"/>
+                <textElement textAlignment="Center">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reporte de Pedidos por Mes]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="25">
+            <staticText>
+                <reportElement x="0" y="0" width="100" height="20" uuid="col1"/>
+                <textElement/><text><![CDATA[Código]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="100" y="0" width="200" height="20" uuid="col2"/>
+                <textElement/><text><![CDATA[Fecha Pedido]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="300" y="0" width="100" height="20" uuid="col3"/>
+                <textElement/><text><![CDATA[Admin]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="400" y="0" width="100" height="20" uuid="col4"/>
+                <textElement/><text><![CDATA[Proveedor]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="100" height="20" uuid="det1"/>
+                <textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="0" width="200" height="20" uuid="det2"/>
+                <textFieldExpression><![CDATA[$F{fechaPedido}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="300" y="0" width="100" height="20" uuid="det3"/>
+                <textFieldExpression><![CDATA[$F{codigoAdministrador}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="400" y="0" width="100" height="20" uuid="det4"/>
+                <textFieldExpression><![CDATA[$F{codigoProveedor}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+</jasperReport>

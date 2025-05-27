@@ -22,6 +22,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -718,17 +719,32 @@ public class TiendaUQ {
 
      */
 
-    public void generarReporteValorTotalProducto(int tipoReporte) throws JRException {
+    public void generarReporte(int tipoReporte,int mes) throws JRException {
+        InputStream jrxml;
+        JasperReport reporte;
+        JasperPrint jasperPrint;
         if(tipoReporte==1)
         {
-            InputStream jrxml = getClass().getResourceAsStream("/ReporteValorTotalProducto.jrxml");
-
+            jrxml = getClass().getResourceAsStream("/ReporteValorTotalProducto.jrxml");
             if (jrxml == null) {
                 throw new RuntimeException("No se encontró el archivo .jrxml en el classpath");
             }
 
-            JasperReport reporte = JasperCompileManager.compileReport(jrxml);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexionBD.getConexionT());
+            reporte = JasperCompileManager.compileReport(jrxml);
+            jasperPrint = JasperFillManager.fillReport(reporte, null, conexionBD.getConexionT());
+            JasperViewer.viewReport(jasperPrint, false);
+        }
+        else if(tipoReporte==2)
+        {
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("MES", mes);
+            jrxml = getClass().getResourceAsStream("/ReporteValorTotalProducto.jrxml");
+            if (jrxml == null) {
+                throw new RuntimeException("No se encontró el archivo .jrxml en el classpath");
+            }
+
+            reporte = JasperCompileManager.compileReport(jrxml);
+            jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexionBD.getConexionT());
             JasperViewer.viewReport(jasperPrint, false);
         }
     }

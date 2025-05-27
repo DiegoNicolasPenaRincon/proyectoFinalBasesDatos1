@@ -17,9 +17,11 @@ import java.util.Map;
 public class MostrarConsultasAdminController {
 
     @FXML
-    private Button reporteCalcularValorButton;
+    private Spinner<Integer> mesSpinner;
     @FXML
-    private Spinner<Integer> valorTotalSpinner;
+    private Button fechaReporteButton;
+    @FXML
+    private Button reporteCalcularValorButton;
     @FXML
     private TableView<ContenedorGeneral> generalTable;
     @FXML
@@ -70,17 +72,20 @@ public class MostrarConsultasAdminController {
 
 
     public void initialize() {
-        SpinnerValueFactory<Integer> valueFactory =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30,1);
-        valorTotalSpinner.setValueFactory(valueFactory);
 
 
         pedidosTable.setVisible(false);
         verificarProductosButton.setVisible(false);
         modificacionesTable.setVisible(false);
         generalTable.setVisible(false);
-        valorTotalSpinner.setVisible(false);
         reporteCalcularValorButton.setVisible(false);
+        fechaReporteButton.setVisible(false);
+        mesSpinner.setVisible(false);
+
+        SpinnerValueFactory<Integer> valueFactory =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12,1);
+        mesSpinner.setValueFactory(valueFactory);
+
 
         if(consultaDato.getValor()==1)
         {
@@ -93,6 +98,8 @@ public class MostrarConsultasAdminController {
             nombreProveedorColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNombreProveedor())));
             fechaPedidoColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getFechaPedido())));
             verificarProductosButton.setVisible(true);
+            mesSpinner.setVisible(true);
+            fechaReporteButton.setVisible(true);
 
             this.pedidosTable.setItems(FXCollections.observableList(tiendaUQ.importarConsultaPedido(consultaDato.getcodigoUniversal())));
         }
@@ -111,7 +118,6 @@ public class MostrarConsultasAdminController {
         {
             consultaLbl.setText("Consulta generalidades");
             generalTable.setVisible(true);
-            valorTotalSpinner.setVisible(true);
             reporteCalcularValorButton.setVisible(true);
 
 
@@ -134,7 +140,18 @@ public class MostrarConsultasAdminController {
     public void calcularValorReporteOnAction(ActionEvent actionEvent) {
         try
         {
-            tiendaUQ.generarReporteValorTotalProducto(1);
+            tiendaUQ.generarReporte(1);
+        }
+        catch (JRException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void generarReportesFechaOnAztion(ActionEvent actionEvent) {
+        try
+        {
+            tiendaUQ.generarReporte(2);
         }
         catch (JRException e)
         {

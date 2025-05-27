@@ -2,20 +2,21 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="841.0" stylesheets="@estilos/mostrarConsultas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.MostrarConsultasAdminController">
     <children>
-        <TableView fx:id="pedidosTable" layoutX="36.0" layoutY="62.0" prefHeight="200.0" prefWidth="742.0" styleClass="table-view" visible="false">
+        <TableView fx:id="pedidosTable" layoutX="24.0" layoutY="96.0" prefHeight="200.0" prefWidth="803.0" styleClass="table-view">
             <columns>
-                <TableColumn fx:id="codigoPedidoColumn" prefWidth="104.0" text="Codigo pedido" />
-                <TableColumn fx:id="codigoAdministradorColumn" prefWidth="133.0" text="Codigo administrador" />
-                <TableColumn fx:id="nombreAdministradorColumn" prefWidth="146.0" text="Nombre administrador" />
-                <TableColumn fx:id="codigoProveedorColumn" prefWidth="111.0" text="Codigo proveedor" />
-                <TableColumn fx:id="nombreProveedorColumn" prefWidth="121.0" text="Nombre proveedor" />
-                <TableColumn fx:id="fechaPedidoColumn" prefWidth="126.0" text="Fecha pedido" />
+                <TableColumn fx:id="codigoPedidoColumn" prefWidth="117.0" text="Codigo pedido" />
+                <TableColumn fx:id="codigoAdministradorColumn" prefWidth="129.0" text="Codigo administrador" />
+                <TableColumn fx:id="nombreAdministradorColumn" prefWidth="158.0" text="Nombre administrador" />
+                <TableColumn fx:id="codigoProveedorColumn" prefWidth="140.0" text="Codigo proveedor" />
+                <TableColumn fx:id="nombreProveedorColumn" prefWidth="153.0" text="Nombre proveedor" />
+                <TableColumn fx:id="fechaPedidoColumn" prefWidth="104.0" text="Fecha pedido" />
             </columns>
         </TableView>
 
@@ -30,7 +31,7 @@
             </columns>
         </TableView>
 
-        <TableView fx:id="generalTable" layoutX="44.0" layoutY="90.0" prefHeight="200.0" prefWidth="742.0" styleClass="table-view">
+        <TableView fx:id="generalTable" layoutX="44.0" layoutY="90.0" prefHeight="200.0" prefWidth="742.0" styleClass="table-view" visible="false">
             <columns>
                 <TableColumn fx:id="nombreGeneralColumn" prefWidth="133.33330917358398" text="Nombre producto" />
                 <TableColumn fx:id="codigoGeneralColumn" prefWidth="129.9999542236328" text="Codigo producto" />
@@ -42,7 +43,7 @@
             </columns>
         </TableView>
 
-        <Button fx:id="reporteCalcularValorButton" layoutX="73.0" layoutY="303.0" onAction="#calcularValorReporteOnAction" styleClass="button" text="Calcular valor total producto" />
+        <Button fx:id="reporteCalcularValorButton" layoutX="73.0" layoutY="303.0" onAction="#calcularValorReporteOnAction" styleClass="button" text="Calcular valor total producto" visible="false" />
       <AnchorPane layoutY="-5.0" prefHeight="85.0" prefWidth="841.0" style="-fx-background-color: #5EB0E8;">
          <children>
       
@@ -50,5 +51,7 @@
          </children>
       </AnchorPane>
       <AnchorPane layoutY="373.0" prefHeight="31.0" prefWidth="841.0" style="-fx-background-color: #5EB0E8;" />
+      <Button fx:id="fechaReporteButton" layoutX="24.0" layoutY="306.0" mnemonicParsing="false" onAction="#generarReportesFechaOnAztion" text="Generar reporte/filtrar por fecha" />
+      <Spinner fx:id="mesSpinner" layoutX="253.0" layoutY="309.0" />
     </children>
 </AnchorPane>
