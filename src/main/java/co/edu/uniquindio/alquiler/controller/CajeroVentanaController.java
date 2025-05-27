@@ -49,6 +49,8 @@ public class CajeroVentanaController {
     private TableColumn<Factura,String> idClienteColumn;
 
     public void verificarProductosOnAction(ActionEvent actionEvent) {
+        Factura factura=cajeroTable.getSelectionModel().getSelectedItem();
+
     }
-    
+
 }

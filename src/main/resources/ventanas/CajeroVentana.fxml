@@ -18,7 +18,6 @@
             <TableColumn fx:id="idClienteColumn" prefWidth="137.0" text="ID cliente" />
             <TableColumn fx:id="nombreClienteColumn" prefWidth="75.0" text="Nombre" />
             <TableColumn fx:id="telefonoClienteColumn" prefWidth="104.0" text="Telefono" />
-            <TableColumn fx:id="totalAdquiridosColumn" prefWidth="142.0" text="Total adquiridos" />
             <TableColumn fx:id="totalColumn" prefWidth="89.0" text="Total" />
         </columns>
       </TableView>

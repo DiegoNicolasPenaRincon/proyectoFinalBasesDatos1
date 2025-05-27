@@ -313,7 +313,6 @@ public class TiendaUQ {
                 Inventario inventario1=new Inventario(producto,unidadesAdquiridas,unidadesVendidas,codigoInventario,listaProveedoresInventario);
                 inventario.add(inventario1);
             }
-
         }
         catch (SQLException e)
         {
@@ -495,6 +494,32 @@ public class TiendaUQ {
             }
         }
         return null;
+    }
+
+    public void importarDatosFacturaCajero(int idCajeroSesionIniciada) throws SQLException {
+        String consulta = """
+            SELECT f.FechaPago, f.codigo, f.documentoEntidadCliente, 
+                   c.nombre, c.telefono, f.total 
+            FROM Factura f
+            JOIN Cliente c ON c.documentoEntidad = f.documentoEntidadCliente
+            WHERE f.documentoEntidadCliente = ?
+            GROUP BY f.FechaPago, f.codigo, f.documentoEntidadCliente, 
+                     c.nombre, c.telefono, f.total;
+        """;
+        PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+        stmt.setInt(1, idCajeroSesionIniciada);
+
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            LocalDateTime fechaPago = rs.getTimestamp("FechaPago").toLocalDateTime();
+            int codigo = rs.getInt("codigo");
+            int documentoEntidadCliente = rs.getInt("documentoEntidadCliente");
+            String nombre = rs.getString("nombre");
+            String telefono = rs.getString("telefono");
+            double total = rs.getDouble("total");
+
+        }
     }
 
 }
