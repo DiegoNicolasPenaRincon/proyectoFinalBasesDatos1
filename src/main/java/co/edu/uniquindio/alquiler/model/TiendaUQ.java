@@ -719,7 +719,7 @@ public class TiendaUQ {
 
      */
 
-    public void generarReporte(int tipoReporte,int mes) throws JRException {
+    public void generarReporte(int tipoReporte,int mes,int codigoPedido) throws JRException {
         InputStream jrxml;
         JasperReport reporte;
         JasperPrint jasperPrint;
@@ -746,6 +746,21 @@ public class TiendaUQ {
 
             reporte = JasperCompileManager.compileReport(jrxml);
             jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexionBD.getConexionT());
+            JasperViewer.viewReport(jasperPrint, false);
+        }
+        else if(tipoReporte==3)
+        {
+            jrxml = getClass().getResourceAsStream("/MostrarProductosPedido.jrxml");
+            Map<String, Object> params = new HashMap<>();
+            params.put("codigoPedido", codigoPedido);
+
+            if (jrxml == null)
+            {
+                throw new RuntimeException("No se encontró el archivo .jrxml en el classpath");
+            }
+
+            reporte = JasperCompileManager.compileReport(jrxml);
+            jasperPrint = JasperFillManager.fillReport(reporte, params, conexionBD.getConexionT());
             JasperViewer.viewReport(jasperPrint, false);
         }
     }

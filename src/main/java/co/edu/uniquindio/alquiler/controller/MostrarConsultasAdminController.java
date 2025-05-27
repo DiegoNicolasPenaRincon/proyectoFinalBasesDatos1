@@ -134,13 +134,21 @@ public class MostrarConsultasAdminController {
     }
 
     public void verificarProductosOnAction(ActionEvent actionEvent) {
-
+        ContenedorConsultaPedido consultar=pedidosTable.getSelectionModel().getSelectedItem();
+        try
+        {
+            tiendaUQ.generarReporte(3,0,consultar.getCodigoPedido());
+        }
+        catch (JRException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void calcularValorReporteOnAction(ActionEvent actionEvent) {
         try
         {
-            tiendaUQ.generarReporte(1,0);
+            tiendaUQ.generarReporte(1,0,0);
         }
         catch (JRException e)
         {
@@ -151,7 +159,7 @@ public class MostrarConsultasAdminController {
     public void generarReportesFechaOnAztion(ActionEvent actionEvent) {
         try
         {
-            tiendaUQ.generarReporte(2,4);
+            tiendaUQ.generarReporte(2,4,0);
         }
         catch (JRException e)
         {
