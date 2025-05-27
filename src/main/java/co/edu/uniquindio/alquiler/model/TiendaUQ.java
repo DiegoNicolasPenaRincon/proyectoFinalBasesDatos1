@@ -236,38 +236,6 @@ public class TiendaUQ {
             }
 
 
-            consulta = "SELECT * FROM Producto";
-            rs = stmt.executeQuery(consulta);
-
-            while(rs.next())
-            {
-                String nombreProducto = rs.getString("nombre");
-                String categoriaProducto = rs.getString("categoria");
-                int codigoProucto =rs.getInt("codigo");
-                int unidadesDisponibles =rs.getInt("undidadesDisponibles");
-                Producto producto=new Producto(nombreProducto,buscarCategoria(categoriaProducto),codigoProucto,unidadesDisponibles);
-                productos.add(producto);
-
-            }
-
-            consulta = "SELECT * FROM Administrador";
-            rs = stmt.executeQuery(consulta);
-
-            while(rs.next())
-            {
-                String nombreAdmin = rs.getString("nombre");
-                String telefonoAdmin = rs.getString("telefono");
-                String correoAdmin =rs.getString("correo");
-                int documentoEntidad =rs.getInt("documentoEntidad");
-                double salarioAdmin=rs.getDouble("salario");
-                String contrasenaAdmin = rs.getString("contrasena");
-
-                Administrador administrador=new Administrador(salarioAdmin,contrasenaAdmin,
-                        nombreAdmin, telefonoAdmin,correoAdmin,documentoEntidad);
-                System.out.println(administrador.getDocumentoEntidad());
-                administradores.add(administrador);
-            }
-
             consulta = "SELECT * FROM Proveedor";
             rs = stmt.executeQuery(consulta);
 
@@ -297,106 +265,7 @@ public class TiendaUQ {
                 proveedores.add(proveedor);
             }
 
-            consulta = "SELECT * FROM Pedido";
-            rs = stmt.executeQuery(consulta);
 
-            while(rs.next())
-            {
-                int codigoAdmin =rs.getInt("codigoAdministrador");
-                LocalDate fechaPedido = rs.getDate("fechaPedido").toLocalDate();
-                int codigo =rs.getInt("codigo");
-                int codigoProveedor=rs.getInt("codigoProveedor");
-
-                String consulta2="SELECT * FROM Pedido_Producto";
-                Statement stmt2 = conexionBD.getConexionT().createStatement();
-                ResultSet rs2 = stmt2.executeQuery(consulta2);
-
-                Proveedor proveedorPedido=buscarProveedor(codigoProveedor);
-
-                Administrador adminPedido=buscarAdmin(codigoAdmin);
-
-
-                ArrayList<Producto> productosPedido=new ArrayList<>();
-
-                while(rs2.next())
-                {
-                    if(rs2.getInt("codigoPedido")==codigo)
-                    {
-                        int codigoProducto=rs2.getInt("codigoProducto");
-                        productosPedido.add(buscarProducto(codigoProducto));
-                    }
-                }
-
-                Pedido pedido=new Pedido(codigo,proveedorPedido, fechaPedido.atStartOfDay(),adminPedido,productosPedido);
-                adminPedido.getPedidos().add(pedido);
-                proveedorPedido.getPedidos().add(pedido);
-                pedidos.add(pedido);
-            }
-
-
-            consulta = "SELECT * FROM Cajero";
-            rs = stmt.executeQuery(consulta);
-
-
-            while(rs.next())
-            {
-                String nombreCajero = rs.getString("nombre");
-                String telefonoCajero = rs.getString("telefono");
-                String correoCajero =rs.getString("correo");
-                int documentoEntidad =rs.getInt("documentoEntidad");
-                double salarioCajero=rs.getDouble("salario");
-                String contrasenaCajero = rs.getString("contrasena");
-
-                Cajero cajero=new Cajero(contrasenaCajero,nombreCajero,telefonoCajero,correoCajero,documentoEntidad,salarioCajero);
-                cajeros.add(cajero);
-            }
-
-            consulta = "SELECT * FROM Cliente";
-            rs = stmt.executeQuery(consulta);
-
-            while(rs.next())
-            {
-                String nombreCliente = rs.getString("nombre");
-                String telefonoCliente = rs.getString("telefono");
-                String correoCliente =rs.getString("correo");
-                int documentoEntidad =rs.getInt("documentoEntidad");
-
-                Cliente cliente=new Cliente(nombreCliente,telefonoCliente,correoCliente,documentoEntidad);
-                clientes.add(cliente);
-            }
-
-            consulta = "SELECT * FROM Factura";
-            rs = stmt.executeQuery(consulta);
-
-            while(rs.next())
-            {
-                LocalDate fechaPago = rs.getDate("fechaPago").toLocalDate();
-                int codigoFactura = rs.getInt("codigo");
-                double total =rs.getDouble("total");
-                int documentoEntidadCajero=rs.getInt("documentoEntidadCajero");
-                int documentoEntidadCliente =rs.getInt("documentoEntidadCliente");
-                String tipo=rs.getString("tipo");
-
-                String consulta2="SELECT * FROM Factura_Producto";
-                Statement stmt2 = conexionBD.getConexionT().createStatement();
-                ResultSet rs2 = stmt2.executeQuery(consulta2);
-
-                ArrayList<Producto> productosFactura=new ArrayList<>();
-
-                while(rs2.next())
-                {
-                    if(rs2.getInt("codigoFactura")==codigoFactura)
-                    {
-                        int codigoProductoFactura=rs2.getInt("codigoProducto");
-                        productosFactura.add(buscarProducto(codigoProductoFactura));
-                    }
-                }
-
-                Factura factura=new Factura(documentoEntidadCliente,codigoFactura,documentoEntidadCajero,convertirTipoFactura(tipo), fechaPago.atStartOfDay(),total,productosFactura);
-                agregarFacturasCajero(documentoEntidadCajero,factura);
-                agregarFacturasCliente(documentoEntidadCliente,factura);
-                facturas.add(factura);
-            }
 
             consulta="SELECT * FROM Inventario";
             rs = stmt.executeQuery(consulta);
@@ -427,25 +296,6 @@ public class TiendaUQ {
                 Inventario inventario1=new Inventario(producto,unidadesAdquiridas,unidadesVendidas,codigoInventario,listaProveedoresInventario);
                 inventario.add(inventario1);
             }
-
-            consulta="SELECT * FROM Modificacion";
-            rs = stmt.executeQuery(consulta);
-
-            while(rs.next())
-            {
-                int codigoAdmin = rs.getInt("codigoAdmin");
-                int codigoInventario =rs.getInt("codigoInventario");
-                LocalDate fechaModificacion = rs.getDate("fechaModificacion").toLocalDate();
-                int codigoInstancia =rs.getInt("codigoInstancia");
-
-                Administrador admin1=buscarAdmin(codigoAdmin);
-                Inventario inventario=buscarInventario(codigoInventario);
-                Modificacion modificacion=new Modificacion(admin1, fechaModificacion.atStartOfDay(),codigoInstancia,inventario);
-                inventario.getModificaciones().add(modificacion);
-                admin1.getModificaciones().add(modificacion);
-                modificaciones.add(modificacion);
-            }
-
 
         }
         catch (SQLException e)
