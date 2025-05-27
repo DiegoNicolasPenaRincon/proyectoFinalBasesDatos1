@@ -1,80 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
-"http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
-              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-              name="ReportePedidosPorMes" pageWidth="595" pageHeight="842"
-              columnWidth="555" leftMargin="20" rightMargin="20"
-              topMargin="20" bottomMargin="20" uuid="eae0f538-9fdc-4e69-9de4-bb6e3429db32">
-
-    <parameter name="MES" class="java.lang.Integer"/>
-
-    <queryString>
-        <![CDATA[
-            SELECT * FROM Pedido WHERE MONTH(fechaPedido) = $P{MES}
-        ]]>
-    </queryString>
-
-    <field name="codigo" class="java.lang.Integer"/>
-    <field name="fechaPedido" class="java.sql.Timestamp"/>
-    <field name="codigoAdministrador" class="java.lang.Integer"/>
-    <field name="codigoProveedor" class="java.lang.Integer"/>
-
-    <title>
-        <band height="50">
-            <staticText>
-                <reportElement x="0" y="10" width="555" height="30" uuid="title-text"/>
-                <textElement textAlignment="Center">
-                    <font size="16" isBold="true"/>
-                </textElement>
-                <text><![CDATA[Reporte de Pedidos por Mes]]></text>
-            </staticText>
-        </band>
-    </title>
-
-    <columnHeader>
-        <band height="25">
-            <staticText>
-                <reportElement x="0" y="0" width="100" height="20" uuid="col1"/>
-                <textElement/><text><![CDATA[Código]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="100" y="0" width="200" height="20" uuid="col2"/>
-                <textElement/><text><![CDATA[Fecha Pedido]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="300" y="0" width="100" height="20" uuid="col3"/>
-                <textElement/><text><![CDATA[Admin]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="400" y="0" width="100" height="20" uuid="col4"/>
-                <textElement/><text><![CDATA[Proveedor]]></text>
-            </staticText>
-        </band>
-    </columnHeader>
-
-    <detail>
-        <band height="20">
-            <textField>
-                <reportElement x="0" y="0" width="100" height="20" uuid="det1"/>
-                <textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
-            </textField>
-            <textField>
-                <reportElement x="100" y="0" width="200" height="20" uuid="det2"/>
-                <textFieldExpression><![CDATA[$F{fechaPedido}]]></textFieldExpression>
-            </textField>
-            <textField>
-                <reportElement x="300" y="0" width="100" height="20" uuid="det3"/>
-                <textFieldExpression><![CDATA[$F{codigoAdministrador}]]></textFieldExpression>
-            </textField>
-            <textField>
-                <reportElement x="400" y="0" width="100" height="20" uuid="det4"/>
-                <textFieldExpression><![CDATA[$F{codigoProveedor}]]></textFieldExpression>
-            </textField>
-        </band>
-    </detail>
-
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="ReportePedidosPorMes" language="java" columnCount="1" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0a2c2c0e-3b79-4b55-901f-298fe73a4f70">
+	<parameter name="MES" class="java.lang.Integer"/>
+	<query language="sql"><![CDATA[SELECT * FROM Pedido WHERE MONTH(fechaPedido) = $P{MES}]]></query>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="fechaPedido" class="java.sql.Timestamp"/>
+	<field name="codigoAdministrador" class="java.lang.Integer"/>
+	<field name="codigoProveedor" class="java.lang.Integer"/>
+	<title height="50" splitType="Stretch">
+		<element kind="staticText" uuid="1fc3a7aa-03e7-4b42-8b2e-888f35b4e233" stretchType="NoStretch" x="0" y="10" width="555" height="30" fontSize="16.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[Reporte de Pedidos por Mes]]></text>
+		</element>
+	</title>
+	<columnHeader height="25" splitType="Stretch">
+		<element kind="staticText" uuid="cbf447e9-3cfd-44ea-a1fd-4c4e57f6811e" stretchType="NoStretch" x="0" y="0" width="100" height="20">
+			<text><![CDATA[Código]]></text>
+		</element>
+		<element kind="staticText" uuid="01a0f4f5-43ed-437c-8f93-bde0b8bc028e" stretchType="NoStretch" x="100" y="0" width="200" height="20">
+			<text><![CDATA[Fecha Pedido]]></text>
+		</element>
+		<element kind="staticText" uuid="f65d74c0-40d7-4e79-abe5-276b8a08c1d1" stretchType="NoStretch" x="300" y="0" width="100" height="20">
+			<text><![CDATA[Admin]]></text>
+		</element>
+		<element kind="staticText" uuid="4ad845d5-2906-4b84-b059-e3a0a16aeb1e" stretchType="NoStretch" x="400" y="0" width="100" height="20">
+			<text><![CDATA[Proveedor]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<element kind="textField" uuid="227e3c94-c2dc-4c2e-8b4f-01217c12f684" stretchType="NoStretch" x="0" y="0" width="100" height="20">
+				<expression><![CDATA[$F{codigo}]]></expression>
+			</element>
+			<element kind="textField" uuid="a6f6dfc6-3c28-406e-884a-203f1ab1707a" stretchType="NoStretch" x="100" y="0" width="200" height="20">
+				<expression><![CDATA[$F{fechaPedido}]]></expression>
+			</element>
+			<element kind="textField" uuid="0a6ddc18-362c-4930-b034-7fcb6c1e6817" stretchType="NoStretch" x="300" y="0" width="100" height="20">
+				<expression><![CDATA[$F{codigoAdministrador}]]></expression>
+			</element>
+			<element kind="textField" uuid="3b8027ce-0bfb-4043-b2aa-5a360db5e4e6" stretchType="NoStretch" x="400" y="0" width="100" height="20">
+				<expression><![CDATA[$F{codigoProveedor}]]></expression>
+			</element>
+		</band>
+	</detail>
 </jasperReport>
