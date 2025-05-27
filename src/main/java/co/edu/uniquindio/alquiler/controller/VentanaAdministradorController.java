@@ -98,7 +98,7 @@ public class VentanaAdministradorController {
     }
 
 
-    public void agregarProductoOnAction(ActionEvent actionEvent) {
+    /*public void agregarProductoOnAction(ActionEvent actionEvent) {
         try
         {
             String nombre=agregarNombreTxtField.getText();
@@ -123,7 +123,7 @@ public class VentanaAdministradorController {
                 throw new AtributoExistenteException("Ese producto ya existe");
             }
 
-            Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,disponibles);
+            Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,disponibles,);
             Inventario inventario=new Inventario(producto,disponibles,vendidas,tiendaUQ.seleccionarNumeroAleatorio(1),proveedoresApoyo);
             Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),inventario);
             inventario.getModificaciones().add(inicial);
@@ -144,6 +144,8 @@ public class VentanaAdministradorController {
             alert.show();
         }
     }
+
+     */
 
 
 

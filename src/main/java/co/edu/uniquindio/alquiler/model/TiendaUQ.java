@@ -710,11 +710,12 @@ public class TiendaUQ {
                 
             }
 
-             */
+
         }
     }
 
      */
+
 
     public void generarReporte() {
         

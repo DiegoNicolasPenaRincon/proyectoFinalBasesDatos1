@@ -43,7 +43,7 @@
             </columns>
         </TableView>
 
-        <Button layoutX="73.0" layoutY="303.0" styleClass="button" text="Calcular valor total" />
+        <Button fx:id="reporteCalcularValorButton" layoutX="73.0" layoutY="303.0" onAction="#calcularValorReporteOnAction" styleClass="button" text="Calcular valor total" />
         <Spinner fx:id="valorTotalSpinner" layoutX="225.0" layoutY="306.0" styleClass="spinner" />
       <AnchorPane layoutY="-5.0" prefHeight="85.0" prefWidth="841.0" style="-fx-background-color: #5EB0E8;">
          <children>

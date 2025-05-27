@@ -6,9 +6,17 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 public class MostrarConsultasAdminController {
 
+    @FXML
+    private Button reporteCalcularValorButton;
+    @FXML
+    private Spinner<Integer> valorTotalSpinner;
     @FXML
     private Button generarReporteButton;
     @FXML
@@ -119,7 +127,15 @@ public class MostrarConsultasAdminController {
         }
     }
 
-    public void verificarProductosOnAction(ActionEvent actionEvent) {
+    public void verificarProductosOnAction(ActionEvent actionEvent) throws JRException {
+        String rutaReporte = "src/main/resources/ReportesModelos/ReporteProductos.jasper";
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(rutaReporte, null, tiendaUQ.conexionBD);
+
+        JasperExportManager.exportReportToPdfFile(jasperPrint, "ReporteProductos.pdf");
+    }
+
+    public void calcularValorReporteOnAction(ActionEvent actionEvent) {
 
     }
 }
