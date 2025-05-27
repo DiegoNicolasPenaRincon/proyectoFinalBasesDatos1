@@ -329,7 +329,7 @@ public class TiendaUQ {
         return TipoFactura.PROVEEDOR;
     }
 
-    /*public Producto buscarProducto(int codigoEntrante) throws SQLException {
+    public Producto buscarProducto(int codigoEntrante) throws SQLException {
         String consulta = "SELECT * FROM Producto WHERE codigo=?";
         PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
         stmt.setInt(1, codigoEntrante);
@@ -350,8 +350,6 @@ public class TiendaUQ {
         }
         return null;
     }
-    
-     */
 
     public Administrador buscarAdmin(int codigoAdmin) {
         for(int i=0;i<administradores.size();i++)
