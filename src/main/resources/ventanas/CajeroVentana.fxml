@@ -5,32 +5,49 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
+<AnchorPane prefHeight="595.0" prefWidth="984.0" stylesheets="@estilos/cajeroVentana.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.CajeroVentanaController">
 
-<AnchorPane prefHeight="567.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.CajeroVentanaController">
-   <children>
-      <Label fx:id="opcionesCajeroLbl" layoutX="368.0" layoutY="33.0" text="Opciones cajero" />
-      <Button fx:id="verificarProductosButton" layoutX="319.0" layoutY="276.0" mnemonicParsing="false" onAction="#verificarProductosOnAction" prefHeight="25.0" prefWidth="184.0" text="Verificar productos adquiridos" />
-      <TableView fx:id="cajeroTable" layoutX="93.0" layoutY="62.0" prefHeight="200.0" prefWidth="674.0">
-        <columns>
-          <TableColumn fx:id="fechaPagoolumn" prefWidth="118.0" text="Fecha pago" />
-          <TableColumn fx:id="codigoFacturaColumn" prefWidth="153.0" text="Codigo factura" />
-            <TableColumn fx:id="idClienteColumn" prefWidth="137.0" text="ID cliente" />
-            <TableColumn fx:id="nombreClienteColumn" prefWidth="75.0" text="Nombre" />
-            <TableColumn fx:id="telefonoClienteColumn" prefWidth="104.0" text="Telefono" />
-            <TableColumn fx:id="totalColumn" prefWidth="89.0" text="Total" />
-        </columns>
-      </TableView>
-      <TableView fx:id="productosAdquiridosTable" layoutX="10.0" layoutY="326.0" prefHeight="200.0" prefWidth="960.0">
-         <columns>
-            <TableColumn fx:id="nombreProductoColumn" prefWidth="118.0" text="Nombre producto" />
-            <TableColumn fx:id="codigoProductoColumn" prefWidth="153.0" text="Codigo producto" />
-            <TableColumn fx:id="categoriaProductoColumn" prefWidth="137.0" text="Categoria producto" />
-            <TableColumn fx:id="nombreProveedorColumn" prefWidth="127.0" text="Nombre proveedor" />
-            <TableColumn fx:id="codigoProveedorColumn" prefWidth="122.0" text="Codigo proveedor" />
-            <TableColumn fx:id="direccionProveedorColumn" prefWidth="173.0" text="Direccion proveedor" />
-            <TableColumn fx:id="cantidadProductoColumn" prefWidth="129.0" text="Cantidad Producto" />
-         </columns>
-      </TableView>
-   </children>
+    <children>
+        <VBox alignment="TOP_CENTER" layoutX="30" layoutY="20" minHeight="-Infinity" minWidth="-Infinity" prefWidth="924" spacing="20">
+
+                  <!-- Título -->
+            <Label fx:id="opcionesCajeroLbl" styleClass="titulo" text="Opciones cajero" />
+
+            <!-- Tabla de facturas -->
+            <TableView fx:id="cajeroTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="749.0" styleClass="tabla">
+                <columns>
+                    <TableColumn fx:id="fechaPagoolumn" prefWidth="118.0" text="Fecha pago" />
+                    <TableColumn fx:id="codigoFacturaColumn" prefWidth="153.0" text="Código factura" />
+                    <TableColumn fx:id="idClienteColumn" prefWidth="137.0" text="ID cliente" />
+                    <TableColumn fx:id="nombreClienteColumn" prefWidth="177.33331298828125" text="Nombre" />
+                    <TableColumn fx:id="telefonoClienteColumn" prefWidth="152.0" text="Teléfono" />
+                    <TableColumn fx:id="totalColumn" prefWidth="165.33331298828125" text="Total" />
+                </columns>
+            </TableView>
+
+            <!-- Botón -->
+            <Button fx:id="verificarProductosButton" onAction="#verificarProductosOnAction" prefWidth="300" styleClass="boton" text="Verificar productos adquiridos" />
+
+            <!-- Tabla de productos adquiridos -->
+            <TableView fx:id="productosAdquiridosTable" prefHeight="200.0" prefWidth="900.0" styleClass="tabla">
+                <columns>
+                    <TableColumn fx:id="nombreProductoColumn" prefWidth="118.0" text="Nombre producto" />
+                    <TableColumn fx:id="codigoProductoColumn" prefWidth="153.0" text="Código producto" />
+                    <TableColumn fx:id="categoriaProductoColumn" prefWidth="137.0" text="Categoría producto" />
+                    <TableColumn fx:id="nombreProveedorColumn" prefWidth="127.0" text="Nombre proveedor" />
+                    <TableColumn fx:id="codigoProveedorColumn" prefWidth="122.0" text="Código proveedor" />
+                    <TableColumn fx:id="direccionProveedorColumn" prefWidth="123.33331298828125" text="Dirección proveedor" />
+                    <TableColumn fx:id="cantidadProductoColumn" prefWidth="120.00006103515625" text="Cantidad producto" />
+                </columns>
+            </TableView>
+
+        </VBox>
+      <AnchorPane layoutY="-2.0" prefHeight="85.0" prefWidth="984.0" style="-fx-background-color: #5EB0E8;">
+         <children>
+            <Label fx:id="opcionesCajeroLbl1" layoutX="387.0" layoutY="11.0" styleClass="titulo" text="Opciones cajero" />
+         </children>
+      </AnchorPane>
+    </children>
 </AnchorPane>

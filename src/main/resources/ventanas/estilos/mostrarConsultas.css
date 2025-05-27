@@ -1,0 +1,41 @@
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #343a40;
+}
+
+.button {
+    -fx-background-color: #0d6efd;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 8 15 8 15;
+}
+
+.button:hover {
+    -fx-background-color: #0b5ed7;
+}
+
+.table-view {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+}
+
+.spinner {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #ced4da;
+}

@@ -7,41 +7,50 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<AnchorPane prefHeight="400.0" prefWidth="841.0" stylesheets="@estilos/mostrarConsultas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.MostrarConsultasAdminController">
+    <children>
+        <TableView fx:id="pedidosTable" layoutX="36.0" layoutY="62.0" prefHeight="200.0" prefWidth="742.0" styleClass="table-view" visible="false">
+            <columns>
+                <TableColumn fx:id="codigoPedidoColumn" prefWidth="104.0" text="Codigo pedido" />
+                <TableColumn fx:id="codigoAdministradorColumn" prefWidth="133.0" text="Codigo administrador" />
+                <TableColumn fx:id="nombreAdministradorColumn" prefWidth="146.0" text="Nombre administrador" />
+                <TableColumn fx:id="codigoProveedorColumn" prefWidth="111.0" text="Codigo proveedor" />
+                <TableColumn fx:id="nombreProveedorColumn" prefWidth="121.0" text="Nombre proveedor" />
+                <TableColumn fx:id="fechaPedidoColumn" prefWidth="126.0" text="Fecha pedido" />
+            </columns>
+        </TableView>
 
-<AnchorPane prefHeight="400.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.MostrarConsultasAdminController">
-   <children>
-      <TableView fx:id="pedidosTable" layoutX="36.0" layoutY="62.0" prefHeight="200.0" prefWidth="742.0" visible="false">
-        <columns>
-          <TableColumn fx:id="codigoPedidoColumn" prefWidth="104.0" text="Codigo pedido" />
-          <TableColumn fx:id="codigoAdministradorColumn" prefWidth="133.0" text="Codigo administrador" />
-            <TableColumn fx:id="nombreAdministradorColumn" prefWidth="146.0" text="Nombre administrador" />
-            <TableColumn fx:id="codigoProveedorColumn" prefWidth="111.0" text="Codigo proveedor" />
-            <TableColumn fx:id="nombreProveedorColumn" prefWidth="121.0" text="Nombre proveedor" />
-            <TableColumn fx:id="fechaPedidoColumn" prefWidth="126.0" text="Fecha pedido" />
-        </columns>
-      </TableView>
-      <Label fx:id="consultaLbl" layoutX="393.0" layoutY="26.0" text="Label" />
-      <Button fx:id="verificarProductosButton" layoutX="44.0" layoutY="290.0" mnemonicParsing="false" onAction="#verificarProductosOnAction" text="Verificar productos del pedido" visible="false" />
-      <TableView fx:id="modificacionesTable" layoutX="152.0" layoutY="84.0" prefHeight="200.0" prefWidth="538.0" visible="false">
-        <columns>
-          <TableColumn fx:id="nombreAdminColumn" prefWidth="135.0" text="Nombre administrador" />
-          <TableColumn fx:id="idAdminColumn" minWidth="3.0" prefWidth="109.0" text="ID administrador" />
-            <TableColumn fx:id="fechaModificacionColumn" prefWidth="124.0" text="Fecha modificacion" />
-            <TableColumn fx:id="codigoModificacionColumn" prefWidth="169.0" text="Codigo modificacion" />
-        </columns>
-      </TableView>
-      <TableView fx:id="generalTable" layoutX="73.0" layoutY="84.0" prefHeight="200.0" prefWidth="681.0">
-        <columns>
-          <TableColumn fx:id="nombreGeneralColumn" prefWidth="112.0" text="Nombre producto" />
-          <TableColumn fx:id="codigoGeneralColumn" prefWidth="110.0" text="Codigo producto" />
-            <TableColumn fx:id="proveedorGeneralColumn" prefWidth="126.0" text="Nombre  proveedor" />
-            <TableColumn fx:id="cProveedorGeneralColumn" prefWidth="111.0" text="Codigo proveedor" />
-            <TableColumn fx:id="categoriaGeneralColumn" prefWidth="89.0" text="Categoria" />
-            <TableColumn fx:id="ivaGeneralColumn" prefWidth="61.0" text="Iva" />
-            <TableColumn fx:id="utilidadGeneralColumn" prefWidth="75.0" text="Utilidad" />
-        </columns>
-      </TableView>
-      <Button layoutX="73.0" layoutY="303.0" mnemonicParsing="false" text="Calcular valor total" />
-      <Spinner layoutX="206.0" layoutY="303.0" />
-   </children>
+        <Button fx:id="verificarProductosButton" layoutX="44.0" layoutY="290.0" mnemonicParsing="false" onAction="#verificarProductosOnAction" styleClass="button" text="Verificar productos del pedido" visible="false" />
+
+        <TableView fx:id="modificacionesTable" layoutX="152.0" layoutY="84.0" prefHeight="200.0" prefWidth="538.0" styleClass="table-view" visible="false">
+            <columns>
+                <TableColumn fx:id="nombreAdminColumn" prefWidth="135.0" text="Nombre administrador" />
+                <TableColumn fx:id="idAdminColumn" minWidth="3.0" prefWidth="109.0" text="ID administrador" />
+                <TableColumn fx:id="fechaModificacionColumn" prefWidth="124.0" text="Fecha modificacion" />
+                <TableColumn fx:id="codigoModificacionColumn" prefWidth="169.0" text="Codigo modificacion" />
+            </columns>
+        </TableView>
+
+        <TableView fx:id="generalTable" layoutX="44.0" layoutY="90.0" prefHeight="200.0" prefWidth="742.0" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="nombreGeneralColumn" prefWidth="133.33330917358398" text="Nombre producto" />
+                <TableColumn fx:id="codigoGeneralColumn" prefWidth="129.9999542236328" text="Codigo producto" />
+                <TableColumn fx:id="proveedorGeneralColumn" prefWidth="139.33340454101562" text="Nombre proveedor" />
+                <TableColumn fx:id="cProveedorGeneralColumn" prefWidth="135.33334350585938" text="Codigo proveedor" />
+                <TableColumn fx:id="categoriaGeneralColumn" prefWidth="79.33331298828125" text="Categoria" />
+                <TableColumn fx:id="ivaGeneralColumn" prefWidth="46.66668701171875" text="IVA" />
+                <TableColumn fx:id="utilidadGeneralColumn" prefWidth="74.66668701171875" text="Utilidad" />
+            </columns>
+        </TableView>
+
+        <Button layoutX="73.0" layoutY="303.0" styleClass="button" text="Calcular valor total" />
+        <Spinner fx:id="valorTotalSpinner" layoutX="225.0" layoutY="306.0" styleClass="spinner" />
+      <AnchorPane layoutY="-5.0" prefHeight="85.0" prefWidth="841.0" style="-fx-background-color: #5EB0E8;">
+         <children>
+      
+              <Label fx:id="consultaLbl" layoutX="327.0" layoutY="33.0" styleClass="label" text="Consultas disponibles" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="373.0" prefHeight="31.0" prefWidth="841.0" style="-fx-background-color: #5EB0E8;" />
+    </children>
 </AnchorPane>

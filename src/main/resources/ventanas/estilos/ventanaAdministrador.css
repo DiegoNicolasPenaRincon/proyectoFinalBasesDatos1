@@ -1,0 +1,89 @@
+/* Estilo general del AnchorPane */
+.anchor-pane {
+    -fx-background-color: #f5f7fa;
+}
+
+/* Estilo general de etiquetas */
+.label {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Título principal */
+.titulo-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a72c4;
+}
+
+/* Campos de texto */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 5 10 5 10;
+    -fx-font-size: 13px;
+}
+
+/* Spinners */
+.spinner {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 3;
+}
+
+/* ComboBox */
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 13px;
+}
+
+/* Tabla de datos */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #000000;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 30px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: transparent transparent #ddd transparent;
+}
+
+.table-view .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Botones */
+.button {
+    -fx-background-color: #2a72c4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8 15 8 15;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #1e5ba0;
+}
+
+.button:pressed {
+    -fx-background-color: #15467d;
+}
