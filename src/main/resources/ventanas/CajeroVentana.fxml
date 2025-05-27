@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="567.0" prefWidth="882.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.CajeroVentanaController">
+<AnchorPane prefHeight="567.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.alquiler.controller.CajeroVentanaController">
    <children>
       <Label fx:id="opcionesCajeroLbl" layoutX="368.0" layoutY="33.0" text="Opciones cajero" />
       <Button fx:id="verificarProductosButton" layoutX="319.0" layoutY="276.0" mnemonicParsing="false" onAction="#verificarProductosOnAction" prefHeight="25.0" prefWidth="184.0" text="Verificar productos adquiridos" />
-      <TableView fx:id="cajeroTable" layoutX="24.0" layoutY="63.0" prefHeight="200.0" prefWidth="819.0">
+      <TableView fx:id="cajeroTable" layoutX="93.0" layoutY="62.0" prefHeight="200.0" prefWidth="674.0">
         <columns>
           <TableColumn fx:id="fechaPagoolumn" prefWidth="118.0" text="Fecha pago" />
           <TableColumn fx:id="codigoFacturaColumn" prefWidth="153.0" text="Codigo factura" />
@@ -21,7 +21,7 @@
             <TableColumn fx:id="totalColumn" prefWidth="89.0" text="Total" />
         </columns>
       </TableView>
-      <TableView fx:id="productosAdquiridosTable" layoutX="14.0" layoutY="328.0" prefHeight="200.0" prefWidth="831.0">
+      <TableView fx:id="productosAdquiridosTable" layoutX="10.0" layoutY="326.0" prefHeight="200.0" prefWidth="960.0">
          <columns>
             <TableColumn fx:id="nombreProductoColumn" prefWidth="118.0" text="Nombre producto" />
             <TableColumn fx:id="codigoProductoColumn" prefWidth="153.0" text="Codigo producto" />
@@ -29,6 +29,7 @@
             <TableColumn fx:id="nombreProveedorColumn" prefWidth="127.0" text="Nombre proveedor" />
             <TableColumn fx:id="codigoProveedorColumn" prefWidth="122.0" text="Codigo proveedor" />
             <TableColumn fx:id="direccionProveedorColumn" prefWidth="173.0" text="Direccion proveedor" />
+            <TableColumn fx:id="cantidadProductoColumn" prefWidth="129.0" text="Cantidad Producto" />
          </columns>
       </TableView>
    </children>

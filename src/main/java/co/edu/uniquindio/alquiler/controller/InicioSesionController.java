@@ -30,8 +30,8 @@ public class InicioSesionController {
     private Label contrasenaLabel;
 
     TiendaUQ tiendaUQ=TiendaUQ.getInstance();
-    DatosSesion<Administrador> datosAdmin= DatosSesion.getInstance();
-    DatosSesion<Cajero> datosCajero=DatosSesion.getInstance();
+    DatosSesionAdministrador datosAdmin= DatosSesionAdministrador.getInstance();
+    DatosSesionCajero datosCajero=DatosSesionCajero.getInstance();
 
     public void initialize() {
 

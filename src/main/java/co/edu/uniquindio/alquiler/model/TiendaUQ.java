@@ -496,30 +496,81 @@ public class TiendaUQ {
         return null;
     }
 
-    public void importarDatosFacturaCajero(int idCajeroSesionIniciada) throws SQLException {
-        String consulta = """
+    public ArrayList<ContenedorImporteCajero> importarDatosFacturaCajero(int idCajeroSesionIniciada)  {
+        ArrayList<ContenedorImporteCajero> listasCajeros=new ArrayList<>();
+        try
+        {
+            String consulta = """
             SELECT f.FechaPago, f.codigo, f.documentoEntidadCliente, 
                    c.nombre, c.telefono, f.total 
             FROM Factura f
             JOIN Cliente c ON c.documentoEntidad = f.documentoEntidadCliente
-            WHERE f.documentoEntidadCliente = ?
+            WHERE f.documentoEntidadCajero = ?
             GROUP BY f.FechaPago, f.codigo, f.documentoEntidadCliente, 
                      c.nombre, c.telefono, f.total;
         """;
-        PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
-        stmt.setInt(1, idCajeroSesionIniciada);
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1, idCajeroSesionIniciada);
 
-        ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
-        while (rs.next()) {
-            LocalDateTime fechaPago = rs.getTimestamp("FechaPago").toLocalDateTime();
-            int codigo = rs.getInt("codigo");
-            int documentoEntidadCliente = rs.getInt("documentoEntidadCliente");
-            String nombre = rs.getString("nombre");
-            String telefono = rs.getString("telefono");
-            double total = rs.getDouble("total");
-
+            while (rs.next()) {
+                LocalDateTime fechaPago = rs.getTimestamp("FechaPago").toLocalDateTime();
+                int codigo = rs.getInt("codigo");
+                int documentoEntidadCliente = rs.getInt("documentoEntidadCliente");
+                String nombre = rs.getString("nombre");
+                String telefono = rs.getString("telefono");
+                double total = rs.getDouble("total");
+                ContenedorImporteCajero contenedor=new ContenedorImporteCajero(fechaPago,codigo,documentoEntidadCliente,nombre,telefono,total);
+                listasCajeros.add(contenedor);
+            }
         }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return listasCajeros;
     }
+
+    public ArrayList<ContenedorProductoCajero> importarPorductosCajero(int facturaId) {
+        ArrayList<ContenedorProductoCajero> listaProductos=new ArrayList<>();
+        try
+        {
+            String consulta = """
+            SELECT 
+                p.nombre AS nombreProducto, p.codigo AS codigoProducto, p.categoria,
+                prove.nombre AS nombreProveedor, prove.codigo AS codigoProveedor, prove.direccion, fo.cantidadProducto
+            FROM Producto p
+            JOIN Proveedor_Producto pro ON pro.codigoProducto = p.codigo
+            JOIN Proveedor prove ON prove.codigo = pro.codigoProveedor
+            JOIN Factura_Producto fo ON fo.codigoProducto = p.codigo
+            JOIN Factura f ON f.codigo = fo.codigoFactura
+            WHERE f.codigo = ?
+        """;
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1, facturaId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String nombreProducto = rs.getString("nombreProducto");
+                int codigoProducto = rs.getInt("codigoProducto");
+                String categoria = rs.getString("categoria");
+                String nombreProveedor = rs.getString("nombreProveedor");
+                int codigoProveedor = rs.getInt("codigoProveedor");
+                String direccion = rs.getString("direccion");
+                int cantidadProducto=rs.getInt("cantidadProducto");
+                ContenedorProductoCajero contenedor=new ContenedorProductoCajero(nombreProducto,codigoProducto,categoria,nombreProveedor,codigoProveedor,direccion,cantidadProducto);
+                listaProductos.add(contenedor);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return listaProductos;
+    }
+
+
 
 }

@@ -1,36 +1,34 @@
 package co.edu.uniquindio.alquiler.controller;
 
-import co.edu.uniquindio.alquiler.model.Cliente;
-import co.edu.uniquindio.alquiler.model.Factura;
-import co.edu.uniquindio.alquiler.model.Producto;
+import co.edu.uniquindio.alquiler.exceptions.AtributoVacioException;
+import co.edu.uniquindio.alquiler.model.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class CajeroVentanaController {
     @FXML
-    private TableColumn<Cliente,String> nombreClienteColumn;
+    private TableColumn<ContenedorProductoCajero,String> cantidadProductoColumn;
     @FXML
-    private TableColumn<Cliente,String> telefonoClienteColumn;
+    private TableColumn<ContenedorImporteCajero,String> nombreClienteColumn;
     @FXML
-    private TableColumn<Cliente,String> totalAdquiridosColumn;
+    private TableColumn<ContenedorImporteCajero,String> telefonoClienteColumn;
     @FXML
-    private TableView<Producto> productosAdquiridosTable;
+    private TableView<ContenedorProductoCajero> productosAdquiridosTable;
     @FXML
-    private TableColumn<Producto,String> nombreProductoColumn;
+    private TableColumn<ContenedorProductoCajero,String> nombreProductoColumn;
     @FXML
-    private TableColumn<Producto,String> codigoProductoColumn;
+    private TableColumn<ContenedorProductoCajero,String> codigoProductoColumn;
     @FXML
-    private TableColumn<Producto,String> categoriaProductoColumn;
+    private TableColumn<ContenedorProductoCajero,String> categoriaProductoColumn;
     @FXML
-    private TableColumn<Producto,String> nombreProveedorColumn;
+    private TableColumn<ContenedorProductoCajero,String> nombreProveedorColumn;
     @FXML
-    private TableColumn<Producto,String> codigoProveedorColumn;
+    private TableColumn<ContenedorProductoCajero,String> codigoProveedorColumn;
     @FXML
-    private TableColumn<Producto,String> direccionProveedorColumn;
+    private TableColumn<ContenedorProductoCajero,String> direccionProveedorColumn;
     @FXML
     private Label opcionesCajeroLbl;
     @FXML
@@ -38,19 +36,61 @@ public class CajeroVentanaController {
     @FXML
     private Button verificarClienteButton;
     @FXML
-    private TableView<Factura> cajeroTable;
+    private TableView<ContenedorImporteCajero> cajeroTable;
     @FXML
-    private TableColumn<Factura,String> fechaPagoolumn;
+    private TableColumn<ContenedorImporteCajero,String> fechaPagoolumn;
     @FXML
-    private TableColumn<Factura,String> codigoFacturaColumn;
+    private TableColumn<ContenedorImporteCajero,String> codigoFacturaColumn;
     @FXML
-    private TableColumn<Factura,String> totalColumn;
+    private TableColumn<ContenedorImporteCajero,String> totalColumn;
     @FXML
-    private TableColumn<Factura,String> idClienteColumn;
+    private TableColumn<ContenedorImporteCajero,String> idClienteColumn;
+
+    TiendaUQ tiendaUQ=TiendaUQ.getInstance();
+    DatosSesionCajero datosCajero= DatosSesionCajero.getInstance();
+
+    public void initialize() {
+        productosAdquiridosTable.setVisible(false);
+        this.cajeroTable.setItems(FXCollections.observableList(tiendaUQ.importarDatosFacturaCajero(datosCajero.getUsuarioActivo().getDocumentoEntidad())));
+
+        fechaPagoolumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getFechaPago())));
+        codigoFacturaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoFactura())));
+        totalColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getTotal()) ) );
+        idClienteColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getIdCliente()) ) );
+        nombreClienteColumn.setCellValueFactory( cellData -> new SimpleStringProperty(cellData.getValue().getNombreCliente()));
+        telefonoClienteColumn.setCellValueFactory( cellData -> new SimpleStringProperty(cellData.getValue().getTelefonoCliente()));
+
+        cantidadProductoColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getCantidadProducto())));
+        nombreProductoColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNombreProducto())));
+        codigoProductoColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getCodigoProducto()) ) );
+        categoriaProductoColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getCategoriaNombre()) ) );
+        nombreProveedorColumn.setCellValueFactory( cellData -> new SimpleStringProperty(cellData.getValue().getNombreProveedor()));
+        codigoProveedorColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getCodigoProveedor()) ) );
+        direccionProveedorColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getDireccionProveedor()) ) );
+    }
 
     public void verificarProductosOnAction(ActionEvent actionEvent) {
-        Factura factura=cajeroTable.getSelectionModel().getSelectedItem();
+        ContenedorImporteCajero contenedorImporteCajero=cajeroTable.getSelectionModel().getSelectedItem();
+        try
+        {
+            if(contenedorImporteCajero!=null)
+            {
+                this.productosAdquiridosTable.setItems(FXCollections.observableList(tiendaUQ.importarPorductosCajero(contenedorImporteCajero.getCodigoFactura())));
+                productosAdquiridosTable.setVisible(true);
+            }
+            else
+            {
+                throw new AtributoVacioException("Debe seleccionar por lo menos un elemento de la tabla");
+            }
+        }
 
+        catch (AtributoVacioException e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 
 }

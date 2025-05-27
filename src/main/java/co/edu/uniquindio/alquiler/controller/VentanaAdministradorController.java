@@ -78,7 +78,7 @@ public class VentanaAdministradorController {
 
 
     TiendaUQ tiendaUQ=TiendaUQ.getInstance();
-    DatosSesion<Administrador> datosAdmin= DatosSesion.getInstance();
+    DatosSesionAdministrador datosAdmin= DatosSesionAdministrador.getInstance();
     ArrayList<Proveedor> proveedoresApoyo;
 
     public void initialize() {
@@ -185,5 +185,9 @@ public class VentanaAdministradorController {
     }
 
     public void eliminarProductoOnAction(ActionEvent actionEvent) {
+    }
+
+    public void verificarPedidosOnAction(ActionEvent actionEvent) {
+
     }
 }
