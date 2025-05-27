@@ -701,5 +701,15 @@ public class TiendaUQ {
         return listaGeneralidades;
     }
 
+    public void verificarProveedor() {
+        for(int i=0;i<proveedores.size();i++)
+        {
+            if(proveedores.get(i))
+            {
+                
+            }
+        }
+    }
+
 
 }
