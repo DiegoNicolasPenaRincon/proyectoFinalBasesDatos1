@@ -140,7 +140,7 @@ public class MostrarConsultasAdminController {
     public void calcularValorReporteOnAction(ActionEvent actionEvent) {
         try
         {
-            tiendaUQ.generarReporte(1);
+            tiendaUQ.generarReporte(1,0);
         }
         catch (JRException e)
         {
@@ -151,7 +151,7 @@ public class MostrarConsultasAdminController {
     public void generarReportesFechaOnAztion(ActionEvent actionEvent) {
         try
         {
-            tiendaUQ.generarReporte(2);
+            tiendaUQ.generarReporte(2,4);
         }
         catch (JRException e)
         {
