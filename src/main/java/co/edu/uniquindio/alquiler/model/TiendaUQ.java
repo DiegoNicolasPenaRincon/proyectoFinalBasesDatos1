@@ -321,17 +321,6 @@ public class TiendaUQ {
         }
     }
 
-    public CategoriaProducto buscarCategoria(String nombreCategoriaSql) {
-        for(int i=0;i<categorias.size();i++)
-        {
-            if(categorias.get(i).getNombre().equals(nombreCategoriaSql))
-            {
-                return categorias.get(i);
-            }
-        }
-        return null;
-    }
-
     public TipoFactura convertirTipoFactura(String tipo) {
         if(tipo.equals("cliente"))
         {
@@ -340,16 +329,29 @@ public class TiendaUQ {
         return TipoFactura.PROVEEDOR;
     }
 
-    public Producto buscarProducto(int codigo) {
-        for(int i=0;i<productos.size();i++)
+    /*public Producto buscarProducto(int codigoEntrante) throws SQLException {
+        String consulta = "SELECT * FROM Producto WHERE codigo=?";
+        PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+        stmt.setInt(1, codigoEntrante);
+
+        ResultSet rs = stmt.executeQuery();
+
+        while(rs.next())
         {
-            if(productos.get(i).getCodigo()==codigo)
+            int codigo = rs.getInt("codigo");
+            if(codigo==codigoEntrante)
             {
-                return productos.get(i);
+                String nombre = rs.getString("nombre");
+                String categoria = rs.getString("categoria");
+                CategoriaProducto categoriaProducto=buscarCategoria(categoria);
+                int unidadesDisponibles =rs.getInt("unidadesDisponibles");
+                return new Producto(nombre,categoriaProducto,codigo,unidadesDisponibles);
             }
         }
         return null;
     }
+    
+     */
 
     public Administrador buscarAdmin(int codigoAdmin) {
         for(int i=0;i<administradores.size();i++)
@@ -461,6 +463,26 @@ public class TiendaUQ {
             numeroAleatorio=(int)(Math.random() * 10000);
         }
         return numeroAleatorio;
+    }
+
+    public CategoriaProducto buscarCategoria(String nombre) throws SQLException {
+        String consulta = "SELECT * FROM CategoriaProducto WHERE nombre=?";
+        PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+        stmt.setString(1, nombre);
+
+        ResultSet rs = stmt.executeQuery();
+
+        while(rs.next())
+        {
+            String nombreCategoria = rs.getString("nombre");
+            if(nombreCategoria.equals(nombre))
+            {
+                double iva=rs.getDouble("iva");
+                double utilidad=rs.getDouble("utilidad");
+                return new CategoriaProducto(nombre,utilidad,iva);
+            }
+        }
+        return null;
     }
 
 }
