@@ -295,6 +295,7 @@ public class TiendaUQ {
 
                 Proveedor proveedor=new Proveedor(telefono,codigo,nombre,direccion,productos1);
                 proveedores.add(proveedor);
+                System.out.print(proveedores.size());
             }
 
 

@@ -47,15 +47,15 @@
         <ComboBox fx:id="proveedoresAgregadosComboBox" layoutX="730.0" layoutY="270.0" prefHeight="25.0" prefWidth="165.0" styleClass="combo-box" />
 
         <!-- Botones de acción -->
-        <Button fx:id="agregarProductoButton" layoutX="597.0" layoutY="314.0" onAction="#agregarProductoOnAction" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Agregar producto" />
+        <Button fx:id="agregarProductoButton" layoutX="602.0" layoutY="363.0" onAction="#agregarProductoOnAction" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Agregar producto" />
 
-        <Button fx:id="modificarProductoButton" layoutX="755.0" layoutY="314.0" onAction="#modificarProductoOnAction" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Modificar producto" />
+        <Button fx:id="modificarProductoButton" layoutX="755.0" layoutY="363.0" onAction="#modificarProductoOnAction" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Modificar producto" />
 
-        <Button fx:id="agregaProveedorInventarioButton" layoutX="598.0" layoutY="371.0" onAction="#agregarProveedorProductoOnAction" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Agregar proveedor" />
+        <Button fx:id="agregaProveedorInventarioButton" layoutX="602.0" layoutY="415.0" onAction="#agregarProveedorProductoOnAction" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Agregar proveedor" />
 
-        <Button fx:id="quitarProveedorProductoButton" layoutX="755.0" layoutY="371.0" onAction="#quitarProveedor" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Quitar proveedor" />
+        <Button fx:id="quitarProveedorProductoButton" layoutX="755.0" layoutY="415.0" onAction="#quitarProveedor" prefHeight="35.0" prefWidth="152.0" styleClass="button" text="Quitar proveedor" />
 
-        <Button fx:id="eliminarProductoButton" layoutX="606.0" layoutY="431.0" onAction="#eliminarProductoOnAction" prefHeight="25.0" prefWidth="286.0" styleClass="button" text="Eliminar producto" />
+        <Button fx:id="eliminarProductoButton" layoutX="606.0" layoutY="463.0" onAction="#eliminarProductoOnAction" prefHeight="25.0" prefWidth="286.0" styleClass="button" text="Eliminar producto" />
 
         <!-- Sección izquierda inferior -->
         <Button fx:id="InformacionGeneralButton" layoutX="14.0" layoutY="84.0" onAction="#InformacionGeneralOnAction" prefHeight="25.0" prefWidth="180.0" styleClass="button" text="Información general" />
@@ -71,6 +71,8 @@
          </children>
       </AnchorPane>
       <AnchorPane layoutY="514.0" prefHeight="39.0" prefWidth="919.0" style="-fx-background-color: #5EB0E8;" />
+      <Label fx:id="valorPorductoLabel" layoutX="587.0" layoutY="320.0" text="Valor producto" />
+      <Spinner fx:id="valorProductoSpinner" layoutX="719.0" layoutY="310.0" />
 
     </children>
 </AnchorPane>
