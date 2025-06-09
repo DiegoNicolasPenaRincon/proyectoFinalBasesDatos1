@@ -18,6 +18,12 @@ public class VentanaAdministradorController {
 
 
     @FXML
+    private Label valorPorductoLabel;
+    @FXML
+    private Spinner<Double> valorProductoSpinner;
+    @FXML
+    private Button deseleccionarButton;
+    @FXML
     private Button InformacionGeneralButton;
     @FXML
     private Button verificarPedidos;
@@ -83,6 +89,7 @@ public class VentanaAdministradorController {
     ConsultaDato consultaDato=ConsultaDato.getInstance();
 
     public void initialize() {
+        modificarProductoButton.setDisable(true);
         this.proveedoresApoyo=new ArrayList<>();
         proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
         proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));;
@@ -94,12 +101,27 @@ public class VentanaAdministradorController {
         SpinnerValueFactory<Integer> valueFactoryVendidas =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100,1);
 
+        SpinnerValueFactory<Double> valueFactoryValor =
+                new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0,1000.0,0.0,50.00);
+
         unidadesDisponiblesSpinner.setValueFactory(valueFactoryDisponibles);
         unidadesVendidasSpinner.setValueFactory(valueFactoryVendidas);
+        valorProductoSpinner.setValueFactory(valueFactoryValor);
+
+        inventarioTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            Inventario inventario=inventarioTable.getSelectionModel().getSelectedItem();
+            if (newVal != null)
+            {
+                agregarProductoButton.setDisable(true);
+                modificarProductoButton.setDisable(false);
+                proveedoresAgregadosComboBox.setItems(FXCollections.observableList(inventario.getProveedores()));
+            }
+
+        });
 
         nombreInventarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getProducto().getNombre()));
         codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
-        disponiblesColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesAdquiridas()) ) );
+        disponiblesColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesDisponibles()) ) );
         vendidasColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesVendidas()) ) );
         numeroReferenciaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
 
@@ -109,13 +131,13 @@ public class VentanaAdministradorController {
 
 
     public void agregarProductoOnAction(ActionEvent actionEvent) {
-        /*
         try
         {
             String nombre=agregarNombreTxtField.getText();
             int codigo=Integer.parseInt(agregarCodigoTxtfield.getText());
             int disponibles=unidadesDisponiblesSpinner.getValue();
             int vendidas=unidadesVendidasSpinner.getValue();
+            double valor=valorProductoSpinner.getValue();
             String categoria=categoriasComboBox.getSelectionModel().getSelectedItem().getNombre();
             if(nombre.isEmpty())
             {
@@ -133,12 +155,14 @@ public class VentanaAdministradorController {
             {
                 throw new AtributoExistenteException("Ese producto ya existe");
             }
-
-            Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,disponibles,);
+            else if(proveedoresApoyo.isEmpty())
+            {
+                throw new ProveedorException("Debe seleccionar por lo menos un proveedor");
+            }
+            Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,valor);
             Inventario inventario=new Inventario(producto,disponibles,vendidas,tiendaUQ.seleccionarNumeroAleatorio(1),proveedoresApoyo);
             Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),inventario);
             inventario.getModificaciones().add(inicial);
-            tiendaUQ.getProductos().add(producto);
         }
         catch (NumberFormatException e)
         {
@@ -154,9 +178,6 @@ public class VentanaAdministradorController {
             alert.setContentText(e.getMessage());
             alert.show();
         }
-
-         */
-
     }
 
     public void agregarProveedorProductoOnAction(ActionEvent actionEvent) {
@@ -295,4 +316,9 @@ public class VentanaAdministradorController {
         }
     }
 
+    public void deseccionarOnAction(ActionEvent actionEvent) {
+        inventarioTable.getSelectionModel().clearSelection();
+        modificarProductoButton.setDisable(true);
+        agregarProductoButton.setDisable(false);
+    }
 }

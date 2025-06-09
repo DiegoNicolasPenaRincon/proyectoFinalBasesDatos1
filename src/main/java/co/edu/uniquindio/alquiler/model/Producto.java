@@ -9,7 +9,6 @@ public class Producto {
     private String nombre;
     private CategoriaProducto categoria;
     private int codigo;
-    private int unidadesDisponibles;
     private double valor;
 
     public String getNombre() {
@@ -29,14 +28,6 @@ public class Producto {
     }
 
 
-    public int getUnidadesDisponibles() {
-        return unidadesDisponibles;
-    }
-
-    public void setUnidadesDisponibles(int unidadesDisponibles) {
-        this.unidadesDisponibles = unidadesDisponibles;
-    }
-
     public CategoriaProducto getCategoria() {
         return categoria;
     }
@@ -53,11 +44,10 @@ public class Producto {
         this.valor = valor;
     }
 
-    public Producto(String nombre, CategoriaProducto categoria, int codigo, int unidadesDisponibles, double valor) {
+    public Producto(String nombre, CategoriaProducto categoria, int codigo, double valor) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.codigo = codigo;
-        this.unidadesDisponibles = unidadesDisponibles;
         this.valor=valor;
     }
 

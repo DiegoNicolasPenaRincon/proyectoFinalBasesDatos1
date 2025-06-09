@@ -7,6 +7,7 @@ public class Modificacion {
     private LocalDateTime fechaModificacion;
     private int codigoInstancia;
     private Inventario inventario;
+    private String descripcion;
 
     public Administrador getAdministrador() {
         return administrador;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Inventario {
 
     private Producto producto;
-    private int unidadesAdquiridas;
+    private int unidadesDisponibles;
     private int unidadesVendidas;
     private ArrayList<Modificacion> modificaciones;
     private int codigoInstancia;
@@ -20,12 +20,12 @@ public class Inventario {
         this.producto = producto;
     }
 
-    public int getUnidadesAdquiridas() {
-        return unidadesAdquiridas;
+    public int getUnidadesDisponibles() {
+        return unidadesDisponibles;
     }
 
-    public void setUnidadesAdquiridas(int unidadesAdquiridas) {
-        this.unidadesAdquiridas = unidadesAdquiridas;
+    public void setUnidadesDisponibles(int unidadesDisponibles) {
+        this.unidadesDisponibles = unidadesDisponibles;
     }
 
     public int getUnidadesVendidas() {
@@ -60,9 +60,8 @@ public class Inventario {
         this.proveedores = proveedores;
     }
 
-    public Inventario(Producto producto, int unidadesAdquiridas, int unidadesVendidas, int codigoInstancia,ArrayList<Proveedor> proveedores) {
+    public Inventario(Producto producto, int unidadesVendidas, int codigoInstancia,ArrayList<Proveedor> proveedores) {
         this.producto = producto;
-        this.unidadesAdquiridas = unidadesAdquiridas;
         this.unidadesVendidas = unidadesVendidas;
         this.codigoInstancia = codigoInstancia;
         this.modificaciones = new ArrayList<>();

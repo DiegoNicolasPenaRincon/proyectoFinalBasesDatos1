@@ -29,7 +29,6 @@ import java.util.Map;
 public class TiendaUQ {
 
     private ArrayList<Cliente> clientes;
-    private ArrayList<Producto> productos;
     private ArrayList<Administrador> administradores;
     private ArrayList<Cajero> cajeros;
     private ArrayList<Factura> facturas;
@@ -49,7 +48,6 @@ public class TiendaUQ {
         this.pedidos=new ArrayList<>();
         this.proveedores=new ArrayList<>();
         this.inventario=new ArrayList<>();
-        this.productos=new ArrayList<>();
         this.clientes=new ArrayList<>();
         this.modificaciones=new ArrayList<>();
         this.categorias=new ArrayList<>();
@@ -57,7 +55,6 @@ public class TiendaUQ {
         conexionBD.conectarBD();
 
         quemarDatos();
-
     }
 
     public static TiendaUQ getInstance(){
@@ -67,6 +64,87 @@ public class TiendaUQ {
 
         return tienda;
     }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(ArrayList<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public ArrayList<Administrador> getAdministradores() {
+        return administradores;
+    }
+
+    public void setAdministradores(ArrayList<Administrador> administradores) {
+        this.administradores = administradores;
+    }
+
+    public ArrayList<Cajero> getCajeros() {
+        return cajeros;
+    }
+
+    public void setCajeros(ArrayList<Cajero> cajeros) {
+        this.cajeros = cajeros;
+    }
+
+    public ArrayList<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(ArrayList<Factura> facturas) {
+        this.facturas = facturas;
+    }
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(ArrayList<Pedido> pedido) {
+        this.pedidos = pedido;
+    }
+
+    public ArrayList<Proveedor> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(ArrayList<Proveedor> proveedores) {
+        this.proveedores = proveedores;
+    }
+
+    public ArrayList<Inventario> getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(ArrayList<Inventario> inventario) {
+        this.inventario = inventario;
+    }
+
+    public ArrayList<CategoriaProducto> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(ArrayList<CategoriaProducto> categorias) {
+        this.categorias = categorias;
+    }
+
+    public ArrayList<Modificacion> getModificaciones() {
+        return modificaciones;
+    }
+
+    public void setModificaciones(ArrayList<Modificacion> modificaciones) {
+        this.modificaciones = modificaciones;
+    }
+
+    public static TiendaUQ getTienda() {
+        return tienda;
+    }
+
+    public static void setTienda(TiendaUQ tienda) {
+        TiendaUQ.tienda = tienda;
+    }
+
 
     public Cajero verficiarCajero(int documentoIdentidad,String contrasenia) throws ContrasenaException, SQLException {
         String consulta = "SELECT * FROM Cajero WHERE documentoEntidad=?";
@@ -162,94 +240,6 @@ public class TiendaUQ {
         stage.show();
     }
 
-    public ArrayList<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(ArrayList<Cliente> clientes) {
-        this.clientes = clientes;
-    }
-
-    public ArrayList<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(ArrayList<Producto> productos) {
-        this.productos = productos;
-    }
-
-    public ArrayList<Administrador> getAdministradores() {
-        return administradores;
-    }
-
-    public void setAdministradores(ArrayList<Administrador> administradores) {
-        this.administradores = administradores;
-    }
-
-    public ArrayList<Cajero> getCajeros() {
-        return cajeros;
-    }
-
-    public void setCajeros(ArrayList<Cajero> cajeros) {
-        this.cajeros = cajeros;
-    }
-
-    public ArrayList<Factura> getFacturas() {
-        return facturas;
-    }
-
-    public void setFacturas(ArrayList<Factura> facturas) {
-        this.facturas = facturas;
-    }
-
-    public ArrayList<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(ArrayList<Pedido> pedido) {
-        this.pedidos = pedido;
-    }
-
-    public ArrayList<Proveedor> getProveedores() {
-        return proveedores;
-    }
-
-    public void setProveedores(ArrayList<Proveedor> proveedores) {
-        this.proveedores = proveedores;
-    }
-
-    public ArrayList<Inventario> getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(ArrayList<Inventario> inventario) {
-        this.inventario = inventario;
-    }
-
-    public ArrayList<CategoriaProducto> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(ArrayList<CategoriaProducto> categorias) {
-        this.categorias = categorias;
-    }
-
-    public ArrayList<Modificacion> getModificaciones() {
-        return modificaciones;
-    }
-
-    public void setModificaciones(ArrayList<Modificacion> modificaciones) {
-        this.modificaciones = modificaciones;
-    }
-
-    public static TiendaUQ getTienda() {
-        return tienda;
-    }
-
-    public static void setTienda(TiendaUQ tienda) {
-        TiendaUQ.tienda = tienda;
-    }
-
     public void quemarDatos() {
         try
         {
@@ -307,7 +297,7 @@ public class TiendaUQ {
             {
                 int codigoInventario = rs.getInt("codigo");
                 int codigoProducto = rs.getInt("codigoProducto");
-                int unidadesAdquiridas = rs.getInt("unidadesAdquiridas");
+                int unidadesDisponibles = rs.getInt("unidadesDisponibles");
                 int unidadesVendidas =rs.getInt("unidadesVendidas");
 
                 String consulta2="SELECT * FROM Inventario_Proveedor";
@@ -326,7 +316,7 @@ public class TiendaUQ {
                 }
 
                 Producto producto=buscarProducto(codigoProducto);
-                Inventario inventario1=new Inventario(producto,unidadesAdquiridas,unidadesVendidas,codigoInventario,listaProveedoresInventario);
+                Inventario inventario1=new Inventario(producto,unidadesDisponibles,unidadesVendidas,codigoInventario,listaProveedoresInventario);
                 inventario.add(inventario1);
             }
         }
@@ -359,9 +349,8 @@ public class TiendaUQ {
                 String nombre = rs.getString("nombre");
                 String categoria = rs.getString("categoria");
                 CategoriaProducto categoriaProducto=buscarCategoria(categoria);
-                int unidadesDisponibles =rs.getInt("undidadesDisponibles");
                 double valor=rs.getDouble("valor");
-                return new Producto(nombre,categoriaProducto,codigo,unidadesDisponibles,valor);
+                return new Producto(nombre,categoriaProducto,codigo,valor);
             }
         }
         return null;
@@ -437,13 +426,23 @@ public class TiendaUQ {
     }
 
     public boolean verificarCodigoNoRepetido(int numero,int objetoAVerificar) {
-        if(objetoAVerificar==1)
+        if(objetoAVerificar==1||objetoAVerificar==3)
         {
             for(Inventario inventario: inventario)
             {
-                if(inventario.getCodigoInstancia()==numero)
+                if(objetoAVerificar==1)
                 {
-                    return true;
+                    if(inventario.getCodigoInstancia()==numero)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if(inventario.getProducto().getCodigo()==numero)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -452,16 +451,6 @@ public class TiendaUQ {
             for(Modificacion modificacion: modificaciones)
             {
                 if(modificacion.getCodigoInstancia()==numero)
-                {
-                    return true;
-                }
-            }
-        }
-        else if(objetoAVerificar==3)
-        {
-            for(Producto producto: productos)
-            {
-                if(producto.getCodigo()==numero)
                 {
                     return true;
                 }
