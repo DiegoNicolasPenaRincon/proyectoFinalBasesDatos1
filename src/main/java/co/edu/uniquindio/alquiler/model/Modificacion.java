@@ -41,11 +41,20 @@ public class Modificacion {
         this.inventario = inventario;
     }
 
-    public Modificacion(Administrador administrador, LocalDateTime fechaModificacion, int codigoInstancia, Inventario inventario) {
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Modificacion(Administrador administrador, LocalDateTime fechaModificacion, int codigoInstancia, Inventario inventario,String descripcion) {
         this.administrador = administrador;
         this.fechaModificacion = fechaModificacion;
         this.codigoInstancia = codigoInstancia;
         this.inventario = inventario;
+        this.descripcion=descripcion;
     }
 
 

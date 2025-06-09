@@ -161,8 +161,13 @@ public class VentanaAdministradorController {
             }
             Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,valor);
             Inventario inventario=new Inventario(producto,disponibles,vendidas,tiendaUQ.seleccionarNumeroAleatorio(1),proveedoresApoyo);
-            Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),inventario);
+            Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),
+                    inventario,"Creacion de la instancia de inventario del producto: "+producto.getNombre()+" con codigo: "+producto.getCodigo());
+            proveedoresApoyo.clear();
             inventario.getModificaciones().add(inicial);
+            tiendaUQ.getInventario().add(inventario);
+
+
         }
         catch (NumberFormatException e)
         {
