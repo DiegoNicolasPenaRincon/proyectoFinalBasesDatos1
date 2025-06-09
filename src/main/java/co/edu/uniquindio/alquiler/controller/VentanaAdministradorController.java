@@ -91,7 +91,7 @@ public class VentanaAdministradorController {
     public void initialize() {
         modificarProductoButton.setDisable(true);
         this.proveedoresApoyo=new ArrayList<>();
-        proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
+        refrescarProveedoresAgregadosCombo();
         proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));;
         categoriasComboBox.setItems(FXCollections.observableList(tiendaUQ.getCategorias()));
 
@@ -166,8 +166,7 @@ public class VentanaAdministradorController {
             proveedoresApoyo.clear();
             inventario.getModificaciones().add(inicial);
             tiendaUQ.getInventario().add(inventario);
-
-
+            refrescarProveedoresAgregadosCombo();
         }
         catch (NumberFormatException e)
         {
@@ -198,7 +197,7 @@ public class VentanaAdministradorController {
                 if(tiendaUQ.buscarProveedor(proveedor.getCodigo(),proveedoresApoyo)==null)
                 {
                     proveedoresApoyo.add(proveedor);
-                    proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
+                    refrescarProveedoresAgregadosCombo();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setHeaderText("Alerta");
                     alert.setContentText("Proveedor agregado correctamente");
@@ -230,7 +229,7 @@ public class VentanaAdministradorController {
             else
             {
                 proveedoresApoyo.remove(proveedorAgregado);
-                proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
+                refrescarProveedoresAgregadosCombo();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Alerta");
                 alert.setContentText("Proveedor eliminado con exito");
@@ -325,5 +324,9 @@ public class VentanaAdministradorController {
         inventarioTable.getSelectionModel().clearSelection();
         modificarProductoButton.setDisable(true);
         agregarProductoButton.setDisable(false);
+    }
+
+    public void refrescarProveedoresAgregadosCombo() {
+        proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
     }
 }
