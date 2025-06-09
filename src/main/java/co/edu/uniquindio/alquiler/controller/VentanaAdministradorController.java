@@ -2,6 +2,7 @@ package co.edu.uniquindio.alquiler.controller;
 
 import co.edu.uniquindio.alquiler.exceptions.AtributoExistenteException;
 import co.edu.uniquindio.alquiler.exceptions.AtributoVacioException;
+import co.edu.uniquindio.alquiler.exceptions.ProveedorException;
 import co.edu.uniquindio.alquiler.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -82,10 +83,19 @@ public class VentanaAdministradorController {
     ConsultaDato consultaDato=ConsultaDato.getInstance();
 
     public void initialize() {
-        proveedoresComboBox=new ComboBox<>();
+        this.proveedoresApoyo=new ArrayList<>();
+        proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
         proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));;
         categoriasComboBox.setItems(FXCollections.observableList(tiendaUQ.getCategorias()));
-        this.proveedoresApoyo=new ArrayList<>();
+
+        SpinnerValueFactory<Integer> valueFactoryDisponibles =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100,1);
+
+        SpinnerValueFactory<Integer> valueFactoryVendidas =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100,1);
+
+        unidadesDisponiblesSpinner.setValueFactory(valueFactoryDisponibles);
+        unidadesVendidasSpinner.setValueFactory(valueFactoryVendidas);
 
         nombreInventarioColumn.setCellValueFactory( cellData -> new SimpleStringProperty( cellData.getValue().getProducto().getNombre()));
         codigoInventarioPColum.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getProducto().getCodigo())));
@@ -144,12 +154,10 @@ public class VentanaAdministradorController {
             alert.setContentText(e.getMessage());
             alert.show();
         }
+
          */
+
     }
-
-
-
-
 
     public void agregarProveedorProductoOnAction(ActionEvent actionEvent) {
         Proveedor proveedor=proveedoresComboBox.getSelectionModel().getSelectedItem();
@@ -161,10 +169,49 @@ public class VentanaAdministradorController {
             }
             else
             {
-                proveedoresApoyo.add(proveedor);
+                if(tiendaUQ.buscarProveedor(proveedor.getCodigo(),proveedoresApoyo)==null)
+                {
+                    proveedoresApoyo.add(proveedor);
+                    proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("Alerta");
+                    alert.setContentText("Proveedor agregado correctamente");
+                    alert.show();
+                }
+                else
+                {
+                    throw new ProveedorException("El proveedor ya fue agregador");
+                }
             }
         }
-        catch (AtributoVacioException e)
+        catch (AtributoVacioException | ProveedorException e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Alerta");
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
+    }
+
+    public void quitarProveedor(ActionEvent actionEvent) {
+        Proveedor proveedorAgregado=proveedoresAgregadosComboBox.getSelectionModel().getSelectedItem();
+        try
+        {
+            if(proveedorAgregado==null)
+            {
+                throw new AtributoVacioException("debe seleccionar por lo menos un proveedor");
+            }
+            else
+            {
+                proveedoresApoyo.remove(proveedorAgregado);
+                proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Alerta");
+                alert.setContentText("Proveedor eliminado con exito");
+                alert.show();
+            }
+        }
+        catch (AtributoVacioException | ProveedorException e)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Alerta");
@@ -203,9 +250,6 @@ public class VentanaAdministradorController {
 
     public void modificarProductoOnAction(ActionEvent actionEvent) {
 
-    }
-
-    public void quitarProveedor(ActionEvent actionEvent) {
     }
 
     public void eliminarProductoOnAction(ActionEvent actionEvent) {

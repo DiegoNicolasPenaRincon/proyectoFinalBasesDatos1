@@ -321,7 +321,7 @@ public class TiendaUQ {
                     if(rs2.getInt("codigoInventario")==codigoInventario)
                     {
                         int codigoProveedorInventario=rs2.getInt("codigoProveedor");
-                        listaProveedoresInventario.add(buscarProveedor(codigoProveedorInventario));
+                        listaProveedoresInventario.add(buscarProveedor(codigoProveedorInventario,proveedores));
                     }
                 }
 
@@ -414,12 +414,12 @@ public class TiendaUQ {
         }
     }
 
-    public Proveedor buscarProveedor(int codigoProveedor) {
-        for(int i=0;i<proveedores.size();i++)
+    public Proveedor buscarProveedor(int codigoProveedor,ArrayList<Proveedor> listaProveedoresBuscar) {
+        for(int i=0;i<listaProveedoresBuscar.size();i++)
         {
-            if(proveedores.get(i).getCodigo()==codigoProveedor)
+            if(listaProveedoresBuscar.get(i).getCodigo()==codigoProveedor)
             {
-                return proveedores.get(i);
+                return listaProveedoresBuscar.get(i);
             }
         }
         return null;
