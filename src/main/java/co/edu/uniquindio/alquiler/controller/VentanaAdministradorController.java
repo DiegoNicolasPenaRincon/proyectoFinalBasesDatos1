@@ -90,6 +90,7 @@ public class VentanaAdministradorController {
 
     public void initialize() {
         modificarProductoButton.setDisable(true);
+        eliminarProductoButton.setDisable(true);
         this.proveedoresApoyo=new ArrayList<>();
         refrescarProveedoresAgregadosCombo();
         proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));;
@@ -114,6 +115,7 @@ public class VentanaAdministradorController {
             {
                 agregarProductoButton.setDisable(true);
                 modificarProductoButton.setDisable(false);
+                eliminarProductoButton.setDisable(false);
                 proveedoresAgregadosComboBox.setItems(FXCollections.observableList(inventario.getProveedores()));
             }
 
@@ -160,27 +162,29 @@ public class VentanaAdministradorController {
                 throw new ProveedorException("Debe seleccionar por lo menos un proveedor");
             }
             Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,valor);
+            tiendaUQ.exportarProducto(producto);
+            tiendaUQ.exportarProveedorProducto(producto.getCodigo(),proveedoresApoyo);
             Inventario inventario=new Inventario(producto,disponibles,vendidas,tiendaUQ.seleccionarNumeroAleatorio(1),proveedoresApoyo);
+            tiendaUQ.exportarInventario(inventario);
+            tiendaUQ.exportarInventarioProveedor(inventario.getCodigoInstancia(),proveedoresApoyo);
             Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),
                     inventario,"Creacion de la instancia de inventario del producto: "+producto.getNombre()+" con codigo: "+producto.getCodigo());
+            tiendaUQ.exportarModificacion(inicial);
             proveedoresApoyo.clear();
             inventario.getModificaciones().add(inicial);
             tiendaUQ.getInventario().add(inventario);
             refrescarProveedoresAgregadosCombo();
+            inventarioTable.refresh();
+
+            tiendaUQ.mostrarInformacion("Las unidades disponibles, unidades vendidas y el codigo del producto deben contener valores numericos");
         }
         catch (NumberFormatException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText("Las unidades disponibles, unidades vendidas y el codigo del producto deben contener valores numericos");
-            alert.show();
+            tiendaUQ.mostrarAlerta("Las unidades disponibles, unidades vendidas y el codigo del producto deben contener valores numericos");
         }
-        catch (AtributoVacioException e)
+        catch (AtributoVacioException |AtributoExistenteException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            tiendaUQ.mostrarAlerta(e.getMessage());
         }
     }
 
@@ -198,10 +202,7 @@ public class VentanaAdministradorController {
                 {
                     proveedoresApoyo.add(proveedor);
                     refrescarProveedoresAgregadosCombo();
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setHeaderText("Alerta");
-                    alert.setContentText("Proveedor agregado correctamente");
-                    alert.show();
+                    tiendaUQ.mostrarInformacion("Proveedor agregado correctamente");
                 }
                 else
                 {
@@ -211,10 +212,7 @@ public class VentanaAdministradorController {
         }
         catch (AtributoVacioException | ProveedorException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            tiendaUQ.mostrarAlerta(e.getMessage());
         }
     }
 
@@ -230,18 +228,12 @@ public class VentanaAdministradorController {
             {
                 proveedoresApoyo.remove(proveedorAgregado);
                 refrescarProveedoresAgregadosCombo();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Alerta");
-                alert.setContentText("Proveedor eliminado con exito");
-                alert.show();
+                tiendaUQ.mostrarInformacion("Proveedor eliminado con exito");
             }
         }
         catch (AtributoVacioException | ProveedorException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            tiendaUQ.mostrarAlerta(e.getMessage());
         }
     }
 
@@ -262,10 +254,7 @@ public class VentanaAdministradorController {
         }
         catch (AtributoVacioException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            tiendaUQ.mostrarAlerta(e.getMessage());
         }
         catch (IOException e)
         {
@@ -278,6 +267,7 @@ public class VentanaAdministradorController {
     }
 
     public void eliminarProductoOnAction(ActionEvent actionEvent) {
+
     }
 
     public void verificarPedidosOnAction(ActionEvent actionEvent) {
@@ -297,10 +287,7 @@ public class VentanaAdministradorController {
         }
         catch (AtributoVacioException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText(e.getMessage());
-            alert.show();
+           tiendaUQ.mostrarAlerta(e.getMessage());
         }
         catch (IOException e)
         {
@@ -324,6 +311,7 @@ public class VentanaAdministradorController {
         inventarioTable.getSelectionModel().clearSelection();
         modificarProductoButton.setDisable(true);
         agregarProductoButton.setDisable(false);
+        eliminarProductoButton.setDisable(true);
     }
 
     public void refrescarProveedoresAgregadosCombo() {

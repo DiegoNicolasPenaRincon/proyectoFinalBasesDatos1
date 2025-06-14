@@ -12,6 +12,7 @@ import db.Conexion;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -36,7 +37,7 @@ public class TiendaUQ {
     private ArrayList<Proveedor> proveedores;
     private ArrayList<Inventario> inventario;
     private ArrayList<CategoriaProducto> categorias;
-    private ArrayList<Modificacion> modificaciones;
+    //private ArrayList<Modificacion> modificaciones;
 
     private static TiendaUQ tienda;
     public Conexion conexionBD=Conexion.getInstance();
@@ -49,7 +50,7 @@ public class TiendaUQ {
         this.proveedores=new ArrayList<>();
         this.inventario=new ArrayList<>();
         this.clientes=new ArrayList<>();
-        this.modificaciones=new ArrayList<>();
+        //this.modificaciones=new ArrayList<>();
         this.categorias=new ArrayList<>();
 
         conexionBD.conectarBD();
@@ -129,13 +130,15 @@ public class TiendaUQ {
         this.categorias = categorias;
     }
 
-    public ArrayList<Modificacion> getModificaciones() {
+    /*public ArrayList<Modificacion> getModificaciones() {
         return modificaciones;
     }
 
     public void setModificaciones(ArrayList<Modificacion> modificaciones) {
         this.modificaciones = modificaciones;
     }
+
+     */
 
     public static TiendaUQ getTienda() {
         return tienda;
@@ -426,33 +429,30 @@ public class TiendaUQ {
     }
 
     public boolean verificarCodigoNoRepetido(int numero,int objetoAVerificar) {
-        if(objetoAVerificar==1||objetoAVerificar==3)
+        for(Inventario inventario: inventario)
         {
-            for(Inventario inventario: inventario)
+            if(objetoAVerificar==1)
             {
-                if(objetoAVerificar==1)
-                {
-                    if(inventario.getCodigoInstancia()==numero)
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    if(inventario.getProducto().getCodigo()==numero)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-        else if(objetoAVerificar==2)
-        {
-            for(Modificacion modificacion: modificaciones)
-            {
-                if(modificacion.getCodigoInstancia()==numero)
+                if(inventario.getCodigoInstancia()==numero)
                 {
                     return true;
+                }
+            }
+            else if(objetoAVerificar==3)
+            {
+                if(inventario.getProducto().getCodigo()==numero)
+                {
+                    return true;
+                }
+            }
+            else if(objetoAVerificar==2)
+            {
+                for(Modificacion modificacion: inventario.getModificaciones())
+                {
+                    if(modificacion.getCodigoInstancia()==numero)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -694,44 +694,106 @@ public class TiendaUQ {
         return listaGeneralidades;
     }
 
-   public void exportarInventario() {
+   public void exportarProducto(Producto producto) {
        try
        {
-           String consulta = """
-            SELECT 
-                ad.nombre AS nombreAdmin,
-                ad.documentoEntidad AS documentoIdentidadAdmin,
-                modi.fechaModificacion,
-                modi.codigoInstancia
-            FROM Administrador ad
-            JOIN Modificacion modi ON modi.codigoAdmin = ad.documentoEntidad
-            WHERE modi.codigoInventario=?""";
+           String consulta = "INSERT INTO Producto(categoria,nombre,codigo,valor)Values(?,?,?,?);";
 
            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
-           stmt.setInt(1, codigoInventario);
+           stmt.setString(1, producto.getCategoria().getNombre());
+           stmt.setString(2, producto.getNombre());
+           stmt.setInt(3, producto.getCodigo());
+           stmt.setDouble(4,producto.getValor());
 
-           ResultSet rs = stmt.executeQuery();
-
-           while (rs.next())
-           {
-               String nombreAdmin = rs.getString("nombreAdmin");
-               int documentoIdentidadAdmin = rs.getInt("documentoIdentidadAdmin");
-               LocalDateTime fechaModificacion = rs.getTimestamp("fechaModificacion").toLocalDateTime();
-               int codigoInstancia = rs.getInt("codigoInstancia");
-               ContenedorModificaciones contenedor=new ContenedorModificaciones(nombreAdmin,documentoIdentidadAdmin,fechaModificacion,codigoInstancia);
-               listaModificaciones.add(contenedor);
-           }
+           stmt.executeUpdate();
        }
        catch (SQLException e)
        {
            throw new RuntimeException(e);
        }
-       return listaModificaciones;
    }
 
-   public void exportarProducto() {
+   public void exportarInventario(Inventario inventario) {
+       try
+       {
+           String consulta = "INSERT INTO Inventario(codigo,codigoProducto,unidadesDisponibles,unidadesVendidas)VALUES(?,?,?,?);";
 
+           PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+           stmt.setInt(1, inventario.getCodigoInstancia());
+           stmt.setInt(2, inventario.getProducto().getCodigo());
+           stmt.setInt(3, inventario.getUnidadesDisponibles());
+           stmt.setInt(4,inventario.getUnidadesVendidas());
+
+           stmt.executeUpdate();
+       }
+       catch (SQLException e)
+       {
+           throw new RuntimeException(e);
+       }
    }
+
+    public void exportarModificacion(Modificacion modificacion) {
+        try
+        {
+            String consulta = "INSERT INTO Modificacion(codigoAdmin,codigoInventario,fechaModificacion,codigoInstancia,Descripcion)VALUES(?,?,?,?,?);";
+
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1, modificacion.getAdministrador().getDocumentoEntidad());
+            stmt.setInt(2, modificacion.getInventario().getCodigoInstancia());
+            stmt.setTimestamp(3, Timestamp.valueOf(modificacion.getFechaModificacion()));
+            stmt.setInt(4,modificacion.getCodigoInstancia());
+            stmt.setString(5,modificacion.getDescripcion());
+
+            stmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void exportarInventarioProveedor(int codigoInevntario,ArrayList<Proveedor> listaProveedores) {
+        try
+        {
+            String consulta = "INSERT INTO Inventario_Proveedor(codigoInventario,codigoProveedor)VALUES(?,?);";
+
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            for(int i=0;i<listaProveedores.size();i++)
+            {
+                stmt.setInt(1, codigoInevntario);
+                stmt.setInt(2, listaProveedores.get(i).getCodigo());
+                stmt.executeUpdate();
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void eliminarProducto(int codigoProducto) {
+        
+    }
+
+    public void exportarProveedorProducto(int codigoProducto,ArrayList<Proveedor> listaProveedores) {
+        try
+        {
+            String consulta = "INSERT INTO Proveedor_Producto(codigoProducto, codigoProveedor)VALUES(?,?);";
+
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            for(int i=0;i<listaProveedores.size();i++)
+            {
+                stmt.setInt(1, codigoProducto);
+                stmt.setInt(2, listaProveedores.get(i).getCodigo());
+                stmt.executeUpdate();
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void generarReporte(int tipoReporte,int mes,int codigoPedido) throws JRException {
         InputStream jrxml;
@@ -779,6 +841,25 @@ public class TiendaUQ {
         }
     }
 
+    public void mostrarAlerta(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Alerta");
+        alert.setContentText(msg);
+        alert.show();
+    }
 
+    public void mostrarInformacion(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Informacion");
+        alert.setContentText(msg);
+        alert.show();
+    }
+
+    public void mostrarConfirmacion(String msg) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Confirmacion");
+        alert.setContentText(msg);
+        alert.show();
+    }
 
 }

@@ -86,10 +86,7 @@ public class CajeroVentanaController {
 
         catch (AtributoVacioException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Alerta");
-            alert.setContentText(e.getMessage());
-            alert.show();
+            tiendaUQ.mostrarAlerta(e.getMessage());
         }
     }
 
