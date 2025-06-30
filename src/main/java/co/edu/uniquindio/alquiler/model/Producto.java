@@ -9,7 +9,7 @@ public class Producto {
     private String nombre;
     private CategoriaProducto categoria;
     private int codigo;
-    private double valor;
+    private double valor;;
 
     public String getNombre() {
         return nombre;
@@ -43,6 +43,7 @@ public class Producto {
     public void setValor(double valor) {
         this.valor = valor;
     }
+
 
     public Producto(String nombre, CategoriaProducto categoria, int codigo, double valor) {
         this.nombre = nombre;

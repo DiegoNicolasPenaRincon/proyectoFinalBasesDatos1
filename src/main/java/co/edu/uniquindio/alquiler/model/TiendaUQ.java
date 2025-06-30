@@ -298,10 +298,15 @@ public class TiendaUQ {
 
             while(rs.next())
             {
+                boolean descatalogado;
                 int codigoInventario = rs.getInt("codigo");
                 int codigoProducto = rs.getInt("codigoProducto");
                 int unidadesDisponibles = rs.getInt("unidadesDisponibles");
                 int unidadesVendidas =rs.getInt("unidadesVendidas");
+                if(rs.getInt("descatalogado")==0)
+                    descatalogado=false;
+                else
+                    descatalogado=true;
 
                 String consulta2="SELECT * FROM Inventario_Proveedor";
                 Statement stmt2 = conexionBD.getConexionT().createStatement();
@@ -319,7 +324,7 @@ public class TiendaUQ {
                 }
 
                 Producto producto=buscarProducto(codigoProducto);
-                Inventario inventario1=new Inventario(producto,unidadesDisponibles,unidadesVendidas,codigoInventario,listaProveedoresInventario);
+                Inventario inventario1=new Inventario(producto,unidadesDisponibles,unidadesVendidas,codigoInventario,listaProveedoresInventario,descatalogado);
                 inventario.add(inventario1);
             }
         }
@@ -349,6 +354,7 @@ public class TiendaUQ {
             int codigo = rs.getInt("codigo");
             if(codigo==codigoEntrante)
             {
+                boolean descatalogado;
                 String nombre = rs.getString("nombre");
                 String categoria = rs.getString("categoria");
                 CategoriaProducto categoriaProducto=buscarCategoria(categoria);
@@ -771,8 +777,28 @@ public class TiendaUQ {
         }
     }
 
-    public void eliminarProducto(int codigoProducto) {
-        
+    public void descatalogarcatalogarProducto(int codigoProducto,int tipo) {
+        try
+        {
+            String consulta;
+            if(tipo==1)
+            {
+                consulta= "UPDATE Inventario SET descatalogado=1 WHERE codigoProducto=?;";
+            }
+            else
+            {
+                consulta= "UPDATE Inventario SET descatalogado=0 WHERE codigoProducto=?;";
+            }
+
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1, codigoProducto);
+            stmt.executeUpdate();
+
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public void exportarProveedorProducto(int codigoProducto,ArrayList<Proveedor> listaProveedores) {

@@ -11,6 +11,7 @@ public class Inventario {
     private ArrayList<Modificacion> modificaciones;
     private int codigoInstancia;
     private ArrayList<Proveedor> proveedores;
+    private boolean descatalogado;
 
     public Producto getProducto() {
         return producto;
@@ -60,12 +61,21 @@ public class Inventario {
         this.proveedores = proveedores;
     }
 
-    public Inventario(Producto producto, int unidadesDisponibles, int unidadesVendidas, int codigoInstancia,ArrayList<Proveedor> proveedores) {
+    public boolean isDescatalogado() {
+        return descatalogado;
+    }
+
+    public void setDescatalogado(boolean descatalogado) {
+        this.descatalogado = descatalogado;
+    }
+
+    public Inventario(Producto producto, int unidadesDisponibles, int unidadesVendidas, int codigoInstancia, ArrayList<Proveedor> proveedores, boolean descatalogado) {
         this.producto = producto;
         this.unidadesVendidas = unidadesVendidas;
         this.unidadesDisponibles=unidadesDisponibles;
         this.codigoInstancia = codigoInstancia;
         this.modificaciones = new ArrayList<>();
         this.proveedores = proveedores;
+        this.descatalogado=descatalogado;
     }
 }

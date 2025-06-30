@@ -2,6 +2,7 @@ package co.edu.uniquindio.alquiler.controller;
 
 import co.edu.uniquindio.alquiler.exceptions.AtributoExistenteException;
 import co.edu.uniquindio.alquiler.exceptions.AtributoVacioException;
+import co.edu.uniquindio.alquiler.exceptions.ProductoException;
 import co.edu.uniquindio.alquiler.exceptions.ProveedorException;
 import co.edu.uniquindio.alquiler.model.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,7 +17,10 @@ import java.util.ArrayList;
 
 public class VentanaAdministradorController {
 
-
+    @FXML
+    private Button catalogarButton;
+    @FXML
+    private TableColumn<Inventario,String> disponibleProductoColumn;
     @FXML
     private Label valorPorductoLabel;
     @FXML
@@ -38,7 +42,7 @@ public class VentanaAdministradorController {
     @FXML
     private Button quitarProveedorProductoButton;
     @FXML
-    private Button eliminarProductoButton;
+    private Button descatalogarButton;
     @FXML
     private Label opcionesAdminLbl;
     @FXML
@@ -90,7 +94,8 @@ public class VentanaAdministradorController {
 
     public void initialize() {
         modificarProductoButton.setDisable(true);
-        eliminarProductoButton.setDisable(true);
+        descatalogarButton.setDisable(true);
+        catalogarButton.setDisable(true);
         this.proveedoresApoyo=new ArrayList<>();
         refrescarProveedoresAgregadosCombo();
         proveedoresComboBox.setItems(FXCollections.observableList(tiendaUQ.getProveedores()));;
@@ -115,7 +120,16 @@ public class VentanaAdministradorController {
             {
                 agregarProductoButton.setDisable(true);
                 modificarProductoButton.setDisable(false);
-                eliminarProductoButton.setDisable(false);
+                if(inventario.isDescatalogado())
+                {
+                    descatalogarButton.setDisable(true);
+                    catalogarButton.setDisable(false);
+                }
+                else
+                {
+                    catalogarButton.setDisable(true);
+                    descatalogarButton.setDisable(false);
+                }
                 proveedoresAgregadosComboBox.setItems(FXCollections.observableList(inventario.getProveedores()));
             }
 
@@ -126,6 +140,7 @@ public class VentanaAdministradorController {
         disponiblesColum.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesDisponibles()) ) );
         vendidasColumn.setCellValueFactory( cellData -> new SimpleStringProperty( String.valueOf(cellData.getValue().getUnidadesVendidas()) ) );
         numeroReferenciaColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCodigoInstancia())));
+        disponibleProductoColumn.setCellValueFactory( cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().isDescatalogado())));
 
         this.inventarioTable.setItems(FXCollections.observableList(tiendaUQ.getInventario()));
 
@@ -164,7 +179,7 @@ public class VentanaAdministradorController {
             Producto producto=new Producto(nombre,categoriasComboBox.getSelectionModel().getSelectedItem(),codigo,valor);
             tiendaUQ.exportarProducto(producto);
             tiendaUQ.exportarProveedorProducto(producto.getCodigo(),proveedoresApoyo);
-            Inventario inventario=new Inventario(producto,disponibles,vendidas,tiendaUQ.seleccionarNumeroAleatorio(1),proveedoresApoyo);
+            Inventario inventario=new Inventario(producto,disponibles,vendidas,tiendaUQ.seleccionarNumeroAleatorio(1),proveedoresApoyo,false);
             tiendaUQ.exportarInventario(inventario);
             tiendaUQ.exportarInventarioProveedor(inventario.getCodigoInstancia(),proveedoresApoyo);
             Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),
@@ -266,8 +281,12 @@ public class VentanaAdministradorController {
 
     }
 
-    public void eliminarProductoOnAction(ActionEvent actionEvent) {
+    public void catalogarProductoOnAction(ActionEvent actionEvent) {
+        catalogarDescatalogar(2);
+    }
 
+    public void descatalogarOnAction(ActionEvent actionEvent) {
+        catalogarDescatalogar(1);
     }
 
     public void verificarPedidosOnAction(ActionEvent actionEvent) {
@@ -311,10 +330,48 @@ public class VentanaAdministradorController {
         inventarioTable.getSelectionModel().clearSelection();
         modificarProductoButton.setDisable(true);
         agregarProductoButton.setDisable(false);
-        eliminarProductoButton.setDisable(true);
+        descatalogarButton.setDisable(true);
+        catalogarButton.setDisable(true);
     }
 
     public void refrescarProveedoresAgregadosCombo() {
         proveedoresAgregadosComboBox.setItems(FXCollections.observableList(proveedoresApoyo));
     }
+
+    public void catalogarDescatalogar(int tipo) {
+        Inventario inventario=inventarioTable.getSelectionModel().getSelectedItem();
+        try
+        {
+            if(inventario!=null)
+            {
+                if(tipo==1)
+                {
+                    Modificacion modificacion=new Modificacion(datosAdmin.getUsuarioActivo(),LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),inventario,"El producto con codigo "+inventario.getProducto().getCodigo()+", fue descatalogado");
+                    inventario.setDescatalogado(true);
+                    tiendaUQ.descatalogarcatalogarProducto(inventario.getProducto().getCodigo(),1);
+                    tiendaUQ.exportarModificacion(modificacion);
+                    tiendaUQ.mostrarInformacion("El producto fue descatalogado con exito");
+                }
+                else
+                {
+                    Modificacion modificacion=new Modificacion(datosAdmin.getUsuarioActivo(),LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),inventario,"El producto con codigo "+inventario.getProducto().getCodigo()+", fue catalogado");
+                    inventario.setDescatalogado(false);
+                    tiendaUQ.descatalogarcatalogarProducto(inventario.getProducto().getCodigo(),2);
+                    tiendaUQ.exportarModificacion(modificacion);
+                    tiendaUQ.mostrarInformacion("El producto fue catalogado con exito");
+                }
+
+                inventarioTable.refresh();
+            }
+            else
+            {
+                throw new AtributoVacioException("Debe seleccionar el producto que desea eliminar");
+            }
+        }
+        catch (AtributoVacioException e)
+        {
+            tiendaUQ.mostrarAlerta(e.getMessage());
+        }
+    }
+
 }
