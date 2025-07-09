@@ -320,6 +320,7 @@ public class VentanaAdministradorController {
                 inventarioSeleccionado.getModificaciones().add(inicial);
                 inventarioSeleccionado.setUnidadesDisponibles(disponibles);
                 inventarioSeleccionado.setUnidadesVendidas(vendidas);
+                inventarioSeleccionado.setProveedores(proveedoresApoyo);
 
                 proveedoresApoyo.clear();
                 tiendaUQ.reemplazarValor(inventarioSeleccionado.getCodigoInstancia(),inventarioSeleccionado);
