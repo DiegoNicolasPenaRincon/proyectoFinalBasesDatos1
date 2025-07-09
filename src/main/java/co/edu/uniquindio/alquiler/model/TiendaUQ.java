@@ -342,6 +342,16 @@ public class TiendaUQ {
         return TipoFactura.PROVEEDOR;
     }
 
+    public void reemplazarValor(int valorBuscar,Inventario inventarioReemplazar) {
+        for(int i=0;i<inventario.size();i++)
+        {
+            if(valorBuscar==inventario.get(i).getCodigoInstancia())
+            {
+                inventario.set(i,inventarioReemplazar);
+            }
+        }
+    }
+
     public Producto buscarProducto(int codigoEntrante) throws SQLException {
         String consulta = "SELECT * FROM Producto WHERE codigo=?";
         PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
@@ -352,15 +362,11 @@ public class TiendaUQ {
         while(rs.next())
         {
             int codigo = rs.getInt("codigo");
-            if(codigo==codigoEntrante)
-            {
-                boolean descatalogado;
-                String nombre = rs.getString("nombre");
-                String categoria = rs.getString("categoria");
-                CategoriaProducto categoriaProducto=buscarCategoria(categoria);
-                double valor=rs.getDouble("valor");
-                return new Producto(nombre,categoriaProducto,codigo,valor);
-            }
+            String nombre = rs.getString("nombre");
+            String categoria = rs.getString("categoria");
+            CategoriaProducto categoriaProducto=buscarCategoria(categoria);
+            double valor=rs.getDouble("valor");
+            return new Producto(nombre,categoriaProducto,codigo,valor);
         }
         return null;
     }
@@ -423,15 +429,81 @@ public class TiendaUQ {
         return null;
     }
 
-    public Inventario buscarInventario(int codigoInventario) {
-        for(int i=0;i<inventario.size();i++)
+    public void modificarInstanciaInventario(int codigoInventario,int unidadesDisponibles,int unidadesVendidas) {
+        try
         {
-            if(inventario.get(i).getCodigoInstancia()==codigoInventario)
+            String consulta = "UPDATE Inventario SET unidadesDisponibles=?, UnidadesVendidas=? WHERE codigo=?;";
+
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1, unidadesDisponibles);
+            stmt.setInt(2, unidadesVendidas);
+            stmt.setInt(3, codigoInventario);
+
+            stmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void modificarProveedorProducto(ArrayList<Integer> proveedoresCodigos,int codigoProducto) {
+        try
+        {
+            String consulta = "SELECT * FROM Proveedor_Producto WHERE codigoProducto=?;";
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1,codigoProducto);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
             {
-                return inventario.get(i);
+                int codigoProveedor=rs.getInt("codigoProveedor");
+                if(!proveedoresCodigos.contains(rs.getInt("codigoProveedor")))
+                {
+                    String consulta1="DELETE FROM Proveedor_Producto WHERE codigoProveedor=?;";
+                    PreparedStatement stmt1 = conexionBD.getConexionT().prepareStatement(consulta1);
+                    stmt1.setInt(1,codigoProveedor);
+                    stmt1.executeUpdate();
+                }
             }
         }
-        return null;
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void modificarInventarioProveedor(ArrayList<Integer> proveedoresCodigos,int codigoInventario) {
+        try
+        {
+            String consulta = "SELECT * FROM Inventario_Proveedor WHERE codigoInventario=?;";
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            stmt.setInt(1,codigoInventario);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                int codigoProveedor=rs.getInt("codigoProveedor");
+                if(!proveedoresCodigos.contains(rs.getInt("codigoProveedor")))
+                {
+                    String consulta1="DELETE FROM Inventario_Proveedor WHERE codigoProveedor=?;";
+                    PreparedStatement stmt1 = conexionBD.getConexionT().prepareStatement(consulta1);
+                    stmt1.setInt(1,codigoProveedor);
+                    stmt1.executeUpdate();
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Integer> rellenarCodigosProveedores(ArrayList<Proveedor> proveedores) {
+        ArrayList<Integer> codigoProveedores=new ArrayList<>();
+        for(Proveedor proveedor:proveedores)
+        {
+            codigoProveedores.add(proveedor.getCodigo());
+        }
+        return codigoProveedores;
     }
 
     public boolean verificarCodigoNoRepetido(int numero,int objetoAVerificar) {
@@ -703,14 +775,29 @@ public class TiendaUQ {
    public void exportarProducto(Producto producto) {
        try
        {
-           String consulta = "INSERT INTO Producto(categoria,nombre,codigo,valor)Values(?,?,?,?);";
-
+           String consulta="INSERT INTO Producto(categoria,nombre,codigo,valor)Values(?,?,?,?);";
            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
            stmt.setString(1, producto.getCategoria().getNombre());
            stmt.setString(2, producto.getNombre());
-           stmt.setInt(3, producto.getCodigo());
            stmt.setDouble(4,producto.getValor());
+           stmt.setInt(3, producto.getCodigo());
+           stmt.executeUpdate();
+       }
+       catch (SQLException e)
+       {
+           throw new RuntimeException(e);
+       }
+   }
 
+   public void modificarProducto(Producto producto) {
+       try
+       {
+           String consulta = "UPDATE Producto SET categoria=?, nombre=?, valor=? WHERE codigo=?;";
+           PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+           stmt.setString(1, producto.getCategoria().getNombre());
+           stmt.setString(2, producto.getNombre());
+           stmt.setDouble(3,producto.getValor());
+           stmt.setInt(4,producto.getCodigo());
            stmt.executeUpdate();
        }
        catch (SQLException e)
@@ -722,14 +809,14 @@ public class TiendaUQ {
    public void exportarInventario(Inventario inventario) {
        try
        {
-           String consulta = "INSERT INTO Inventario(codigo,codigoProducto,unidadesDisponibles,unidadesVendidas)VALUES(?,?,?,?);";
+           String consulta = "INSERT INTO Inventario(codigo,codigoProducto,unidadesDisponibles,unidadesVendidas,descatalogado)VALUES(?,?,?,?,?);";
 
            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
            stmt.setInt(1, inventario.getCodigoInstancia());
            stmt.setInt(2, inventario.getProducto().getCodigo());
            stmt.setInt(3, inventario.getUnidadesDisponibles());
            stmt.setInt(4,inventario.getUnidadesVendidas());
-
+           stmt.setInt(5,0);
            stmt.executeUpdate();
        }
        catch (SQLException e)
@@ -819,7 +906,6 @@ public class TiendaUQ {
             throw new RuntimeException(e);
         }
     }
-
 
     public void generarReporte(int tipoReporte,int mes,int codigoPedido) throws JRException {
         InputStream jrxml;

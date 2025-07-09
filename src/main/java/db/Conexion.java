@@ -9,7 +9,7 @@ public class Conexion {
     private Connection conexionT=null;
 
     private final String usuario="AdministradorBase";
-    private final String contrasenia="bases";
+    private final String contrasenia="bases1";
     private final String bd="TiendaUQ";
     private final String Ip="localhost";
     private final String puerto="1433";

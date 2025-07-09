@@ -1,9 +1,6 @@
 package co.edu.uniquindio.alquiler.controller;
 
-import co.edu.uniquindio.alquiler.exceptions.AtributoExistenteException;
-import co.edu.uniquindio.alquiler.exceptions.AtributoVacioException;
-import co.edu.uniquindio.alquiler.exceptions.ProductoException;
-import co.edu.uniquindio.alquiler.exceptions.ProveedorException;
+import co.edu.uniquindio.alquiler.exceptions.*;
 import co.edu.uniquindio.alquiler.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -12,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -108,7 +106,7 @@ public class VentanaAdministradorController {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100,1);
 
         SpinnerValueFactory<Double> valueFactoryValor =
-                new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0,1000.0,0.0,50.00);
+                new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0,0.0,50.00);
 
         unidadesDisponiblesSpinner.setValueFactory(valueFactoryDisponibles);
         unidadesVendidasSpinner.setValueFactory(valueFactoryVendidas);
@@ -120,6 +118,7 @@ public class VentanaAdministradorController {
             {
                 agregarProductoButton.setDisable(true);
                 modificarProductoButton.setDisable(false);
+                agregarCodigoTxtfield.setDisable(true);
                 if(inventario.isDescatalogado())
                 {
                     descatalogarButton.setDisable(true);
@@ -130,7 +129,9 @@ public class VentanaAdministradorController {
                     catalogarButton.setDisable(true);
                     descatalogarButton.setDisable(false);
                 }
-                proveedoresAgregadosComboBox.setItems(FXCollections.observableList(inventario.getProveedores()));
+                proveedoresApoyo.clear();
+                proveedoresApoyo.addAll(inventario.getProveedores());
+                refrescarProveedoresAgregadosCombo();
             }
 
         });
@@ -160,14 +161,6 @@ public class VentanaAdministradorController {
             {
                 throw new AtributoVacioException("Debe ingresar un nombre");
             }
-            else if(categoria.isEmpty())
-            {
-                throw new AtributoVacioException("Debe seleccionar una categoria");
-            }
-            else if(proveedoresApoyo.isEmpty())
-            {
-                throw new AtributoVacioException("Debe seleccionar como minimo un proveedor");
-            }
             else if(tiendaUQ.verificarCodigoNoRepetido(codigo,3))
             {
                 throw new AtributoExistenteException("Ese producto ya existe");
@@ -191,15 +184,20 @@ public class VentanaAdministradorController {
             refrescarProveedoresAgregadosCombo();
             inventarioTable.refresh();
 
-            tiendaUQ.mostrarInformacion("Las unidades disponibles, unidades vendidas y el codigo del producto deben contener valores numericos");
+            tiendaUQ.mostrarConfirmacion("Producto creado con exito");
+            resetearDatos();
         }
         catch (NumberFormatException e)
         {
             tiendaUQ.mostrarAlerta("Las unidades disponibles, unidades vendidas y el codigo del producto deben contener valores numericos");
         }
-        catch (AtributoVacioException |AtributoExistenteException e)
+        catch (AtributoVacioException |AtributoExistenteException | ProveedorException e)
         {
             tiendaUQ.mostrarAlerta(e.getMessage());
+        }
+        catch (NullPointerException e)
+        {
+            tiendaUQ.mostrarAlerta("Debe seleccionar como minimo una categoria");
         }
     }
 
@@ -221,7 +219,7 @@ public class VentanaAdministradorController {
                 }
                 else
                 {
-                    throw new ProveedorException("El proveedor ya fue agregador");
+                    throw new ProveedorException("El proveedor ya fue agregado");
                 }
             }
         }
@@ -278,15 +276,74 @@ public class VentanaAdministradorController {
     }
 
     public void modificarProductoOnAction(ActionEvent actionEvent) {
+        Inventario inventarioSeleccionado=inventarioTable.getSelectionModel().getSelectedItem();
+        try
+        {
+            if(inventarioSeleccionado!=null)
+            {
+                String nombre = agregarNombreTxtField.getText();
+                int disponibles = unidadesDisponiblesSpinner.getValue();
+                int vendidas = unidadesVendidasSpinner.getValue();
+                double valor = valorProductoSpinner.getValue();
+                Producto producto = tiendaUQ.buscarProducto(inventarioSeleccionado.getProducto().getCodigo());
+                producto.setValor(valor);
 
+                if(categoriasComboBox.getSelectionModel().getSelectedItem()!=null)
+                {
+                    producto.setCategoria(categoriasComboBox.getSelectionModel().getSelectedItem());
+                }
+
+                if(!nombre.isEmpty())
+                {
+                    producto.setNombre(nombre);
+                }
+                producto.setCodigo(inventarioSeleccionado.getProducto().getCodigo());
+
+                tiendaUQ.modificarInstanciaInventario(inventarioSeleccionado.getCodigoInstancia(),disponibles,vendidas);
+                tiendaUQ.modificarProducto(producto);
+                tiendaUQ.modificarProveedorProducto(tiendaUQ.rellenarCodigosProveedores(proveedoresApoyo),inventarioSeleccionado.getProducto().getCodigo());
+                tiendaUQ.modificarInventarioProveedor(tiendaUQ.rellenarCodigosProveedores(proveedoresApoyo),inventarioSeleccionado.getCodigoInstancia());
+
+                Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),
+                        inventarioSeleccionado,"Se modifico el producto "+inventarioSeleccionado.getProducto().getCodigo());
+                tiendaUQ.exportarModificacion(inicial);
+                inventarioSeleccionado.setProducto(producto);
+                inventarioSeleccionado.getModificaciones().add(inicial);
+                inventarioSeleccionado.setProveedores(proveedoresApoyo);
+
+                proveedoresApoyo.clear();
+                tiendaUQ.reemplazarValor(inventarioSeleccionado.getCodigoInstancia(),inventarioSeleccionado);
+                refrescarProveedoresAgregadosCombo();
+                inventarioTable.refresh();
+                deseleccionar();
+                tiendaUQ.mostrarConfirmacion("Producto modificado con exito");
+                resetearDatos();
+            }
+            else
+            {
+                throw new AtributoVacioException("Debe seleccionar el producto que va a modificar");
+            }
+        }
+        catch (AtributoVacioException e)
+        {
+            tiendaUQ.mostrarAlerta(e.getMessage());
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public void catalogarProductoOnAction(ActionEvent actionEvent) {
         catalogarDescatalogar(2);
+        catalogarButton.setDisable(true);
+        descatalogarButton.setDisable(false);
     }
 
     public void descatalogarOnAction(ActionEvent actionEvent) {
         catalogarDescatalogar(1);
+        descatalogarButton.setDisable(true);
+        catalogarButton.setDisable(false);
     }
 
     public void verificarPedidosOnAction(ActionEvent actionEvent) {
@@ -327,11 +384,17 @@ public class VentanaAdministradorController {
     }
 
     public void deseccionarOnAction(ActionEvent actionEvent) {
+        deseleccionar();
+    }
+
+    public void deseleccionar() {
         inventarioTable.getSelectionModel().clearSelection();
         modificarProductoButton.setDisable(true);
         agregarProductoButton.setDisable(false);
         descatalogarButton.setDisable(true);
         catalogarButton.setDisable(true);
+        agregarCodigoTxtfield.setDisable(false);
+        proveedoresApoyo.clear();
     }
 
     public void refrescarProveedoresAgregadosCombo() {
@@ -372,6 +435,13 @@ public class VentanaAdministradorController {
         {
             tiendaUQ.mostrarAlerta(e.getMessage());
         }
+    }
+
+    public void resetearDatos() {
+        agregarCodigoTxtfield.clear();
+        agregarNombreTxtField.clear();
+        unidadesDisponiblesSpinner.decrement(unidadesDisponiblesSpinner.getValue()-(unidadesDisponiblesSpinner.getValue()-1));
+        unidadesVendidasSpinner.decrement(unidadesVendidasSpinner.getValue()-(unidadesVendidasSpinner.getValue()-1));
     }
 
 }
