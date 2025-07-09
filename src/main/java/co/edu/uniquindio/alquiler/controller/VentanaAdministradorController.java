@@ -293,23 +293,33 @@ public class VentanaAdministradorController {
                     producto.setCategoria(categoriasComboBox.getSelectionModel().getSelectedItem());
                 }
 
+                if(!proveedoresApoyo.isEmpty())
+                {
+                    inventarioSeleccionado.setProveedores(tiendaUQ.agregarProveedores(inventarioSeleccionado.getProveedores(),proveedoresApoyo));
+                }
+
                 if(!nombre.isEmpty())
                 {
                     producto.setNombre(nombre);
                 }
                 producto.setCodigo(inventarioSeleccionado.getProducto().getCodigo());
 
+                ArrayList<Integer> codigosProveedores=tiendaUQ.rellenarCodigosProveedores(proveedoresApoyo);
+
                 tiendaUQ.modificarInstanciaInventario(inventarioSeleccionado.getCodigoInstancia(),disponibles,vendidas);
                 tiendaUQ.modificarProducto(producto);
-                tiendaUQ.modificarProveedorProducto(tiendaUQ.rellenarCodigosProveedores(proveedoresApoyo),inventarioSeleccionado.getProducto().getCodigo());
-                tiendaUQ.modificarInventarioProveedor(tiendaUQ.rellenarCodigosProveedores(proveedoresApoyo),inventarioSeleccionado.getCodigoInstancia());
+                tiendaUQ.eliminarProveedorProducto(codigosProveedores,inventarioSeleccionado.getProducto().getCodigo());
+                tiendaUQ.eliminarInventarioProveedor(codigosProveedores,inventarioSeleccionado.getCodigoInstancia());
+                tiendaUQ.agregarProveedoresProducto(codigosProveedores,producto.getCodigo());
+                tiendaUQ.agregarInventarioProveedor(codigosProveedores,inventarioSeleccionado.getCodigoInstancia());
 
                 Modificacion inicial=new Modificacion(datosAdmin.getUsuarioActivo(), LocalDateTime.now(),tiendaUQ.seleccionarNumeroAleatorio(2),
                         inventarioSeleccionado,"Se modifico el producto "+inventarioSeleccionado.getProducto().getCodigo());
                 tiendaUQ.exportarModificacion(inicial);
                 inventarioSeleccionado.setProducto(producto);
                 inventarioSeleccionado.getModificaciones().add(inicial);
-                inventarioSeleccionado.setProveedores(proveedoresApoyo);
+                inventarioSeleccionado.setUnidadesDisponibles(disponibles);
+                inventarioSeleccionado.setUnidadesVendidas(vendidas);
 
                 proveedoresApoyo.clear();
                 tiendaUQ.reemplazarValor(inventarioSeleccionado.getCodigoInstancia(),inventarioSeleccionado);
@@ -440,8 +450,6 @@ public class VentanaAdministradorController {
     public void resetearDatos() {
         agregarCodigoTxtfield.clear();
         agregarNombreTxtField.clear();
-        unidadesDisponiblesSpinner.decrement(unidadesDisponiblesSpinner.getValue()-(unidadesDisponiblesSpinner.getValue()-1));
-        unidadesVendidasSpinner.decrement(unidadesVendidasSpinner.getValue()-(unidadesVendidasSpinner.getValue()-1));
     }
 
 }

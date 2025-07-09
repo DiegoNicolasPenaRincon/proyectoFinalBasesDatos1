@@ -447,7 +447,7 @@ public class TiendaUQ {
         }
     }
 
-    public void modificarProveedorProducto(ArrayList<Integer> proveedoresCodigos,int codigoProducto) {
+    public void eliminarProveedorProducto(ArrayList<Integer> proveedoresCodigos,int codigoProducto) {
         try
         {
             String consulta = "SELECT * FROM Proveedor_Producto WHERE codigoProducto=?;";
@@ -472,7 +472,7 @@ public class TiendaUQ {
         }
     }
 
-    public void modificarInventarioProveedor(ArrayList<Integer> proveedoresCodigos,int codigoInventario) {
+    public void eliminarInventarioProveedor(ArrayList<Integer> proveedoresCodigos,int codigoInventario) {
         try
         {
             String consulta = "SELECT * FROM Inventario_Proveedor WHERE codigoInventario=?;";
@@ -494,6 +494,58 @@ public class TiendaUQ {
         catch (SQLException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public void agregarProveedoresProducto(ArrayList<Integer> proveedoresCodigos,int codigoProducto) {
+        try
+        {
+            String consulta = "SELECT * FROM Proveedor_Producto WHERE codigoProveedor=? AND codigoProducto=?;";
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            for(int codigoProveedores:proveedoresCodigos)
+            {
+                stmt.setInt(1,codigoProveedores);
+                stmt.setInt(2,codigoProducto);
+                ResultSet rs = stmt.executeQuery();
+                if(!rs.next())
+                {
+                    String consulta1="INSERT INTO Proveedor_Producto(codigoProveedor,codigoProducto) VALUES(?,?);";
+                    PreparedStatement stmt1 = conexionBD.getConexionT().prepareStatement(consulta1);
+                    stmt1.setInt(1, codigoProveedores);
+                    stmt1.setInt(2,codigoProducto);
+                    stmt1.executeUpdate();
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void agregarInventarioProveedor(ArrayList<Integer> proveedoresCodigos,int codigoInventario) {
+        try
+        {
+            String consulta = "SELECT * FROM Inventario_Proveedor WHERE codigoInventario=? AND codigoProveedor=?;";
+            PreparedStatement stmt = conexionBD.getConexionT().prepareStatement(consulta);
+            for(int codigoProveedores:proveedoresCodigos)
+            {
+                stmt.setInt(1,codigoProveedores);
+                stmt.setInt(2,codigoInventario);
+                ResultSet rs = stmt.executeQuery();
+                if(!rs.next())
+                {
+                    String consulta1="INSERT INTO Inventario_Proveedor(codigoProveedor,codigoInventario) VALUES(?,?);";
+                    PreparedStatement stmt1 = conexionBD.getConexionT().prepareStatement(consulta1);
+                    stmt1.setInt(1, codigoProveedores);
+                    stmt1.setInt(2,codigoInventario);
+                    stmt1.executeUpdate();
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
         }
     }
 
@@ -770,6 +822,19 @@ public class TiendaUQ {
             throw new RuntimeException(e);
         }
         return listaGeneralidades;
+    }
+
+    public ArrayList<Proveedor> agregarProveedores(ArrayList<Proveedor> poveedores,ArrayList<Proveedor> proveedoresAAgregar) {
+        ArrayList<Proveedor> proveedoresYaAgregados=new ArrayList<>();
+        for(int i=0;i<proveedoresAAgregar.size();i++)
+        {
+            if(!poveedores.contains(proveedoresAAgregar.get(i)))
+            {
+                proveedoresYaAgregados.add(proveedoresAAgregar.get(i));
+            }
+        }
+        proveedoresYaAgregados.addAll(poveedores);
+        return proveedoresYaAgregados;
     }
 
    public void exportarProducto(Producto producto) {
